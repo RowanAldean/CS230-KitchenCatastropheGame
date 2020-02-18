@@ -217,6 +217,20 @@ public class LevelManager {
     }
 
     /**
+     * Saves a level.
+     *
+     * @param level
+     *            The level to save.
+     * @throws IOException
+     *             when saving failed.
+     */
+    public static void save(Level level) throws IOException {
+        String path = String.format(
+                Constants.FOLDER_LEVELS + Constants.FILE_LEVEL, level.getId());
+        LevelSaver.save(level, path);
+    }
+
+    /**
      * Loads the saved level.
      *
      * @param levelId
