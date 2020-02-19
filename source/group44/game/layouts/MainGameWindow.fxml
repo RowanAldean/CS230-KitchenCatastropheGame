@@ -13,7 +13,7 @@
         <Canvas fx:id="canvas" height="550.0" width="725.0" StackPane.alignment="CENTER" />
         <Pane fx:id="movableObjects" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="725.0" stylesheets="@/group44/resources/application.css">
          <children>
-            <Label id="onScreenMessage" fx:id="onScreenMessage" alignment="CENTER" layoutX="593.0" layoutY="14.0" prefHeight="134.0" prefWidth="118.0" text="onScreenMessage" textAlignment="CENTER" wrapText="true" />
+            <Label id="onScreenMessage" fx:id="onScreenMessage" alignment="CENTER" layoutX="593.0" layoutY="5.0" prefHeight="175.0" prefWidth="118.0" text="onScreenMessage" textAlignment="CENTER" wrapText="true" />
          </children></Pane>
         <Label id="tokensTitle" alignment="TOP_CENTER" prefHeight="18.0" prefWidth="90" text="Tokens: " StackPane.alignment="CENTER_RIGHT">
             <StackPane.margin>

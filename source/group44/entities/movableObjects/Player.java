@@ -21,6 +21,8 @@ import group44.game.CollisionCheckResult;
 import group44.game.CollisionCheckResult.CollisionCheckResultType;
 import group44.game.Level;
 import group44.game.scenes.GameScene;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -83,6 +85,7 @@ public class Player extends MovableObject {
             } else {
                 // Not colliding; stepOn was successful - remove on screen message
                 GameScene.getOnScreenMessage().setVisible(false);
+                GameScene.getOnScreenMessage().setGraphic(null);
                 currentCell.stepOff();
 
                 // If the movableObject on the nextCell is not
@@ -142,7 +145,7 @@ public class Player extends MovableObject {
         if (key != null) {
             door.open(key);
         }
-        GameScene.getOnScreenMessage().textProperty().setValue("You need a " + door.getUnlockingKeyType().getTitle() + " to open this door!");
+        GameScene.setOnScreenMessage("You need a " + door.getUnlockingKeyType().getTitle() + " to open this door!", door.getUnlockingKeyType().getImagePath());
         GameScene.getOnScreenMessage().setVisible(true);
         return door.isOpen();
     }
@@ -172,10 +175,12 @@ public class Player extends MovableObject {
      * @return true if the door are open; otherwise false and update the on screen message.
      */
     private boolean tryToOpenTokenDoor(CollisionCheckResult result) {
+        //TODO: Create Constants.TOKEN_PATH and hardode the paths for each type of LevelObject
+        String tokenIconPath = "group44/resources/cells/token.png";
         TokenDoor door = (TokenDoor) result.getCollidingObject();
         if(!door.open(this.getTokenAccumulator())){
             int tokensLeft = door.getTokensNeeded() - this.getTokenAccumulator().getTokensCount();
-            GameScene.getOnScreenMessage().textProperty().setValue("You need " + tokensLeft + " more token(s) to open this door!");
+            GameScene.setOnScreenMessage("You need " + tokensLeft + " more token(s) to open this door!", tokenIconPath);
             GameScene.getOnScreenMessage().setVisible(true);
         }
         return door.open(this.getTokenAccumulator());

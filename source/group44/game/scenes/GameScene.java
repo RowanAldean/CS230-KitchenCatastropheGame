@@ -23,11 +23,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
@@ -270,6 +268,16 @@ public class GameScene {
      */
     public static Label getOnScreenMessage() {
         return myController.getOnScreenMessage();
+    }
+
+    public static void setOnScreenMessage(String message, String imagePath){
+        ImageView iconImage = new ImageView(imagePath);
+        iconImage.setFitWidth(50);
+        iconImage.setFitHeight(50);
+        iconImage.setPreserveRatio(true);
+        myController.getOnScreenMessage().setGraphic(iconImage);
+        myController.getOnScreenMessage().setContentDisplay(ContentDisplay.BOTTOM);
+        myController.getOnScreenMessage().textProperty().setValue(message);
     }
 
     /**
