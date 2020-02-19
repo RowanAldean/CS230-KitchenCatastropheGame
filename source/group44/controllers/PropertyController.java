@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import group44.annotations.Editable;
 import group44.models.PropertyInfo;
+import group44.models.PropertyInfo.TypeInfo;
 
 public class PropertyController implements IPropertyController {
 
@@ -24,6 +25,7 @@ public class PropertyController implements IPropertyController {
     public PropertyInfo[] getProperties() {
         ArrayList<PropertyInfo> infos = new ArrayList<PropertyInfo>();
         try {
+            System.out.println(this.activeObject.getClass().getName());
             getPropertyInfos(infos, this.activeObject.getClass());
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,7 +86,6 @@ public class PropertyController implements IPropertyController {
     private void getPropertyInfos(ArrayList<PropertyInfo> infos, Class cls)
             throws Exception {
 
-        System.out.println(cls.getName());
         for (Field item : cls.getDeclaredFields()) {
             if (item.isAnnotationPresent(Editable.class)) {
                 item.setAccessible(true);
@@ -92,23 +93,34 @@ public class PropertyController implements IPropertyController {
 
                 switch (item.getType().getSimpleName()) {
                 case "int":
-                    typeInfo = PropertyInfo.TypeInfo.Int;
+                    typeInfo = TypeInfo.Int;
                     break;
                 case "String":
-                    typeInfo = PropertyInfo.TypeInfo.String;
+                    typeInfo = TypeInfo.String;
                     break;
-                case "ArrayList":
-                    typeInfo = PropertyInfo.TypeInfo.ArrayList;
+                case "MovableObject":
+                    typeInfo = TypeInfo.MovableObject;
                     break;
-                case "Image":
-                    typeInfo = PropertyInfo.TypeInfo.Image;
+                case "CollectableItem":
+                    typeInfo = TypeInfo.CollectableItem;
+                    break;
+                case "boolean":
+                    typeInfo = TypeInfo.Boolean;
+                    break;
+                case "Teleporter":
+                    typeInfo = TypeInfo.Teleporter;
+                    break;
+                case "KeyType":
+                    typeInfo = TypeInfo.KeyType;
                     break;
                 default:
+                    String sName = item.getType().getSimpleName();
+                    System.err.println(sName);
                     throw new Exception(item.getType().getSimpleName());
                 }
 
-                infos.add(new PropertyInfo(convertName(item.getName()),
-                        item.get(this.activeObject).toString(), typeInfo));
+                Object value = item.get(this.activeObject);
+                infos.add(new PropertyInfo(convertName(item.getName()), (value == null) ? "null" : value.toString(), typeInfo));
             }
         }
 

@@ -28,6 +28,6 @@ public class PropertyInfo {
     }
 
     public enum TypeInfo {
-        String, Int, ArrayList, Image
+        String, Int, Boolean, CollectableItem, KeyType, MovableObject, Teleporter
     }
 }
