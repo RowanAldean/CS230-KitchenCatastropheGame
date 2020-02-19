@@ -1,5 +1,6 @@
 package group44.entities.cells;
 
+import group44.annotations.Editable;
 import group44.entities.LevelObject;
 import group44.entities.movableObjects.MovableObject;
 import group44.entities.movableObjects.Player;
@@ -16,6 +17,7 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public abstract class StepableCell extends Cell {
     /** MovableObject standing on the. */
+    @Editable
     private MovableObject movableObject;
 
     /**

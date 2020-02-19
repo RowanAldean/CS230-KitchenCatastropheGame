@@ -1,5 +1,6 @@
 package group44.entities;
 
+import group44.annotations.Editable;
 import group44.game.Level;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -12,16 +13,20 @@ import javafx.scene.image.Image;
  */
 public abstract class LevelObject {
     /** Title of the {@link LevelObject}. */
+    @Editable
     private String title;
     /** Path to the image representing the {@link LevelObject} in the game. */
+    @Editable
     private String imagePath;
     /** Image representing the {@link LevelObject} in the game. */
     private Image image;
     /** {@link Level} where the {@link LevelObject} is located. */
     private Level level;
     /** Position X of the {@link LevelObject}. */
+    @Editable
     private int positionX;
     /** Position Y of the {@link LevelObject}. */
+    @Editable
     private int positionY;
 
     /**

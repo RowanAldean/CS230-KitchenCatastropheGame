@@ -1,6 +1,7 @@
 package group44.entities.cells;
 
 import group44.Constants;
+import group44.annotations.Editable;
 import group44.entities.LevelObject;
 import group44.entities.collectableItems.CollectableItem;
 import group44.entities.movableObjects.MovableObject;
@@ -15,6 +16,7 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class Ground extends StepableCell {
     /** Collectable item placed on the Ground. */
+    @Editable
     private CollectableItem collectableItem;
 
     /**
