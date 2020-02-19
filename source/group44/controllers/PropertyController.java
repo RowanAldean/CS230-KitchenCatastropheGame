@@ -48,9 +48,13 @@ public class PropertyController implements IPropertyController {
         try {
             switch (info.getTypeInfo()) {
             case Int:
-                field.setInt(this.activeObject,
-                        Integer.parseInt(info.getValue()));
+                field.setInt(this.activeObject, (Integer) info.getValue());
                 break;
+            case Boolean:
+                field.setBoolean(this.activeObject, (Boolean) info.getValue());
+                break;
+            // TODO: Resolve values from String
+
             default:
                 field.set(this.activeObject, info.getValue());
                 break;
@@ -120,7 +124,8 @@ public class PropertyController implements IPropertyController {
                 }
 
                 Object value = item.get(this.activeObject);
-                infos.add(new PropertyInfo(convertName(item.getName()), (value == null) ? "null" : value.toString(), typeInfo));
+                infos.add(new PropertyInfo(convertName(item.getName()), value,
+                        typeInfo));
             }
         }
 

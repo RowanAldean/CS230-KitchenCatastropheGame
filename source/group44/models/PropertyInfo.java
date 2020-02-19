@@ -2,10 +2,10 @@ package group44.models;
 
 public class PropertyInfo {
     private String key;
-    private String value;
+    private Object value;
     private TypeInfo typeInfo;
 
-    public PropertyInfo(String key, String value, TypeInfo typeInfo) {
+    public PropertyInfo(String key, Object value, TypeInfo typeInfo) {
         this.key = key;
         this.value = value;
         this.typeInfo = typeInfo;
@@ -15,11 +15,11 @@ public class PropertyInfo {
         return key;
     }
 
-    public String getValue() {
+    public Object getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Object value) {
         this.value = value;
     }
 
