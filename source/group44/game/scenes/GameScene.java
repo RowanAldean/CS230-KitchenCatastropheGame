@@ -270,6 +270,11 @@ public class GameScene {
         return myController.getOnScreenMessage();
     }
 
+    /**
+     * Updates the on screen message label and its corresponding picture.
+     * @param message The label text
+     * @param imagePath An imagepath to have an image below the label text
+     */
     public static void setOnScreenMessage(String message, String imagePath){
         ImageView iconImage = new ImageView(imagePath);
         iconImage.setFitWidth(50);
