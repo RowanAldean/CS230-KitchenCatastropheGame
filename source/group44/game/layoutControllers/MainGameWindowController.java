@@ -29,6 +29,8 @@ public class MainGameWindowController {
     @FXML
     private Label timeLabel;
     @FXML
+    private Label tokenAmount;
+    @FXML
     private VBox menuBox;
     @FXML
     private Pane movableObjects;
@@ -96,6 +98,14 @@ public class MainGameWindowController {
 
     public Label getTimeLabel() {
         return timeLabel;
+    }
+
+    public Label getTokenAmount() {
+        return tokenAmount;
+    }
+
+    public void setTokenAmount(int tokenAmount) {
+        this.tokenAmount.textProperty().setValue(Integer.toString(tokenAmount));
     }
 
     public void setMovableObjects(Pane movableObjects) {

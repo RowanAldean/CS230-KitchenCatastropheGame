@@ -12,6 +12,17 @@
       <Canvas fx:id="canvas" height="550.0" width="725.0" StackPane.alignment="CENTER" />
       <Pane fx:id="movableObjects" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             stylesheets="@/group44/resources/application.css" prefHeight="550.0" prefWidth="725.0"/>
+       <Label id="tokensTitle" text="Tokens: " prefHeight="100" prefWidth="90" StackPane.alignment="CENTER_RIGHT"
+              alignment="TOP_CENTER">
+           <StackPane.margin>
+               <Insets bottom="150.0" left="0.0" right="25.0" top="25.0"/>
+           </StackPane.margin>
+       </Label>
+       <Label id="tokenAmount" fx:id="tokenAmount" text="0" StackPane.alignment="CENTER_RIGHT" alignment="TOP_CENTER" prefHeight="100" prefWidth="90">
+           <StackPane.margin>
+               <Insets bottom="120.0" left="0.0" right="25.0" top="25.0"/>
+           </StackPane.margin>
+       </Label>
        <Label id="timeTitle" text="Time Taken:" prefHeight="100" prefWidth="90" StackPane.alignment="CENTER_RIGHT"
               alignment="CENTER">
            <StackPane.margin>

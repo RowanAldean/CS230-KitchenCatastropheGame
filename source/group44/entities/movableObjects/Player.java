@@ -280,7 +280,7 @@ public class Player extends MovableObject {
      *
      * @return the {@link TokenAccumulator}.
      */
-    private TokenAccumulator getTokenAccumulator() {
+    public TokenAccumulator getTokenAccumulator() {
         for (CollectableItem item : this.inventory) {
             if (item instanceof TokenAccumulator) {
                 return (TokenAccumulator) item;

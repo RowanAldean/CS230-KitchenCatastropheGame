@@ -68,6 +68,11 @@
     -fx-pref-width: 200;
 }
 
+#tokensTitle{
+    -fx-font-weight: bold;
+    -fx-font-family: "Helvetica";
+}
+
 #timeTitle{
     -fx-font-weight: bold;
     -fx-font-family: "Helvetica";

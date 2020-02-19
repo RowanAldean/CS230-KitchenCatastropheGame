@@ -27,6 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -290,6 +291,11 @@ public class GameScene {
         currentLevel.draw(gc);
     }
 
+    private void showTokens(Label tokenAmount) {
+        int tokens = currentLevel.getPlayer().getTokenAccumulator().getTokensCount();
+        tokenAmount.setText(String.valueOf(tokens));
+    }
+
     /**
      * This method should be called when the game has ended. The player time
      * should be sent as a parameter to store it. Then an alert with the top 3
@@ -338,6 +344,7 @@ public class GameScene {
         case RIGHT:
             if (canMove) {
                 this.currentLevel.keyDown(event);
+                this.showTokens(myController.getTokenAmount());
             }
             break;
 
