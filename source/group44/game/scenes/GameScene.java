@@ -30,6 +30,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 /**
@@ -46,8 +47,8 @@ public class GameScene {
     // (in this setup) as we need to access it in different methods.
     private Canvas canvas;
 
-    // The controller associated with the specific fxml file.
-    private MainGameWindowController myController;
+    // The controller associated with the specific fxml file and specific GameScene.
+    private static MainGameWindowController myController;
 
     private boolean canMove = true;
 
@@ -202,6 +203,9 @@ public class GameScene {
         a1.setWidth(500);
 
         if (status == LevelFinishStatus.GoalReached) {
+            myController.getOnScreenMessage().setTextFill(Paint.valueOf("green"));
+            myController.getOnScreenMessage().textProperty().setValue("You've completed the level!" + "\n" +"WELL DONE!!");
+            myController.getOnScreenMessage().setVisible(true);
             a1.setTitle("Congrats on finishing the level!");
             Leaderboard.addOrUpdate(currentProfile.getId(),
                     currentLevel.getId(), timer.getCurrentTimeTaken());
@@ -227,6 +231,10 @@ public class GameScene {
                                 currentProfile.getId(), currentLevel.getId()));
             } // TODO: Here add the times with append
         } else {
+            //Display death message
+            myController.getOnScreenMessage().textProperty().setValue("YOU COULDN'T HANDLE THIS KITCHEN! Rest In Peace");
+            myController.getOnScreenMessage().setVisible(true);
+            //Display post-death menu
             a1.setTitle("And then I took an arrow to the knee!");
             // TODO: Here add the times with append
             a1.setContentText(
@@ -254,6 +262,14 @@ public class GameScene {
                 }
             }
         }
+    }
+
+    /**
+     * This method gets the onScreenMessage label which is displayed in the UI.
+     * @return the onScreenMessage JavaFX label
+     */
+    public static Label getOnScreenMessage() {
+        return myController.getOnScreenMessage();
     }
 
     /**
@@ -291,6 +307,10 @@ public class GameScene {
         currentLevel.draw(gc);
     }
 
+    /**
+     * This method updates the token amount shown in the GameScene
+     * @param tokenAmount the label holding the current token amount
+     */
     private void showTokens(Label tokenAmount) {
         int tokens = currentLevel.getPlayer().getTokenAccumulator().getTokensCount();
         tokenAmount.setText(String.valueOf(tokens));
@@ -333,7 +353,6 @@ public class GameScene {
                         .setVisible(!myController.getMenuBox().isVisible());
                 canMove = true;
             }
-
             break;
         }
 
@@ -352,7 +371,6 @@ public class GameScene {
             // Do nothing
             break;
         }
-
         // Redraw game as the player may have moved.
         drawGame();
         // Consume the event. This means we mark it as dealt

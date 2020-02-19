@@ -27,6 +27,8 @@ public class MainGameWindowController {
     @FXML
     private Canvas canvas;
     @FXML
+    private Label onScreenMessage;
+    @FXML
     private Label timeLabel;
     @FXML
     private Label tokenAmount;
@@ -42,6 +44,7 @@ public class MainGameWindowController {
     @FXML
     public void initialize() {
         menuBox.setVisible(false);
+        onScreenMessage.setVisible(false);
     }
 
     public Button getHomeButton() {
@@ -98,6 +101,14 @@ public class MainGameWindowController {
 
     public Label getTimeLabel() {
         return timeLabel;
+    }
+
+    public Label getOnScreenMessage() {
+        return onScreenMessage;
+    }
+
+    public void setOnScreenMessage(Label onScreenMessage) {
+        this.onScreenMessage = onScreenMessage;
     }
 
     public Label getTokenAmount() {
