@@ -1,4 +1,4 @@
-package group44.models;
+package group44.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

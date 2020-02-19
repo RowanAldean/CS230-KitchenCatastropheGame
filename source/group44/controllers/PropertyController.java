@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import group44.entities.LevelObject;
-import group44.models.Editable;
+import group44.annotations.Editable;
 import group44.models.PropertyInfo;
 
 public class PropertyController implements IPropertyController {
