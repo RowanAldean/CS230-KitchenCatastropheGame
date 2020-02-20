@@ -114,16 +114,12 @@ public class Player extends MovableObject {
         case MissingKey:
             if (this.tryToOpenKeyDoor(result)) {
                 LevelObject cell = result.getCollidingObject();
-                this.getLevel().updateCell(new Ground(getLevel(), cell.getPositionX(), cell.getPositionY(),
-                        "group44/resources/cells/floor.png"));
                 this.move();
             }
             break;
         case NotEnoughTokens:
             if (this.tryToOpenTokenDoor(result)) {
                 LevelObject cell = result.getCollidingObject();
-                this.getLevel().updateCell(new Ground(getLevel(), cell.getPositionX(), cell.getPositionY(),
-                        "group44/resources/cells/floor.png"));
                 this.move();
             }
             break;

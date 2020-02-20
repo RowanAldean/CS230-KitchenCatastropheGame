@@ -17,6 +17,7 @@ import group44.game.Level;
  * @version 1.0
  */
 public class KeyDoor extends Door {
+    private boolean isOpen;
     /** Unlocking key for the door. */
     private Key.KeyType unlockingKey;
 
@@ -41,11 +42,12 @@ public class KeyDoor extends Door {
      */
     public KeyDoor(Level level, String title, int positionX, int positionY,
             String lockedImagePath, String unlockedImagePath,
-            Key.KeyType unlockingKey) {
+            Key.KeyType unlockingKey, boolean isOpen) {
         super(level, title, positionX, positionY, lockedImagePath,
-                unlockedImagePath);
+                unlockedImagePath, isOpen);
 
         this.unlockingKey = unlockingKey;
+        this.isOpen = isOpen;
     }
 
     /**
@@ -117,6 +119,8 @@ public class KeyDoor extends Door {
         builder.append(this.getUnlockedImagePath());
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getUnlockingKeyType().getKeyCode());
+        builder.append(Constants.LEVEL_OBJECT_DELIMITER);
+        builder.append(this.isOpen());
 
         if (this.getMovableObject() != null) {
             builder.append(",");

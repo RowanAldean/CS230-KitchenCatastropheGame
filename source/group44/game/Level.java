@@ -318,13 +318,4 @@ public class Level {
         this.isFinished = true;
         this.finishStatus = status;
     }
-
-    /**
-     * Update the current cell with an alternative cell.
-     *
-     * @param cell - cell to replace current cell
-     */
-    public void updateCell (Cell cell) {
-        grid[cell.getPositionX()][cell.getPositionY()] =cell;
-    }
 }
