@@ -376,6 +376,7 @@ public class GameScene {
         case RIGHT:
             if (canMove) {
                 this.currentLevel.keyDown(event);
+                //TODO: Consider alternative means of checking token count (this checks on every step) - try only on collection.
                 this.showTokens(myController.getTokenAmount());
             }
             break;
