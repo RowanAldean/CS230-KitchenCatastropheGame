@@ -49,6 +49,14 @@ public class TokenDoor extends Door {
     }
 
     /**
+     * Getter method for returning number of tokens needed for this door.
+     * @return Number of tokens needed.
+     */
+    public int getTokensNeeded() {
+        return tokensNeeded;
+    }
+
+    /**
      * Opens the door if a {@link TokenAccumulator} with the right amount of
      * tokens were used.
      *
