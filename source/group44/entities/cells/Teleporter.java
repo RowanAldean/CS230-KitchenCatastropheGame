@@ -72,20 +72,20 @@ public class Teleporter extends StepableCell {
             LevelObject[][] surroudingArea = this
                     .getSurroundingArea(this.linkedTeleporter);
 
-            for (int x = 0; x < surroudingArea.length; x++) {
-                for (int y = 0; y < surroudingArea[0].length; y++) {
-                    LevelObject levelObject = surroudingArea[x][y];
+            //this will convert the velocity of the object into a position in the surrounding area
+            int newPosInSurroundX = 1 + object.getVelocityX();
+            int newPosInSurroundY = 1 + object.getVelocityY();
 
-                    if (levelObject instanceof Ground
-                            && ((Ground) surroudingArea[x][y])
-                                    .isSteppedOn() == false) {
-                        StepableCell stepableCell = (Ground) surroudingArea[x][y];
-                        stepableCell.stepOn(object);
-                        object.setPosition(stepableCell.getPositionX(),
-                                stepableCell.getPositionY());
-                        return true;
-                    }
-                }
+            //get the tile the object will move to
+            LevelObject newTile = surroudingArea[newPosInSurroundX][newPosInSurroundY];
+
+            //check if the move can be completed
+            if (newTile instanceof Ground && !((Ground) newTile).isSteppedOn()) {
+                StepableCell stepableCell = (Ground) newTile;
+                stepableCell.stepOn(object);
+                object.setPosition(stepableCell.getPositionX(),
+                        stepableCell.getPositionY());
+                return true;
             }
         }
         return false;

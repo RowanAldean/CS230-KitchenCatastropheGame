@@ -10,6 +10,7 @@ public final class Constants {
     // Data - Files
     public static final String FILE_RECORDS = "data/records.txt";
     public static final String FILE_PROFILES = "data/profiles.txt";
+    public static final String FILE_LEVEL = "level_%d.txt";
     public static final String FILE_LEVEL_TEMP_PATTERN = "%d-%d.txt"; // "LEVEL_ID-PROFILE_ID.txt"
 
     public static final int WINDOW_WIDTH = 800;
