@@ -18,7 +18,7 @@ The game is based on the classic game Burger Time; the player is a chef who is a
     2. Branch: `123-update-issue-instructions-in-readme` or `123-Update-Issue-instructions-in-readme`
 4. Create a Pull Request
 
-Branch will be automatically deleted after the code is merged.
+_Branch will be automatically deleted after the code is merged._
 
 ## How to do a Pull Request
 1. Click "Pull requests"
