@@ -6,11 +6,32 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import group44.annotations.Editable;
+import group44.entities.LevelObject;
 import group44.models.PropertyInfo;
 import group44.models.PropertyInfo.TypeInfo;
 
+/**
+ * A controller to change editable properties of {@link LevelObject}.
+ *
+ * @author Tomas Svejnoha
+ * @version 1.0
+ */
 public class PropertyController implements IPropertyController {
 
+    private static final String OBJECT_TYPE_SIMPLE_NAME = "java.lang.Object";
+    private static final String INT_TYPE_SIMPLE_NAME = "int";
+    private static final String BOOLEAN_TYPE_SIMPLE_NAME = "boolean";
+    private static final String STRING_TYPE_SIMPLE_NAME = "String";
+    private static final String MOVABLE_OBJECT_TYPE_SIMPLE_NAME = "MovableObject";
+    private static final String COLLECTABLE_ITEM_TYPE_SIMPLE_NAME = "CollectableItem";
+    private static final String TELEPORTER_TYPE_SIMPLE_NAME = "Teleporter";
+    private static final String KEY_TYPE_TYPE_SIMPLE_NAME = "KeyType";
+
+    private static final String REGEX_PATTERN_FIELD_NAME = "^([a-z]+)|([A-Z][a-z]*)";
+
+    /**
+     * Currently edited object.
+     */
     private Object activeObject;
 
     @Override
@@ -39,11 +60,11 @@ public class PropertyController implements IPropertyController {
     @Override
     public void setPropertyValue(PropertyInfo info)
             throws NoSuchFieldException, SecurityException {
-        String fieldName = convertToField(info.getKey());
+        String fieldName = convertNameToField(info.getKey());
 
         @SuppressWarnings("rawtypes")
         Class cls = this.activeObject.getClass();
-        Field field = getDeclaredFieldInHierarchy(fieldName, cls);
+        Field field = this.getDeclaredFieldInHierarchy(fieldName, cls);
         field.setAccessible(true);
         try {
             switch (info.getTypeInfo()) {
@@ -66,8 +87,22 @@ public class PropertyController implements IPropertyController {
         }
     }
 
+    /**
+     * Returns a {@link Field} in an object or in its super-classes.
+     *
+     * @param name
+     *            The name of the field.
+     * @param cls
+     *            The instance of the object in which to look for the
+     *            {@link Field}.
+     * @return The field.
+     * @throws NoSuchFieldException
+     *             when the {@link Field} is not found.
+     * @throws SecurityException
+     *             when the {@link Field} can't be accessed.
+     */
     @SuppressWarnings("rawtypes")
-    private static Field getDeclaredFieldInHierarchy(String name, Class cls)
+    private Field getDeclaredFieldInHierarchy(String name, Class cls)
             throws NoSuchFieldException, SecurityException {
         Field field = null;
         try {
@@ -78,14 +113,24 @@ public class PropertyController implements IPropertyController {
 
         if (field != null) {
             return field;
-        } else if (cls.getSuperclass() != null
-                && !cls.getSuperclass().getName().equals("java.lang.Object")) {
-            return getDeclaredFieldInHierarchy(name, cls.getSuperclass());
+        } else if (cls.getSuperclass() != null && !cls.getSuperclass().getName()
+                .equals(OBJECT_TYPE_SIMPLE_NAME)) {
+            return this.getDeclaredFieldInHierarchy(name, cls.getSuperclass());
         } else {
             throw new NoSuchFieldException(name);
         }
     }
 
+    /**
+     * Returns information about {@link Editable} fields in the hierarchy.
+     *
+     * @param infos
+     *            The {@link ArrayList} with already discovered {@link Field}s.
+     * @param cls
+     *            The class in which to for the fields.
+     * @throws Exception
+     *             when something blows up.
+     */
     @SuppressWarnings("rawtypes")
     private void getPropertyInfos(ArrayList<PropertyInfo> infos, Class cls)
             throws Exception {
@@ -96,25 +141,25 @@ public class PropertyController implements IPropertyController {
                 PropertyInfo.TypeInfo typeInfo = null;
 
                 switch (item.getType().getSimpleName()) {
-                case "int":
+                case INT_TYPE_SIMPLE_NAME:
                     typeInfo = TypeInfo.Int;
                     break;
-                case "String":
+                case STRING_TYPE_SIMPLE_NAME:
                     typeInfo = TypeInfo.String;
                     break;
-                case "MovableObject":
+                case MOVABLE_OBJECT_TYPE_SIMPLE_NAME:
                     typeInfo = TypeInfo.MovableObject;
                     break;
-                case "CollectableItem":
+                case COLLECTABLE_ITEM_TYPE_SIMPLE_NAME:
                     typeInfo = TypeInfo.CollectableItem;
                     break;
-                case "boolean":
+                case BOOLEAN_TYPE_SIMPLE_NAME:
                     typeInfo = TypeInfo.Boolean;
                     break;
-                case "Teleporter":
+                case TELEPORTER_TYPE_SIMPLE_NAME:
                     typeInfo = TypeInfo.Teleporter;
                     break;
-                case "KeyType":
+                case KEY_TYPE_TYPE_SIMPLE_NAME:
                     typeInfo = TypeInfo.KeyType;
                     break;
                 default:
@@ -124,26 +169,33 @@ public class PropertyController implements IPropertyController {
                 }
 
                 Object value = item.get(this.activeObject);
-                infos.add(new PropertyInfo(convertName(item.getName()), value,
-                        typeInfo));
+                infos.add(new PropertyInfo(convertfieldToName(item.getName()),
+                        value, typeInfo));
             }
         }
 
-        if (cls.getSuperclass() != null
-                && !cls.getSuperclass().getName().equals("java.lang.Object")) {
+        if (cls.getSuperclass() != null && !cls.getSuperclass().getName()
+                .equals(OBJECT_TYPE_SIMPLE_NAME)) {
             getPropertyInfos(infos, cls.getSuperclass());
         }
     }
 
-    private String convertName(String name) {
+    /**
+     * Converts field name to displayable name.
+     *
+     * @param name
+     *            the field name.
+     * @return the displayable name.
+     */
+    private String convertfieldToName(String name) {
         StringBuilder builder = new StringBuilder();
 
-        Pattern pattern = Pattern.compile("^([a-z]+)|([A-Z][a-z]*)");
+        Pattern pattern = Pattern.compile(REGEX_PATTERN_FIELD_NAME);
         Matcher matcher = pattern.matcher(name);
 
         while (matcher.find()) {
             builder.append(matcher.group());
-            builder.append(' ');
+            builder.append(" ");
         }
         if (builder.length() > 0) {
             builder.deleteCharAt(builder.length() - 1);
@@ -154,7 +206,14 @@ public class PropertyController implements IPropertyController {
         return builder.toString();
     }
 
-    private String convertToField(String name) {
+    /**
+     * Converts the displayable name back to field name.
+     *
+     * @param name
+     *            The displayable name.
+     * @return The field name.
+     */
+    private String convertNameToField(String name) {
         name = name.replace(" ", "");
 
         StringBuilder builder = new StringBuilder(name);
