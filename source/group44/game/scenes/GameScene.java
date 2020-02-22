@@ -7,8 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
+import group44.controllers.IPropertyController;
 import group44.controllers.Leaderboard;
 import group44.controllers.LevelManager;
+import group44.controllers.PropertyController;
+import group44.entities.collectableItems.TokenAccumulator;
 import group44.exceptions.CollisionException;
 import group44.exceptions.ParsingException;
 import group44.game.Level;
@@ -16,6 +19,7 @@ import group44.game.LevelFinishStatus;
 import group44.game.layoutControllers.MainGameWindowController;
 import group44.models.GTimer;
 import group44.models.Profile;
+import group44.models.PropertyInfo;
 import group44.models.Record;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -101,12 +105,27 @@ public class GameScene {
             e.printStackTrace();
         }
         primaryStage.setTitle("Kitchen Catastrophe");
+
+
+        IPropertyController propertyController = new PropertyController();
+        for (int x = 0; x < this.currentLevel.getGridWidth(); x++) {
+            for (int y = 0; y < this.currentLevel.getGridHeight(); y++) {
+                propertyController.setActiveObject(this.currentLevel.getGrid()[x][y]);
+
+                PropertyInfo[] propertyInfos = propertyController.getProperties();
+                for (PropertyInfo info : propertyInfos) {
+                    System.out.println(String.format("%s (%s): %s", info.getKey(), info.getTypeInfo(), info.getValue() == null ? "null" : info.getValue()));
+                }
+
+                System.out.println();
+            }
+        }
     }
 
     /**
      * Adding the listeners to the menu buttons. It also makes the player unable
      * to move while the menu is closed. Here the time of the player needs to be
-     * stopped aswell.
+     * stopped as well.
      */
     private void setUpMenu() {
         this.canMove = false;
