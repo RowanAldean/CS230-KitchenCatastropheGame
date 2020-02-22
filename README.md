@@ -10,6 +10,16 @@ The game is based on the classic game Burger Time; the player is a chef who is a
 6. Wait for a Pull Request review (please **do not merge the code if the review is not done**)
 7. After the review is done, your code will be merged, or you will be asked to work on the code a bit more
 
+## Working on Issues
+1. Assign yourself to the Issue if you are not assigned
+2. Change the Issue status from "To do" to "In progress"
+3. Create a new branch for the issue (example below)
+    1. Issue: `Update Issue instructions in readme #123`
+    2. Branch: `123-update-issue-instructions-in-readme` or `123-Update-Issue-instructions-in-readme`
+4. Create a Pull Request
+
+Branch will be automatically deleted after the code is merged.
+
 ## How to do a Pull Request
 1. Click "Pull requests"
 2. Choose "dev" as a branch where you want to pull your code
