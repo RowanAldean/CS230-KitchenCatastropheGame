@@ -2,6 +2,7 @@ package group44.controllers;
 
 import group44.annotations.Editable;
 import group44.models.PropertyInfo;
+import group44.models.PropertyInfo.TypeInfo;
 
 /**
  * An interface for {@link PropertyController}.
@@ -37,7 +38,9 @@ public interface IPropertyController {
      *             when property is not found.
      * @throws SecurityException
      *             when property can't be set.
+     * @throws ClassCastException
+     *             when type is inconsistent with {@link TypeInfo}.
      */
     void setPropertyValue(PropertyInfo info)
-            throws NoSuchFieldException, SecurityException;
+            throws NoSuchFieldException, SecurityException, ClassCastException;
 }

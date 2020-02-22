@@ -7,6 +7,10 @@ import java.util.regex.Pattern;
 
 import group44.annotations.Editable;
 import group44.entities.LevelObject;
+import group44.entities.cells.Teleporter;
+import group44.entities.collectableItems.CollectableItem;
+import group44.entities.collectableItems.Key.KeyType;
+import group44.entities.movableObjects.MovableObject;
 import group44.models.PropertyInfo;
 import group44.models.PropertyInfo.TypeInfo;
 
@@ -28,6 +32,8 @@ public class PropertyController implements IPropertyController {
     private static final String KEY_TYPE_TYPE_SIMPLE_NAME = "KeyType";
 
     private static final String REGEX_PATTERN_FIELD_NAME = "^([a-z]+)|([A-Z][a-z]*)";
+
+    private static final String CLASS_CAST_EXCEPTION_MESSAGE = "Inconsistent type for %s!";
 
     /**
      * Currently edited object.
@@ -59,7 +65,7 @@ public class PropertyController implements IPropertyController {
 
     @Override
     public void setPropertyValue(PropertyInfo info)
-            throws NoSuchFieldException, SecurityException {
+            throws NoSuchFieldException, SecurityException, ClassCastException {
         String fieldName = convertNameToField(info.getKey());
 
         @SuppressWarnings("rawtypes")
@@ -68,13 +74,48 @@ public class PropertyController implements IPropertyController {
         field.setAccessible(true);
         try {
             switch (info.getTypeInfo()) {
+            case String:
+                if (info.getValue().getClass() != String.class) {
+                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                }
+                field.set(this.activeObject, (String) info.getValue());
+                break;
             case Int:
+                if (info.getValue().getClass() != Integer.class) {
+                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                }
                 field.setInt(this.activeObject, (Integer) info.getValue());
                 break;
             case Boolean:
+                if (info.getValue().getClass() != Boolean.class) {
+                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                }
                 field.setBoolean(this.activeObject, (Boolean) info.getValue());
                 break;
-            // TODO: Resolve values from String
+            case CollectableItem:
+                if (info.getValue().getClass() != CollectableItem.class) {
+                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                }
+                field.set(this.activeObject, (CollectableItem) info.getValue());
+                break;
+            case KeyType:
+                if (info.getValue().getClass() != KeyType.class) {
+                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                }
+                field.set(this.activeObject, (KeyType) info.getValue());
+                break;
+            case MovableObject:
+                if (info.getValue().getClass() != MovableObject.class) {
+                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                }
+                field.set(this.activeObject, (MovableObject) info.getValue());
+                break;
+            case Teleporter:
+                if (info.getValue().getClass() != Teleporter.class) {
+                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                }
+                field.set(this.activeObject, (Teleporter) info.getValue());
+                break;
 
             default:
                 field.set(this.activeObject, info.getValue());
