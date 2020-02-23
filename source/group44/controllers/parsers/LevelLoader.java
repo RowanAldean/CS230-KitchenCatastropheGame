@@ -332,14 +332,7 @@ public class LevelLoader {
         String lockedImagePath = scanner.next();
         String unlockedImagePath = scanner.next();
         KeyType unlockingKey = getKeyType(scanner.nextInt());
-        String isOpenS = scanner.next();
-
-        boolean isOpen;
-        if (isOpenS == "true") {
-            isOpen = true;
-        } else {
-            isOpen = false;
-        }
+        Boolean isOpen = scanner.nextBoolean();
 
         MovableObject movableObject = null;
         if (scanner.hasNext()) {
@@ -386,14 +379,7 @@ public class LevelLoader {
         String lockedImagePath = scanner.next();
         String unlockedImagePath = scanner.next();
         int tokensNeeded = scanner.nextInt();
-        String isOpenS = scanner.next();
-
-        boolean isOpen;
-        if (isOpenS == "true") {
-            isOpen = true;
-        } else {
-            isOpen = false;
-        }
+        Boolean isOpen = scanner.nextBoolean();
 
         MovableObject movableObject = null;
         if (scanner.hasNext()) {

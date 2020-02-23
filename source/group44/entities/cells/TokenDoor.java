@@ -17,7 +17,6 @@ import group44.game.Level;
  * @version 1.0
  */
 public class TokenDoor extends Door {
-    private boolean isOpen;
     /** Number of Tokens needed to open the door. */
     private int tokensNeeded;
 
@@ -38,7 +37,9 @@ public class TokenDoor extends Door {
      * @param unlockedImagePath
      *            Path to the Image representing unlocked door in the game.
      * @param tokensNeeded
-     *            number of tokens needed to open the door.
+     *            Number of tokens needed to open the door.
+     * @param isOpen
+     *            Open/Closed state of the door.
      */
     public TokenDoor(Level level, String title, int positionX, int positionY,
             String lockedImagePath, String unlockedImagePath,
@@ -46,7 +47,6 @@ public class TokenDoor extends Door {
         super(level, title, positionX, positionY, lockedImagePath,
                 unlockedImagePath, isOpen);
 
-        this.isOpen = isOpen;
         this.tokensNeeded = tokensNeeded;
     }
 

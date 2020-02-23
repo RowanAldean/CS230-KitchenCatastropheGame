@@ -17,7 +17,6 @@ import group44.game.Level;
  * @version 1.0
  */
 public class KeyDoor extends Door {
-    private boolean isOpen;
     /** Unlocking key for the door. */
     private Key.KeyType unlockingKey;
 
@@ -39,6 +38,8 @@ public class KeyDoor extends Door {
      *            Path to the Image representing unlocked door in the game.
      * @param unlockingKey
      *            Key used to unlock the door.
+     * @param isOpen
+     *            Open/Closed state of the door.
      */
     public KeyDoor(Level level, String title, int positionX, int positionY,
             String lockedImagePath, String unlockedImagePath,
@@ -47,7 +48,6 @@ public class KeyDoor extends Door {
                 unlockedImagePath, isOpen);
 
         this.unlockingKey = unlockingKey;
-        this.isOpen = isOpen;
     }
 
     /**
