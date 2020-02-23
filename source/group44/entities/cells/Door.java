@@ -1,5 +1,6 @@
 package group44.entities.cells;
 
+import group44.annotations.Editable;
 import group44.entities.collectableItems.CollectableItem;
 import group44.entities.movableObjects.MovableObject;
 import group44.game.Level;
@@ -13,8 +14,10 @@ import javafx.scene.image.Image;
  */
 public abstract class Door extends StepableCell {
     /** Is open? */
+    @Editable
     private boolean isOpen;
     /** Path to the image representing unlocked door. */
+    @Editable
     private String unlockedImagePath;
     /** Image representing unlocked door. */
     private Image unlockedImage;

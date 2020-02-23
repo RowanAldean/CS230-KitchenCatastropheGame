@@ -1,6 +1,7 @@
 package group44.entities.cells;
 
 import group44.Constants;
+import group44.annotations.Editable;
 import group44.entities.collectableItems.CollectableItem;
 import group44.entities.collectableItems.Key;
 import group44.entities.collectableItems.Key.KeyType;
@@ -18,6 +19,7 @@ import group44.game.Level;
  */
 public class KeyDoor extends Door {
     /** Unlocking key for the door. */
+    @Editable
     private Key.KeyType unlockingKey;
 
     /**
