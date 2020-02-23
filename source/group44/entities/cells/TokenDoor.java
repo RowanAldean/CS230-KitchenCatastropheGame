@@ -37,13 +37,15 @@ public class TokenDoor extends Door {
      * @param unlockedImagePath
      *            Path to the Image representing unlocked door in the game.
      * @param tokensNeeded
-     *            number of tokens needed to open the door.
+     *            Number of tokens needed to open the door.
+     * @param isOpen
+     *            Open/Closed state of the door.
      */
     public TokenDoor(Level level, String title, int positionX, int positionY,
             String lockedImagePath, String unlockedImagePath,
-            int tokensNeeded) {
+            int tokensNeeded, boolean isOpen) {
         super(level, title, positionX, positionY, lockedImagePath,
-                unlockedImagePath);
+                unlockedImagePath, isOpen);
 
         this.tokensNeeded = tokensNeeded;
     }
@@ -125,6 +127,8 @@ public class TokenDoor extends Door {
         builder.append(this.getUnlockedImagePath());
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.tokensNeeded);
+        builder.append(Constants.LEVEL_OBJECT_DELIMITER);
+        builder.append(this.isOpen());
 
         if (this.getMovableObject() != null) {
             builder.append(",");

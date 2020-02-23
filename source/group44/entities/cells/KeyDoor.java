@@ -38,12 +38,14 @@ public class KeyDoor extends Door {
      *            Path to the Image representing unlocked door in the game.
      * @param unlockingKey
      *            Key used to unlock the door.
+     * @param isOpen
+     *            Open/Closed state of the door.
      */
     public KeyDoor(Level level, String title, int positionX, int positionY,
             String lockedImagePath, String unlockedImagePath,
-            Key.KeyType unlockingKey) {
+            Key.KeyType unlockingKey, boolean isOpen) {
         super(level, title, positionX, positionY, lockedImagePath,
-                unlockedImagePath);
+                unlockedImagePath, isOpen);
 
         this.unlockingKey = unlockingKey;
     }
@@ -117,6 +119,8 @@ public class KeyDoor extends Door {
         builder.append(this.getUnlockedImagePath());
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getUnlockingKeyType().getKeyCode());
+        builder.append(Constants.LEVEL_OBJECT_DELIMITER);
+        builder.append(this.isOpen());
 
         if (this.getMovableObject() != null) {
             builder.append(",");

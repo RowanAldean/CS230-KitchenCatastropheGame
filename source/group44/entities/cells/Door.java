@@ -36,11 +36,12 @@ public abstract class Door extends StepableCell {
      *            Path to the Image representing unlocked door in the game.
      */
     public Door(Level level, String title, int positionX, int positionY,
-            String lockedImagePath, String unlockedImagePath) {
+            String lockedImagePath, String unlockedImagePath, boolean isOpen) {
         super(level, title, positionX, positionY, lockedImagePath);
 
         this.unlockedImagePath = unlockedImagePath;
         this.unlockedImage = new Image(unlockedImagePath, true);
+        this.isOpen = isOpen;
     }
 
     /**

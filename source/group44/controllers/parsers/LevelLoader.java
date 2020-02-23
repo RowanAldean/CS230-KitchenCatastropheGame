@@ -332,6 +332,7 @@ public class LevelLoader {
         String lockedImagePath = scanner.next();
         String unlockedImagePath = scanner.next();
         KeyType unlockingKey = getKeyType(scanner.nextInt());
+        Boolean isOpen = scanner.nextBoolean();
 
         MovableObject movableObject = null;
         if (scanner.hasNext()) {
@@ -351,7 +352,7 @@ public class LevelLoader {
         }
 
         StepableCell stepableCell = new KeyDoor(level, title, positionX,
-                positionY, lockedImagePath, unlockedImagePath, unlockingKey);
+                positionY, lockedImagePath, unlockedImagePath, unlockingKey, isOpen);
 
         if (movableObject != null) {
             stepableCell.stepOn(movableObject);
@@ -378,6 +379,7 @@ public class LevelLoader {
         String lockedImagePath = scanner.next();
         String unlockedImagePath = scanner.next();
         int tokensNeeded = scanner.nextInt();
+        Boolean isOpen = scanner.nextBoolean();
 
         MovableObject movableObject = null;
         if (scanner.hasNext()) {
@@ -397,7 +399,7 @@ public class LevelLoader {
         }
 
         StepableCell stepableCell = new TokenDoor(level, title, positionX,
-                positionY, lockedImagePath, unlockedImagePath, tokensNeeded);
+                positionY, lockedImagePath, unlockedImagePath, tokensNeeded, isOpen);
 
         if (movableObject != null) {
             stepableCell.stepOn(movableObject);
