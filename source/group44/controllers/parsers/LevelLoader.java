@@ -126,32 +126,32 @@ public class LevelLoader {
         Cell cell = null;
 
         switch (type) {
-        case Constants.TYPE_WALL:
-            cell = parseWallEntry(level, scanner);
-            break;
-        case Constants.TYPE_GROUND:
-            cell = parseGroundEntry(level, scanner);
-            break;
-        case Constants.TYPE_WATER:
-            cell = parseWaterEntry(level, scanner);
-            break;
-        case Constants.TYPE_FIRE:
-            cell = parseFireEntry(level, scanner);
-            break;
-        case Constants.TYPE_GOAL:
-            cell = parseGoalEntry(level, scanner);
-            break;
-        case Constants.TYPE_KEY_DOOR:
-            cell = parseKeyDoorEntry(level, scanner);
-            break;
-        case Constants.TYPE_TOKEN_DOOR:
-            cell = parseTokenDoorEntry(level, scanner);
-            break;
-        case Constants.TYPE_TELEPORTER:
-            cell = parseTeleporterEntry(level, scanner);
-            break;
-        case Constants.TYPE_TELEPORTER_LINK:
-            parseTeleporterLink(level, scanner);
+            case Constants.TYPE_WALL:
+                cell = parseWallEntry(level, scanner);
+                break;
+            case Constants.TYPE_GROUND:
+                cell = parseGroundEntry(level, scanner);
+                break;
+            case Constants.TYPE_WATER:
+                cell = parseWaterEntry(level, scanner);
+                break;
+            case Constants.TYPE_FIRE:
+                cell = parseFireEntry(level, scanner);
+                break;
+            case Constants.TYPE_GOAL:
+                cell = parseGoalEntry(level, scanner);
+                break;
+            case Constants.TYPE_KEY_DOOR:
+                cell = parseKeyDoorEntry(level, scanner);
+                break;
+            case Constants.TYPE_TOKEN_DOOR:
+                cell = parseTokenDoorEntry(level, scanner);
+                break;
+            case Constants.TYPE_TELEPORTER:
+                cell = parseTeleporterEntry(level, scanner);
+                break;
+            case Constants.TYPE_TELEPORTER_LINK:
+                parseTeleporterLink(level, scanner);
         }
 
         if (cell != null) {
@@ -174,9 +174,8 @@ public class LevelLoader {
     private static Cell parseWallEntry(Level level, Scanner scanner) {
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
-        String imagePath = scanner.next();
 
-        return new Wall(level, positionX, positionY, imagePath);
+        return new Wall(level, positionX, positionY);
     }
 
     /**
@@ -192,7 +191,6 @@ public class LevelLoader {
     private static StepableCell parseGroundEntry(Level level, Scanner scanner) {
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
-        String imagePath = scanner.next();
         MovableObject movableObject = null;
         CollectableItem collectableItem = null;
 
@@ -221,13 +219,11 @@ public class LevelLoader {
         }
 
         if (movableObject != null) {
-            return new Ground(level, positionX, positionY, imagePath,
-                    movableObject);
+            return new Ground(level, positionX, positionY, movableObject);
         } else if (collectableItem != null) {
-            return new Ground(level, positionX, positionY, imagePath,
-                    collectableItem);
+            return new Ground(level, positionX, positionY, collectableItem);
         } else {
-            return new Ground(level, positionX, positionY, imagePath);
+            return new Ground(level, positionX, positionY);
         }
     }
 
@@ -244,7 +240,6 @@ public class LevelLoader {
     private static StepableCell parseWaterEntry(Level level, Scanner scanner) {
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
-        String imagePath = scanner.next();
 
         MovableObject movableObject = null;
         if (scanner.hasNext()) {
@@ -263,8 +258,7 @@ public class LevelLoader {
             }
         }
 
-        StepableCell stepableCell = new Water(level, positionX, positionY,
-                imagePath);
+        StepableCell stepableCell = new Water(level, positionX, positionY);
 
         if (movableObject != null) {
             stepableCell.stepOn(movableObject);
@@ -285,7 +279,6 @@ public class LevelLoader {
     private static StepableCell parseFireEntry(Level level, Scanner scanner) {
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
-        String imagePath = scanner.next();
 
         MovableObject movableObject = null;
         if (scanner.hasNext()) {
@@ -304,8 +297,7 @@ public class LevelLoader {
             }
         }
 
-        StepableCell stepableCell = new Fire(level, positionX, positionY,
-                imagePath);
+        StepableCell stepableCell = new Fire(level, positionX, positionY);
 
         if (movableObject != null) {
             stepableCell.stepOn(movableObject);
@@ -325,13 +317,12 @@ public class LevelLoader {
      *         {@link StepableCell}.
      */
     private static StepableCell parseKeyDoorEntry(Level level,
-            Scanner scanner) {
+                                                  Scanner scanner) {
         String title = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
-        String lockedImagePath = scanner.next();
-        String unlockedImagePath = scanner.next();
         KeyType unlockingKey = getKeyType(scanner.nextInt());
+        Boolean isOpen = scanner.nextBoolean();
 
         MovableObject movableObject = null;
         if (scanner.hasNext()) {
@@ -351,7 +342,7 @@ public class LevelLoader {
         }
 
         StepableCell stepableCell = new KeyDoor(level, title, positionX,
-                positionY, lockedImagePath, unlockedImagePath, unlockingKey);
+                positionY, unlockingKey, isOpen);
 
         if (movableObject != null) {
             stepableCell.stepOn(movableObject);
@@ -371,13 +362,12 @@ public class LevelLoader {
      *         {@link StepableCell}.
      */
     private static StepableCell parseTokenDoorEntry(Level level,
-            Scanner scanner) {
+                                                    Scanner scanner) {
         String title = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
-        String lockedImagePath = scanner.next();
-        String unlockedImagePath = scanner.next();
         int tokensNeeded = scanner.nextInt();
+        Boolean isOpen = scanner.nextBoolean();
 
         MovableObject movableObject = null;
         if (scanner.hasNext()) {
@@ -397,7 +387,7 @@ public class LevelLoader {
         }
 
         StepableCell stepableCell = new TokenDoor(level, title, positionX,
-                positionY, lockedImagePath, unlockedImagePath, tokensNeeded);
+                positionY, tokensNeeded, isOpen);
 
         if (movableObject != null) {
             stepableCell.stepOn(movableObject);
@@ -418,7 +408,6 @@ public class LevelLoader {
     private static StepableCell parseGoalEntry(Level level, Scanner scanner) {
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
-        String imagePath = scanner.next();
 
         MovableObject movableObject = null;
         if (scanner.hasNext()) {
@@ -437,8 +426,7 @@ public class LevelLoader {
             }
         }
 
-        StepableCell stepableCell = new Goal(level, positionX, positionY,
-                imagePath);
+        StepableCell stepableCell = new Goal(level, positionX, positionY);
 
         if (movableObject != null) {
             stepableCell.stepOn(movableObject);
@@ -458,11 +446,10 @@ public class LevelLoader {
      *         {@link StepableCell}.
      */
     private static StepableCell parseTeleporterEntry(Level level,
-            Scanner scanner) {
+                                                     Scanner scanner) {
         String title = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
-        String imagePath = scanner.next();
 
         MovableObject movableObject = null;
         if (scanner.hasNext()) {
@@ -482,7 +469,7 @@ public class LevelLoader {
         }
 
         StepableCell stepableCell = new Teleporter(level, title, positionX,
-                positionY, imagePath);
+                positionY);
 
         if (movableObject != null) {
             stepableCell.stepOn(movableObject);
@@ -501,16 +488,15 @@ public class LevelLoader {
      * @return the serialised {@link Player} as a type of {@link MovableObject}.
      */
     private static MovableObject parsePlayerEntry(Level level,
-            Scanner scanner) {
+                                                  Scanner scanner) {
         String name = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
         int velocityX = scanner.nextInt();
         int velocityY = scanner.nextInt();
-        String imagePath = scanner.next();
 
         Player player = new Player(level, name, positionX, positionY, velocityX,
-                velocityY, imagePath);
+                velocityY);
 
         while (scanner.hasNext()) {
             String type = scanner.next();
@@ -541,14 +527,12 @@ public class LevelLoader {
      *         {@link MovableObject}.
      */
     private static MovableObject parseDumbTargetingEnemyEntry(Level level,
-            Scanner scanner) {
+                                                              Scanner scanner) {
         String name = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
-        String imagePath = scanner.next();
 
-        return new DumbTargetingEnemy(level, name, positionX, positionY,
-                imagePath);
+        return new DumbTargetingEnemy(level, name, positionX, positionY);
     }
 
     /**
@@ -563,16 +547,15 @@ public class LevelLoader {
      *         {@link MovableObject}.
      */
     private static MovableObject parseStraightWalkingEnemyEntry(Level level,
-            Scanner scanner) {
+                                                                Scanner scanner) {
         String name = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
         int velocityX = scanner.nextInt();
         int velocityY = scanner.nextInt();
-        String imagePath = scanner.next();
 
         return new StraightWalkingEnemy(level, name, positionX, positionY,
-                velocityX, velocityY, imagePath);
+                velocityX, velocityY);
     }
 
     /**
@@ -587,14 +570,12 @@ public class LevelLoader {
      *         {@link MovableObject}.
      */
     private static MovableObject parseWallFollowingEnemyEntry(Level level,
-            Scanner scanner) {
+                                                              Scanner scanner) {
         String name = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
-        String imagePath = scanner.next();
 
-        return new WallFollowingEnemy(level, name, positionX, positionY,
-                imagePath);
+        return new WallFollowingEnemy(level, name, positionX, positionY);
     }
 
     //
@@ -610,14 +591,12 @@ public class LevelLoader {
      *         {@link MovableObject}.
      */
     private static MovableObject parseSmartTargetingEnemyEntry(Level level,
-            Scanner scanner) {
+                                                               Scanner scanner) {
         String name = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
-        String imagePath = scanner.next();
 
-        return new SmartTargetingEnemy(level, name, positionX, positionY,
-                imagePath);
+        return new SmartTargetingEnemy(level, name, positionX, positionY);
     }
 
     /**
@@ -632,10 +611,9 @@ public class LevelLoader {
      *         {@link CollectableItem}.
      */
     private static CollectableItem parseFireBootsEntry(Level level,
-            Scanner scanner) {
-        String imagePath = scanner.next();
+                                                       Scanner scanner) {
 
-        return new FireBoots(level, imagePath);
+        return new FireBoots(level);
     }
 
     /**
@@ -650,10 +628,9 @@ public class LevelLoader {
      *         {@link CollectableItem}.
      */
     private static CollectableItem parseFlipperEntry(Level level,
-            Scanner scanner) {
-        String imagePath = scanner.next();
+                                                     Scanner scanner) {
 
-        return new Flippers(level, imagePath);
+        return new Flippers(level);
     }
 
     /**
@@ -684,10 +661,9 @@ public class LevelLoader {
      * @return the serialised {@link Token} as a type {@link CollectableItem}.
      */
     private static CollectableItem parseTokenEntry(Level level,
-            Scanner scanner) {
-        String imagePath = scanner.next();
+                                                   Scanner scanner) {
 
-        return new Token(level, imagePath);
+        return new Token(level);
     }
 
     /**
@@ -699,16 +675,16 @@ public class LevelLoader {
      */
     private static KeyType getKeyType(int keyTypeID) {
         switch (keyTypeID) {
-        case 1:
-            return KeyType.RED;
-        case 2:
-            return KeyType.BLUE;
-        case 3:
-            return KeyType.GREEN;
-        case 4:
-            return KeyType.GOLD;
-        default:
-            return KeyType.RED;
+            case 1:
+                return KeyType.RED;
+            case 2:
+                return KeyType.BLUE;
+            case 3:
+                return KeyType.GREEN;
+            case 4:
+                return KeyType.GOLD;
+            default:
+                return KeyType.RED;
         }
     }
 
