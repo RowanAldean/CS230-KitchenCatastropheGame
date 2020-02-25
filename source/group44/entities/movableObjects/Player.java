@@ -64,6 +64,32 @@ public class Player extends MovableObject {
     }
 
     /**
+     * Creates a new instance of {@link Player} at specific position in a
+     * specific {@link Level}.
+     *
+     * @param level
+     *            The {@link Level} where the {@link Player} is located.
+     * @param name
+     *            The name of the {@link Player}.
+     * @param positionX
+     *            Position X of the {@link Player}.
+     * @param positionY
+     *            Position Y of the {@link Player}.
+     * @param velocityX
+     *            Velocity X of the {@link Player}.
+     * @param velocityY
+     *            Velocity Y of the {@link Player}.
+     */
+    public Player(Level level, String name, int positionX, int positionY,
+                  int velocityX, int velocityY) {
+        super(level, name, positionX, positionY, velocityX, velocityY,
+                Constants.PLAYER_PATH);
+
+        this.inventory = new ArrayList<>();
+        this.inventory.add(new TokenAccumulator());
+    }
+
+    /**
      * Moves the {@link Player} in the velocity direction.
      */
     @Override

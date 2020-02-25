@@ -24,6 +24,16 @@ public class Token extends CollectableItem {
     }
 
     /**
+     * Creates a new instance of {@link Token} with position, and image.
+     *
+     * @param level
+     *            The {@link Level} where the {@link Ground} is located.
+     */
+    public Token(Level level) {
+        super(level, Constants.TITLE_TOKEN, Constants.TOKEN_PATH);
+    }
+
+    /**
      * Returns a string representation of the {@link Token}.
      *
      * @return a string representation of the token.

@@ -23,6 +23,16 @@ public class FireBoots extends CollectableItem {
     }
 
     /**
+     * Creates a new instance of {@link FireBoots} with position, and image.
+     *
+     * @param level
+     *            The {@link Level} where the {@link FireBoots} are located.
+     */
+    public FireBoots(Level level) {
+        super(level, Constants.TITLE_FIREBOOTS, Constants.FIRE_BOOTS_PATH);
+    }
+
+    /**
      * Returns a String representation of the {@link FireBoots}.
      *
      * @return the string representation of the {@link FireBoots}.

@@ -1,5 +1,6 @@
 package group44.entities.movableObjects;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import group44.Constants;
 import group44.entities.cells.Ground;
 import group44.entities.cells.StepableCell;
@@ -30,14 +31,11 @@ public class StraightWalkingEnemy extends Enemy {
      *            Velocity X of the {@link StraightWalkingEnemy}.
      * @param velocityY
      *            Velocity Y of the {@link StraightWalkingEnemy}.
-     * @param imagePath
-     *            Path to the Image representing the
-     *            {@link StraightWalkingEnemy} on the screen.
      */
     public StraightWalkingEnemy(Level level, String name, int positionX,
-            int positionY, int velocityX, int velocityY, String imagePath) {
+                                int positionY, int velocityX, int velocityY) {
         super(level, name, positionX, positionY, velocityX, velocityY,
-                imagePath);
+                Constants.STRAIGHT_WALKING_ENEMY_PATH);
     }
 
     /**
@@ -88,8 +86,6 @@ public class StraightWalkingEnemy extends Enemy {
         builder.append(this.getVelocityX());
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getVelocityY());
-        builder.append(Constants.LEVEL_OBJECT_DELIMITER);
-        builder.append(this.getImagePath());
 
         return builder.toString();
     }
