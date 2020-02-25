@@ -23,6 +23,16 @@ public class Flippers extends CollectableItem {
     }
 
     /**
+     * Creates a new instance of {@link Flippers} with position, and image.
+     *
+     * @param level
+     *            The {@link Level} where the object is located.
+     */
+    public Flippers(Level level) {
+        super(level, Constants.TITLE_FLIPPERS, Constants.FLIPPERS_PATH);
+    }
+
+    /**
      * Returns a String representation of the {@link Flippers}.
      *
      * @return the string representation of the {@link Flippers}.
