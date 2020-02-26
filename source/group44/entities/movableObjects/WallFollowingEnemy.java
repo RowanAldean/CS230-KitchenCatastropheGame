@@ -1,6 +1,5 @@
 package group44.entities.movableObjects;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import group44.Constants;
 import group44.entities.LevelObject;
 import group44.entities.cells.Ground;
