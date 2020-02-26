@@ -42,7 +42,7 @@ public final class Constants {
     public static final String STRAIGHT_WALKING_ENEMY_PATH = FILE_SOURCE + "resources/Enemies/Carrot/MrCarrotFront.png";
     public static final String WALL_FOLLOWING_ENEMY_PATH = FILE_SOURCE + "resources/Enemies/Hotdog/MrHotDogFront.png";
 
-    public static final int WINDOW_WIDTH = 600;
+    public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;
 
     public static final int CANVAS_WIDTH = 725;
