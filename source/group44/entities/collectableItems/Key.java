@@ -1,6 +1,7 @@
 package group44.entities.collectableItems;
 
 import group44.Constants;
+import group44.annotations.Editable;
 import group44.game.Level;
 
 /**
@@ -11,6 +12,7 @@ import group44.game.Level;
  */
 public class Key extends CollectableItem {
     /** Type of the key needed to open the door. */
+    @Editable
     private KeyType keyType;
 
     /**

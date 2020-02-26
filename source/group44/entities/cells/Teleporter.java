@@ -1,6 +1,7 @@
 package group44.entities.cells;
 
 import group44.Constants;
+import group44.annotations.Editable;
 import group44.entities.LevelObject;
 import group44.entities.movableObjects.MovableObject;
 import group44.game.Level;
@@ -14,6 +15,7 @@ import group44.game.Level;
  */
 public class Teleporter extends StepableCell {
     /** Linked teleporter. */
+    @Editable
     private Teleporter linkedTeleporter;
 
     /**

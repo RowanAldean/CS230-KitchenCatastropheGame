@@ -1,6 +1,7 @@
 package group44.entities.cells;
 
 import group44.Constants;
+import group44.annotations.Editable;
 import group44.entities.collectableItems.CollectableItem;
 import group44.entities.collectableItems.Key;
 import group44.entities.collectableItems.TokenAccumulator;
@@ -18,6 +19,7 @@ import group44.game.Level;
  */
 public class TokenDoor extends Door {
     /** Number of Tokens needed to open the door. */
+    @Editable
     private int tokensNeeded;
 
     /**
@@ -37,7 +39,9 @@ public class TokenDoor extends Door {
      * @param unlockedImagePath
      *            Path to the Image representing unlocked door in the game.
      * @param tokensNeeded
-     *            number of tokens needed to open the door.
+     *            Number of tokens needed to open the door.
+     * @param isOpen
+     *            Open/Closed state of the door.
      */
     public TokenDoor(Level level, String title, int positionX, int positionY,
             String lockedImagePath, String unlockedImagePath,
@@ -71,6 +75,14 @@ public class TokenDoor extends Door {
                 Constants.OPEN_TOKEN_DOOR_PATH, isOpen);
 
         this.tokensNeeded = tokensNeeded;
+    }
+
+    /**
+     * Getter method for returning number of tokens needed for this door.
+     * @return Number of tokens needed.
+     */
+    public int getTokensNeeded() {
+        return tokensNeeded;
     }
 
     /**
@@ -142,6 +154,8 @@ public class TokenDoor extends Door {
         builder.append(this.getUnlockedImagePath());
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.tokensNeeded);
+        builder.append(Constants.LEVEL_OBJECT_DELIMITER);
+        builder.append(this.isOpen());
 
         if (this.getMovableObject() != null) {
             builder.append(",");

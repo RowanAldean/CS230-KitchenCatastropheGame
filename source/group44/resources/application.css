@@ -68,6 +68,18 @@
     -fx-pref-width: 200;
 }
 
+#onScreenMessage{
+    -fx-font-family: "Arial";
+    -fx-font-size: 13pt;
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+
+#tokensTitle{
+    -fx-font-weight: bold;
+    -fx-font-family: "Helvetica";
+}
+
 #timeTitle{
     -fx-font-weight: bold;
     -fx-font-family: "Helvetica";

@@ -1,5 +1,6 @@
 package group44.entities.movableObjects;
 
+import group44.annotations.Editable;
 import group44.entities.LevelObject;
 import group44.entities.cells.Cell;
 import group44.entities.cells.StepableCell;
@@ -16,8 +17,10 @@ import group44.game.LevelFinishStatus;
  */
 public abstract class MovableObject extends LevelObject {
     /** Velocity X of the object. */
+    @Editable
     private int velocityX;
     /** Velocity Y of the object. */
+    @Editable
     private int velocityY;
 
     /**
@@ -118,7 +121,7 @@ public abstract class MovableObject extends LevelObject {
      *
      * @param object
      *            the {@link MovableObject}.
-     * 
+     *
      * @return if found, the {@link StepableCell} where the object is located,
      *         otherwise null.
      */

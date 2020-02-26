@@ -7,8 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
+import group44.controllers.IPropertyController;
 import group44.controllers.Leaderboard;
 import group44.controllers.LevelManager;
+import group44.controllers.PropertyController;
+import group44.entities.collectableItems.TokenAccumulator;
 import group44.exceptions.CollisionException;
 import group44.exceptions.ParsingException;
 import group44.game.Level;
@@ -16,6 +19,7 @@ import group44.game.LevelFinishStatus;
 import group44.game.layoutControllers.MainGameWindowController;
 import group44.models.GTimer;
 import group44.models.Profile;
+import group44.models.PropertyInfo;
 import group44.models.Record;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -23,12 +27,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 /**
@@ -45,8 +49,8 @@ public class GameScene {
     // (in this setup) as we need to access it in different methods.
     private Canvas canvas;
 
-    // The controller associated with the specific fxml file.
-    private MainGameWindowController myController;
+    // The controller associated with the specific fxml file and specific GameScene.
+    private static MainGameWindowController myController;
 
     private boolean canMove = true;
 
@@ -101,12 +105,27 @@ public class GameScene {
             e.printStackTrace();
         }
         primaryStage.setTitle("Kitchen Catastrophe");
+
+
+        IPropertyController propertyController = new PropertyController();
+        for (int x = 0; x < this.currentLevel.getGridWidth(); x++) {
+            for (int y = 0; y < this.currentLevel.getGridHeight(); y++) {
+                propertyController.setActiveObject(this.currentLevel.getGrid()[x][y]);
+
+                PropertyInfo[] propertyInfos = propertyController.getProperties();
+                for (PropertyInfo info : propertyInfos) {
+                    System.out.println(String.format("%s (%s): %s", info.getKey(), info.getTypeInfo(), info.getValue() == null ? "null" : info.getValue()));
+                }
+
+                System.out.println();
+            }
+        }
     }
 
     /**
      * Adding the listeners to the menu buttons. It also makes the player unable
      * to move while the menu is closed. Here the time of the player needs to be
-     * stopped aswell.
+     * stopped as well.
      */
     private void setUpMenu() {
         this.canMove = false;
@@ -201,6 +220,9 @@ public class GameScene {
         a1.setWidth(500);
 
         if (status == LevelFinishStatus.GoalReached) {
+            myController.getOnScreenMessage().setTextFill(Paint.valueOf("green"));
+            myController.getOnScreenMessage().textProperty().setValue("You've completed the level!" + "\n" +"WELL DONE!!");
+            myController.getOnScreenMessage().setVisible(true);
             a1.setTitle("Congrats on finishing the level!");
             Leaderboard.addOrUpdate(currentProfile.getId(),
                     currentLevel.getId(), timer.getCurrentTimeTaken());
@@ -226,6 +248,10 @@ public class GameScene {
                                 currentProfile.getId(), currentLevel.getId()));
             } // TODO: Here add the times with append
         } else {
+            //Display death message
+            myController.getOnScreenMessage().textProperty().setValue("YOU COULDN'T HANDLE THIS KITCHEN! Rest In Peace");
+            myController.getOnScreenMessage().setVisible(true);
+            //Display post-death menu
             a1.setTitle("And then I took an arrow to the knee!");
             // TODO: Here add the times with append
             a1.setContentText(
@@ -253,6 +279,29 @@ public class GameScene {
                 }
             }
         }
+    }
+
+    /**
+     * This method gets the onScreenMessage label which is displayed in the UI.
+     * @return the onScreenMessage JavaFX label
+     */
+    public static Label getOnScreenMessage() {
+        return myController.getOnScreenMessage();
+    }
+
+    /**
+     * Updates the on screen message label and its corresponding picture.
+     * @param message The label text
+     * @param imagePath An imagepath to have an image below the label text
+     */
+    public static void setOnScreenMessage(String message, String imagePath){
+        ImageView iconImage = new ImageView(imagePath);
+        iconImage.setFitWidth(50);
+        iconImage.setFitHeight(50);
+        iconImage.setPreserveRatio(true);
+        myController.getOnScreenMessage().setGraphic(iconImage);
+        myController.getOnScreenMessage().setContentDisplay(ContentDisplay.BOTTOM);
+        myController.getOnScreenMessage().textProperty().setValue(message);
     }
 
     /**
@@ -288,6 +337,15 @@ public class GameScene {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         currentLevel.draw(gc);
+    }
+
+    /**
+     * This method updates the token amount shown in the GameScene
+     * @param tokenAmount the label holding the current token amount
+     */
+    private void showTokens(Label tokenAmount) {
+        int tokens = currentLevel.getPlayer().getTokenAccumulator().getTokensCount();
+        tokenAmount.setText(String.valueOf(tokens));
     }
 
     /**
@@ -327,7 +385,6 @@ public class GameScene {
                         .setVisible(!myController.getMenuBox().isVisible());
                 canMove = true;
             }
-
             break;
         }
 
@@ -338,6 +395,8 @@ public class GameScene {
         case RIGHT:
             if (canMove) {
                 this.currentLevel.keyDown(event);
+                //TODO: Consider alternative means of checking token count (this checks on every step) - try only on collection.
+                this.showTokens(myController.getTokenAmount());
             }
             break;
 
@@ -345,7 +404,6 @@ public class GameScene {
             // Do nothing
             break;
         }
-
         // Redraw game as the player may have moved.
         drawGame();
         // Consume the event. This means we mark it as dealt
