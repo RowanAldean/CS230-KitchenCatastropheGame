@@ -41,6 +41,21 @@ public class Ground extends StepableCell {
      * {@link Level}.
      *
      * @param level
+     *            The {@link Level} where the {@link Ground} is located.
+     * @param positionX
+     *            Position X of the {@link Ground} in the {@link Level}.
+     * @param positionY
+     *            Position X of the {@link Ground} in the {@link Level}.
+     */
+    public Ground(Level level, int positionX, int positionY) {
+        super(level, Constants.TITLE_GROUND, positionX, positionY, Constants.GROUND_PATH);
+    }
+
+    /**
+     * Creates a new instance of {@link Ground} at a specific location in the
+     * {@link Level}.
+     *
+     * @param level
      *            The {@link Level} where the {@link Goal} is located.
      * @param positionX
      *            Position X of the {@link Ground} in the {@link Level}.
@@ -54,6 +69,25 @@ public class Ground extends StepableCell {
     public Ground(Level level, int positionX, int positionY, String imagePath,
             CollectableItem collectableItem) {
         this(level, positionX, positionY, imagePath);
+        this.collectableItem = collectableItem;
+    }
+
+    /**
+     * Creates a new instance of {@link Ground} at a specific location in the
+     * {@link Level}.
+     *
+     * @param level
+     *            The {@link Level} where the {@link Goal} is located.
+     * @param positionX
+     *            Position X of the {@link Ground} in the {@link Level}.
+     * @param positionY
+     *            Position Y of the {@link Ground} in the {@link Level}.
+     * @param collectableItem
+     *            {@link CollectableItem} placed on the {@link Ground}.
+     */
+    public Ground(Level level, int positionX, int positionY,
+                  CollectableItem collectableItem) {
+        this(level, positionX, positionY, Constants.GROUND_PATH);
         this.collectableItem = collectableItem;
     }
 
@@ -74,6 +108,24 @@ public class Ground extends StepableCell {
     public Ground(Level level, int positionX, int positionY, String imagePath,
             MovableObject steppedItem) {
         super(level, Constants.TITLE_GROUND, positionX, positionY, imagePath,
+                steppedItem);
+    }
+
+    /**
+     * Creates a new {@link Ground}.
+     *
+     * @param level
+     *            The {@link Level} where the object is located.
+     * @param positionX
+     *            Position X in the game.
+     * @param positionY
+     *            Position Y in the game.
+     * @param steppedItem
+     *            The {@link MovableObject} on the cell.
+     */
+    public Ground(Level level, int positionX, int positionY,
+                  MovableObject steppedItem) {
+        super(level, Constants.TITLE_GROUND, positionX, positionY, Constants.GROUND_PATH,
                 steppedItem);
     }
 

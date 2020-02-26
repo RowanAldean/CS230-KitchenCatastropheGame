@@ -48,7 +48,33 @@ public class KeyDoor extends Door {
             Key.KeyType unlockingKey, boolean isOpen) {
         super(level, title, positionX, positionY, lockedImagePath,
                 unlockedImagePath, isOpen);
+        this.unlockingKey = unlockingKey;
+    }
 
+    /**
+     * This creates a new instance of {@link KeyDoor} and associates it with an
+     * unlocking {@link KeyType}.
+     *
+     * @param level
+     *            The {@link Level} where the {@link KeyDoor} is located.
+     * @param title
+     *            Title of the {@link Door}.
+     * @param positionX
+     *            Position X in the game.
+     * @param positionY
+     *            Position Y in the game.
+     * @param unlockingKey
+     *            Key used to unlock the door.
+     * @param isOpen
+     *            Open/Closed state of the door.
+     */
+    public KeyDoor(Level level, String title, int positionX, int positionY,
+                   Key.KeyType unlockingKey, boolean isOpen) {
+
+        super(level, title, positionX, positionY,
+                String.format(Constants.CLOSED_KEY_DOOR_PATH, unlockingKey.getFormattedName()),
+                String.format(Constants.OPEN_KEY_DOOR_PATH, unlockingKey.getFormattedName()),
+                isOpen);
         this.unlockingKey = unlockingKey;
     }
 

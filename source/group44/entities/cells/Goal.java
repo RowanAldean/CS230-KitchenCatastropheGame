@@ -30,6 +30,20 @@ public class Goal extends StepableCell {
     }
 
     /**
+     * Creates a new instance of {@link Goal}.
+     *
+     * @param level
+     *            The {@link Level} where the {@link Goal} is located.
+     * @param positionX
+     *            Position X of the object in the {@link group44.game.Level}.
+     * @param positionY
+     *            Position Y of the object in the {@link group44.game.Level}.
+     */
+    public Goal(Level level, int positionX, int positionY) {
+        super(level, Constants.TITLE_GOAL, positionX, positionY, Constants.GOAL_PATH);
+    }
+
+    /**
      * Interacts with {@link MovableObject} that stepped on the {@link Goal}.
      *
      * @param object

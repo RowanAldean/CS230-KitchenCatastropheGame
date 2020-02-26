@@ -57,13 +57,13 @@ public class Key extends CollectableItem {
      */
     public enum KeyType {
         /** Red key. */
-        RED(1, "Red key", "group44/resources/keys/red.png"),
+        RED(1, "Red key"),
         /** Blue key. */
-        BLUE(2, "Blue key", "group44/resources/keys/blue.png"),
+        BLUE(2, "Blue key"),
         /** Green key. */
-        GREEN(3, "Green key", "group44/resources/keys/green.png"),
+        GREEN(3, "Green key"),
         /** Gold key. */
-        GOLD(4, "Gold key", "group44/resources/keys/yellow.png");
+        GOLD(4, "Gold key");
 
         /** Id of the key. */
         private int code;
@@ -72,10 +72,10 @@ public class Key extends CollectableItem {
         /** Image path of the key. */
         private String imagePath;
 
-        KeyType(int code, String title, String imagePath) {
+        KeyType(int code, String title) {
             this.code = code;
             this.title = title;
-            this.imagePath = imagePath;
+            this.imagePath = String.format(Constants.KEY_PATH, this.name().toLowerCase());
         }
 
         /**
@@ -103,6 +103,16 @@ public class Key extends CollectableItem {
          */
         public String getImagePath() {
             return this.imagePath;
+        }
+
+        /**
+         * Returns the name of the key with the first letter capitalized.
+         *
+         * @return name of the key.
+         */
+        public String getFormattedName() {
+            String str = this.name().toLowerCase();
+            return str.substring(0,1).toUpperCase() + str.substring(1);
         }
     }
 }

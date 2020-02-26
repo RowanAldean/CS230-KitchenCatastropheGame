@@ -39,6 +39,23 @@ public class Teleporter extends StepableCell {
     }
 
     /**
+     * Creates a new instance of {@link Teleporter} with linked
+     * {@link Teleporter}.
+     *
+     * @param level
+     *            The {@link Level} where the {@link Teleporter} is located.
+     * @param title
+     *            The title of the {@link Teleporter}.
+     * @param positionX
+     *            The position X in the game.
+     * @param positionY
+     *            The position Y in the game.
+     */
+    public Teleporter(Level level, String title, int positionX, int positionY) {
+        super(level, title, positionX, positionY, Constants.TELEPORTER_PATH);
+    }
+
+    /**
      * Links the teleporter with another instance of Teleporter.
      *
      * @param linkedTeleporter
@@ -46,6 +63,15 @@ public class Teleporter extends StepableCell {
      */
     public void setLinkedTeleporter(Teleporter linkedTeleporter) {
         this.linkedTeleporter = linkedTeleporter;
+    }
+
+    /**
+     * Returns the linked teleporter.
+     *
+     * @return linked Teleporter.
+     */
+    public Teleporter getLinkedTeleporter(){
+        return this.linkedTeleporter;
     }
 
     /**

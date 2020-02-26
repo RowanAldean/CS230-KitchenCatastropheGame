@@ -53,6 +53,31 @@ public class TokenDoor extends Door {
     }
 
     /**
+     * This creates a new {@link KeyDoor} and associates a unlocking
+     * {@link Key.KeyType} with it.
+     *
+     * @param level
+     *            The {@link Level} where the {@link KeyDoor} is located.
+     * @param title
+     *            Title of the {@link Door}.
+     * @param positionX
+     *            Position X in the game.
+     * @param positionY
+     *            Position Y in the game.
+     * @param tokensNeeded
+     *            Number of tokens needed to open the door.
+     * @param isOpen
+     *            Open/Closed state of the door.
+     */
+    public TokenDoor(Level level, String title, int positionX, int positionY, int tokensNeeded, boolean isOpen) {
+        super(level, title, positionX, positionY,
+                Constants.CLOSED_TOKEN_DOOR_PATH,
+                Constants.OPEN_TOKEN_DOOR_PATH, isOpen);
+
+        this.tokensNeeded = tokensNeeded;
+    }
+
+    /**
      * Getter method for returning number of tokens needed for this door.
      * @return Number of tokens needed.
      */

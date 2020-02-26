@@ -6,6 +6,8 @@ import group44.entities.movableObjects.MovableObject;
 import group44.game.Level;
 import javafx.scene.image.Image;
 
+import java.io.File;
+
 /**
  * Super class for all Door classes.
  *
@@ -39,11 +41,11 @@ public abstract class Door extends StepableCell {
      *            Path to the Image representing unlocked door in the game.
      */
     public Door(Level level, String title, int positionX, int positionY,
-            String lockedImagePath, String unlockedImagePath, boolean isOpen) {
+                String lockedImagePath, String unlockedImagePath, boolean isOpen) {
         super(level, title, positionX, positionY, lockedImagePath);
 
         this.unlockedImagePath = unlockedImagePath;
-        this.unlockedImage = new Image(unlockedImagePath, true);
+        this.unlockedImage = new Image(new File(unlockedImagePath).toURI().toString(), true);
         this.isOpen = isOpen;
     }
 

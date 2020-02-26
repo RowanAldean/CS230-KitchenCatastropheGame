@@ -27,11 +27,29 @@ public class DumbTargetingEnemy extends Enemy {
      * @param positionY
      *            position Y in the game.
      * @param imagePath
-     *            path to the Image representing the {@link DumbTargetingEnemy}.
+     *
      */
     public DumbTargetingEnemy(Level level, String name, int positionX,
-            int positionY, String imagePath) {
+                              String imagePath, int positionY) {
         super(level, name, positionX, positionY, 0, 0, imagePath);
+    }
+
+    /**
+     * Creates a new instance of {@link DumbTargetingEnemy}.
+     *
+     * @param level
+     *            the {@link Level} where the {@link DumbTargetingEnemy} is
+     *            located.
+     * @param name
+     *            name of the {@link DumbTargetingEnemy}.
+     * @param positionX
+     *            position X in the game.
+     * @param positionY
+     *            position Y in the game.
+     */
+    public DumbTargetingEnemy(Level level, String name, int positionX,
+                              int positionY) {
+        super(level, name, positionX, positionY, 0, 0, Constants.DUMB_TARGETING_ENEMY_PATH);
     }
 
     /**
@@ -136,9 +154,6 @@ public class DumbTargetingEnemy extends Enemy {
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
 
         builder.append(this.getPositionY());
-        builder.append(Constants.LEVEL_OBJECT_DELIMITER);
-
-        builder.append(this.getImagePath());
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
 
         return builder.toString();

@@ -26,13 +26,10 @@ public class WallFollowingEnemy extends Enemy {
      *            Position X of the {@link WallFollowingEnemy}.
      * @param positionY
      *            Position Y of the {@link WallFollowingEnemy}.
-     * @param imagePath
-     *            Path to the Image representing the {@link WallFollowingEnemy}
-     *            on the screen.
      */
     public WallFollowingEnemy(Level level, String name, int positionX,
-            int positionY, String imagePath) {
-        super(level, name, positionX, positionY, 0, 0, imagePath);
+                              int positionY) {
+        super(level, name, positionX, positionY, 0, 0, Constants.WALL_FOLLOWING_ENEMY_PATH);
     }
 
     /**
@@ -72,7 +69,7 @@ public class WallFollowingEnemy extends Enemy {
             // BOTTOM FREE, obstacle BOTTOM LEFT || RIGHT
             else if (this.isObstacleBottom() == false
                     && (this.isObstacleBottomLeft()
-                            || this.isObstacleBottomRight())) {
+                    || this.isObstacleBottomRight())) {
                 this.setDirectionDown();
             }
             // else
@@ -105,7 +102,7 @@ public class WallFollowingEnemy extends Enemy {
             // RIGHT FREE, obstacle TOP RIGHT || BOTTOM RIGHT
             else if (this.isObstacleRight() == false
                     && (this.isObstacleTopRight()
-                            || this.isObstacleBottomRight())) {
+                    || this.isObstacleBottomRight())) {
                 this.setDirectionRight();
             }
             // else
@@ -307,8 +304,6 @@ public class WallFollowingEnemy extends Enemy {
         sb.append(this.getPositionX());
         sb.append(Constants.LEVEL_OBJECT_DELIMITER);
         sb.append(this.getPositionY());
-        sb.append(Constants.LEVEL_OBJECT_DELIMITER);
-        sb.append(this.getImagePath());
 
         return sb.toString();
     }

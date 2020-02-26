@@ -5,6 +5,8 @@ import group44.game.Level;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.io.File;
+
 /**
  * Abstract class from which all other classes in the game inherit.
  *
@@ -66,7 +68,7 @@ public abstract class LevelObject {
             String imagePath) {
         this(level, title, positionX, positionY);
         this.imagePath = imagePath;
-        this.setImage(new Image(imagePath));
+        this.setImage(new Image(new File(imagePath).toURI().toString()));
     }
 
     /**
