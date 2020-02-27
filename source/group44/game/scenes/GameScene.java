@@ -3,6 +3,7 @@ package group44.game.scenes;
 import static group44.Constants.WINDOW_HEIGHT;
 import static group44.Constants.WINDOW_WIDTH;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
@@ -295,7 +296,7 @@ public class GameScene {
      * @param imagePath An imagepath to have an image below the label text
      */
     public static void setOnScreenMessage(String message, String imagePath){
-        ImageView iconImage = new ImageView(imagePath);
+        ImageView iconImage = new ImageView(new File(imagePath).toURI().toString());
         iconImage.setFitWidth(50);
         iconImage.setFitHeight(50);
         iconImage.setPreserveRatio(true);
