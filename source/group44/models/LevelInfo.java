@@ -46,4 +46,10 @@ public class LevelInfo {
     public File getFile() {
         return this.file;
     }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "Level " + this.id;
+    }
 }
