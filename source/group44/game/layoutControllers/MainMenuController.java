@@ -33,7 +33,7 @@ public class MainMenuController {
     @FXML
     private Button quit;
     @FXML
-    private Button motd;
+    private Button levelEditorButton;
     @FXML
     private ImageView logo;
 
@@ -94,12 +94,12 @@ public class MainMenuController {
         return profileSelection;
     }
 
-    public void setMOTD(Button motd) {
-        this.motd = motd;
+    public void setlevelEditorButton(Button levelEditorButton) {
+        this.levelEditorButton = levelEditorButton;
     }
 
-    public Button getMOTD() {
-        return motd;
+    public Button getLevelEditorButton() {
+        return levelEditorButton;
     }
 
     public void setQuit(Button quit) {

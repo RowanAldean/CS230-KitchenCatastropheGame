@@ -137,14 +137,14 @@ public class MainMenuScene {
                 });
     }
 
-    private void showMOTD(MouseEvent e) {
-        new MOTDScene(primaryStage);
+    private void showLevelEditorStartupWindow(MouseEvent e) {
+        new LevelEditorStartupScene(primaryStage);
     }
 
     private void setUpButtons() {
         profilesListener();
         mainMenuController.getNewProfile().setOnMouseClicked(this::newProfile);
         mainMenuController.getQuit().setOnMouseClicked(this::closeGame);
-        mainMenuController.getMOTD().setOnMouseClicked(this::showMOTD);
+        mainMenuController.getLevelEditorButton().setOnMouseClicked(this::showLevelEditorStartupWindow);
     }
 }

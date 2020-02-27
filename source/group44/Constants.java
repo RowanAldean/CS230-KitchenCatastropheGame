@@ -4,7 +4,7 @@ public final class Constants {
     private Constants() {
     }
 
-    private static final String FILE_SOURCE = "bin/group44/";
+    private static final String FILE_SOURCE = "source/group44/";
 
     // Data - Folders
     public static final String FOLDER_LEVELS = FILE_SOURCE + "data/levels/";
