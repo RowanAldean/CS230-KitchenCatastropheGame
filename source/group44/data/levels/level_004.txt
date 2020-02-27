@@ -259,9 +259,9 @@ ground,11,1
 wall,11,2
 ground,11,3
 ground,11,4
-ground,11,5
+ground,11,7
 ground,11,6
-teleporter,Teleporter,11,7
+teleporter,Teleporter,11,5
 wall,11,8
 ground,11,9
 ground,11,10
@@ -399,4 +399,4 @@ ground,18,15
 ground,18,16,smartTargetingEnemy,Smart targeting enemy,18,16
 ground,18,17
 goal,18,18
-teleporterLink,7,17,11,7
+teleporterLink,7,17,11,5
