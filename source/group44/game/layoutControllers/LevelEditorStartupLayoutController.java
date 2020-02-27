@@ -14,6 +14,8 @@ public class LevelEditorStartupLayoutController {
     private Button edit;
     @FXML
     private Button delete;
+    @FXML
+    private Button back;
 
     public ListView<LevelInfo> getLevels() {
         return levels;
@@ -39,4 +41,11 @@ public class LevelEditorStartupLayoutController {
     public void setDelete(Button delete) {
         this.delete = delete;
     }
+    public Button getBack() {
+        return back;
+    }
+    public void setBack(Button back) {
+        this.back = back;
+    }
+
 }

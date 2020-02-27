@@ -61,6 +61,7 @@ public class LevelEditorStartupScene {
         createButton.setOnMouseClicked(this::createButtonOnClick);
         this.controller.getEdit().setOnMouseClicked(this::editButtonOnClick);
         this.controller.getDelete().setOnMouseClicked(this::deleteButtonOnClick);
+        this.controller.getBack().setOnMouseClicked(this::backButtonOnClick);
     }
 
     private void createButtonOnClick(MouseEvent e) {
@@ -82,5 +83,9 @@ public class LevelEditorStartupScene {
         if (info != null) {
             System.out.println("Delete button clicked\n" + info);
         }
+    }
+
+    private void backButtonOnClick(MouseEvent e) {
+        new MainMenuScene(this.stage);
     }
 }
