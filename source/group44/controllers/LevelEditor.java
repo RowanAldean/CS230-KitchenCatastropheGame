@@ -12,6 +12,12 @@ import group44.exceptions.PositionTakenException;
 import group44.game.Level;
 import group44.models.LevelInfo;
 
+/**
+ * An implementation of the {@link ILevelEditor} interface.
+ *
+ * @author Tomas Svejnoha
+ * @version 1.0
+ */
 public class LevelEditor implements ILevelEditor {
     private static final String ERROR_POSITION_TAKEN_EXCEPTION_MESSAGE = "Position [%d][%d] is not empty.";
     private static final String ERROR_CELL_NOT_FOUND_EXCEPTION_MESSAGE = "Position [%d][%d] is empty.";
@@ -100,5 +106,4 @@ public class LevelEditor implements ILevelEditor {
     public void save() throws IOException {
         LevelManager.save(this.level);
     }
-
 }
