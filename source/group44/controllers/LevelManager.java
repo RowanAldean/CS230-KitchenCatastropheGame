@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 import group44.Constants;
@@ -265,6 +266,53 @@ public class LevelManager {
         if (info.getFile().exists()) {
             info.getFile().delete();
         }
+    }
+
+    /**
+     * Deletes a {@link Level} with Id.
+     *
+     * @param levelId
+     *            id of the {@link Level} to delete.
+     */
+    public static void deleteLevel(int levelId) {
+        LevelInfo info = getLevelInfo(levelId);
+
+        if (info != null && info.getFile().exists()) {
+            info.getFile().delete();
+            Leaderboard.deleteLevelRecords(levelId);
+            Leaderboard.renumberFollowingLevels(levelId);
+            renumberFollowingLevels(levelId, info.getFile().getPath());
+        }
+    }
+
+    /**
+     * Renumber all following levels.
+     *
+     * @param levelId
+     *            the deleted level.
+     */
+    private static void renumberFollowingLevels(int levelId, String prevPath) {
+        Collections.sort(levelInfos,
+                (a, b) -> Integer.compare(a.getId(), b.getId()));
+        for (LevelInfo levelInfo : levelInfos) {
+            if (levelInfo.getId() == levelId + 1) {
+                try {
+                    Level level = LevelManager.load(levelInfo);
+                    level.setId(level.getId() - 1);
+                    LevelManager.save(level);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                String tmpPath = levelInfo.getFile().getPath();
+                levelInfo.getFile().renameTo(new File(prevPath));
+                prevPath = tmpPath;
+                levelId++;
+            }
+        }
+
+        File file = new File(prevPath);
+        file.delete();
     }
 
     /**

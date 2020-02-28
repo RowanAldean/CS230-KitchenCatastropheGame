@@ -171,7 +171,8 @@ public class Player extends MovableObject {
         if (key != null) {
             door.open(key);
         }
-        GameScene.setOnScreenMessage("You need a " + door.getUnlockingKeyType().getTitle() + " to open this door!", door.getUnlockingKeyType().getImagePath());
+        String imagePath = door.getUnlockingKeyType().getImagePath();
+        GameScene.setOnScreenMessage("You need a " + door.getUnlockingKeyType().getTitle() + " to open this door!", imagePath);
         GameScene.getOnScreenMessage().setVisible(true);
         return door.isOpen();
     }
@@ -202,11 +203,10 @@ public class Player extends MovableObject {
      */
     private boolean tryToOpenTokenDoor(CollisionCheckResult result) {
         //TODO: Create Constants.TOKEN_PATH and hardode the paths for each type of LevelObject
-        String tokenIconPath = "group44/resources/cells/token.png";
         TokenDoor door = (TokenDoor) result.getCollidingObject();
         if(!door.open(this.getTokenAccumulator())){
             int tokensLeft = door.getTokensNeeded() - this.getTokenAccumulator().getTokensCount();
-            GameScene.setOnScreenMessage("You need " + tokensLeft + " more token(s) to open this door!", tokenIconPath);
+            GameScene.setOnScreenMessage("You need " + tokensLeft + " more token(s) to open this door!", Constants.TOKEN_PATH);
             GameScene.getOnScreenMessage().setVisible(true);
         }
         return door.open(this.getTokenAccumulator());

@@ -32,9 +32,35 @@ public class StraightWalkingEnemy extends Enemy {
      *            Velocity Y of the {@link StraightWalkingEnemy}.
      */
     public StraightWalkingEnemy(Level level, String name, int positionX,
-                                int positionY, int velocityX, int velocityY) {
+            int positionY, int velocityX, int velocityY) {
         super(level, name, positionX, positionY, velocityX, velocityY,
                 Constants.STRAIGHT_WALKING_ENEMY_PATH);
+    }
+
+    /**
+     * Creates a new instance of {@link StraightWalkingEnemy}.
+     *
+     * @param level
+     *            The {@link Level} where the {@link StraightWalkingEnemy} is
+     *            located.
+     * @param name
+     *            Title of the {@link StraightWalkingEnemy}.
+     * @param positionX
+     *            Position X of the {@link StraightWalkingEnemy}.
+     * @param positionY
+     *            Position Y of the {@link StraightWalkingEnemy}.
+     * @param velocityX
+     *            Velocity X of the {@link StraightWalkingEnemy}.
+     * @param velocityY
+     *            Velocity Y of the {@link StraightWalkingEnemy}.
+     * @param imagePath
+     *            Path to the Image representing {@link StraightWalkingEnemy} in
+     *            the game.
+     */
+    public StraightWalkingEnemy(Level level, String name, int positionX,
+            int positionY, int velocityX, int velocityY, String imagePath) {
+        super(level, name, positionX, positionY, velocityX, velocityY,
+                imagePath);
     }
 
     /**
@@ -85,6 +111,8 @@ public class StraightWalkingEnemy extends Enemy {
         builder.append(this.getVelocityX());
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getVelocityY());
+        builder.append(Constants.LEVEL_OBJECT_DELIMITER);
+        builder.append(this.getImagePath());
 
         return builder.toString();
     }

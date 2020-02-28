@@ -57,6 +57,16 @@ public class Record implements Comparable<Record> {
     }
 
     /**
+     * Sets the id of the associated {@link Level} to the new value.
+     *
+     * @param id
+     *            the new id.
+     */
+    public void setLevelId(int id) {
+        this.levelId = id;
+    }
+
+    /**
      * Returns the time taken by the user to finish the {@link Level}.
      *
      * @return the time taken.

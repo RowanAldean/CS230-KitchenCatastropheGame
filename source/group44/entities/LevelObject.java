@@ -1,5 +1,6 @@
 package group44.entities;
 
+import group44.Constants;
 import group44.annotations.Editable;
 import group44.game.Level;
 import javafx.scene.canvas.GraphicsContext;
@@ -68,7 +69,16 @@ public abstract class LevelObject {
             String imagePath) {
         this(level, title, positionX, positionY);
         this.imagePath = imagePath;
-        this.setImage(new Image(new File(imagePath).toURI().toString()));
+
+        File file = new File(imagePath);
+        if (file.exists() == false) {
+            file = new File(Constants.FILE_SOURCE + imagePath);
+            if (file.exists() == false) {
+                System.err.println(file.getAbsolutePath());
+            }
+        }
+
+        this.setImage(new Image(file.toURI().toString()));
     }
 
     /**

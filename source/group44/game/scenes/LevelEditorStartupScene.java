@@ -19,11 +19,11 @@ public class LevelEditorStartupScene {
     private LevelEditorStartupLayoutController controller;
     private Stage stage;
 
-    public LevelEditorStartupScene(Stage stage){
+    public LevelEditorStartupScene(Stage stage) {
         this.stage = stage;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                .getResource("/group44/game/layouts/LevelEditorStartupLayout.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
+                "/group44/game/layouts/LevelEditorStartupLayout.fxml"));
 
         try {
             Parent root = fxmlLoader.load();
@@ -34,7 +34,7 @@ public class LevelEditorStartupScene {
             // Instantiating the controller.
             this.controller = fxmlLoader.getController();
 
-            this.initialise();
+            this.loadLevels();
 
             // Adding the listeners for the buttons.
             setUpButtons();
@@ -48,7 +48,8 @@ public class LevelEditorStartupScene {
         this.stage.setTitle("Kitchen Catastrophe");
     }
 
-    private void initialise() {
+    private void loadLevels() {
+        this.controller.getLevels().getItems().clear();
         ArrayList<LevelInfo> levelInfos = LevelManager.load();
 
         for (LevelInfo levelInfo : levelInfos) {
@@ -60,28 +61,33 @@ public class LevelEditorStartupScene {
         Button createButton = this.controller.getCreate();
         createButton.setOnMouseClicked(this::createButtonOnClick);
         this.controller.getEdit().setOnMouseClicked(this::editButtonOnClick);
-        this.controller.getDelete().setOnMouseClicked(this::deleteButtonOnClick);
+        this.controller.getDelete()
+                .setOnMouseClicked(this::deleteButtonOnClick);
         this.controller.getBack().setOnMouseClicked(this::backButtonOnClick);
     }
 
     private void createButtonOnClick(MouseEvent e) {
-        LevelInfo info = this.controller.getLevels().getSelectionModel().getSelectedItem();
+        LevelInfo info = this.controller.getLevels().getSelectionModel()
+                .getSelectedItem();
         if (info != null) {
             System.out.println("Create button clicked\n" + info);
         }
     }
 
     private void editButtonOnClick(MouseEvent e) {
-        LevelInfo info = this.controller.getLevels().getSelectionModel().getSelectedItem();
+        LevelInfo info = this.controller.getLevels().getSelectionModel()
+                .getSelectedItem();
         if (info != null) {
             System.out.println("Edit button clicked\n" + info);
         }
     }
 
     private void deleteButtonOnClick(MouseEvent e) {
-        LevelInfo info = this.controller.getLevels().getSelectionModel().getSelectedItem();
+        LevelInfo info = this.controller.getLevels().getSelectionModel()
+                .getSelectedItem();
         if (info != null) {
-            System.out.println("Delete button clicked\n" + info);
+            LevelManager.deleteLevel(info.getId());
+            this.loadLevels();
         }
     }
 

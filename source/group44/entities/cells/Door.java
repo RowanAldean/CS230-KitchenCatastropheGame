@@ -1,5 +1,6 @@
 package group44.entities.cells;
 
+import group44.Constants;
 import group44.annotations.Editable;
 import group44.entities.collectableItems.CollectableItem;
 import group44.entities.movableObjects.MovableObject;
@@ -45,7 +46,13 @@ public abstract class Door extends StepableCell {
         super(level, title, positionX, positionY, lockedImagePath);
 
         this.unlockedImagePath = unlockedImagePath;
-        this.unlockedImage = new Image(new File(unlockedImagePath).toURI().toString(), true);
+
+        File file = new File(Constants.FILE_SOURCE + unlockedImagePath);
+        if (file.exists() == false) {
+            System.err.println(file.getAbsolutePath());
+        }
+
+        this.unlockedImage = new Image(file.toURI().toString(), true);
         this.isOpen = isOpen;
     }
 

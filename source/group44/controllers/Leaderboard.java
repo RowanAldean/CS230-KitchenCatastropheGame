@@ -331,4 +331,34 @@ public class Leaderboard {
         return record.getProfile().getId() + "," + record.getLevelId() + ","
                 + record.getTime();
     }
+
+    /**
+     * Deletes all {@link Record}s associated with a {@link Level}.
+     *
+     * @param levelId
+     *            Id of the associated {@link Level}.
+     */
+    public static void deleteLevelRecords(int levelId) {
+        load();
+        records.removeIf(x -> x.getLevelId() == levelId);
+        save();
+    }
+
+    /**
+     * Renumbers levels higher than Id.
+     *
+     * @param levelId
+     *            id of the deleted level.
+     */
+    public static void renumberFollowingLevels(int levelId) {
+        Leaderboard.load();
+
+        for (Record record : records) {
+            if (record.getLevelId() > levelId) {
+                record.setLevelId(record.getLevelId() - 1);
+            }
+        }
+
+        Leaderboard.save();
+    }
 }

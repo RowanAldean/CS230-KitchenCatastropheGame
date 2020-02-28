@@ -121,6 +121,16 @@ public class Level {
     }
 
     /**
+     * Sets the Id of the {@link Level}.
+     *
+     * @param id
+     *            the new id.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
      * Returns a 2D array with all {@link Cell} in the {@link Level}.
      *
      * @return 2D array of {@link Cell}s

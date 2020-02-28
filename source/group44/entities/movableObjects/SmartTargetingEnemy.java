@@ -33,8 +33,32 @@ public class SmartTargetingEnemy extends Enemy {
      *            position Y in the game.
      */
     public SmartTargetingEnemy(Level level, String title, int positionX,
-                               int positionY) {
-        super(level, title, positionX, positionY, 0, 0, Constants.SMART_TARGETING_ENEMY_PATH);
+            int positionY) {
+        super(level, title, positionX, positionY, 0, 0,
+                Constants.SMART_TARGETING_ENEMY_PATH);
+
+        this.cellPathInfos = new CellPathInfo[level.getGridWidth()][level
+                .getGridHeight()];
+    }
+
+    /**
+     * Creates a new instance of {@link SmartTargetingEnemy}.
+     *
+     * @param level
+     *            level where the {@link SmartTargetingEnemy} is located.
+     * @param title
+     *            title of the enemy.
+     * @param positionX
+     *            position X in the game.
+     * @param positionY
+     *            position Y in the game.
+     * @param imagePath
+     *            Path to the Image representing {@link SmartTargetingEnemy} in
+     *            the game.
+     */
+    public SmartTargetingEnemy(Level level, String title, int positionX,
+            int positionY, String imagePath) {
+        super(level, title, positionX, positionY, 0, 0, imagePath);
 
         this.cellPathInfos = new CellPathInfo[level.getGridWidth()][level
                 .getGridHeight()];
@@ -272,6 +296,8 @@ public class SmartTargetingEnemy extends Enemy {
         sb.append(this.getPositionX());
         sb.append(Constants.LEVEL_OBJECT_DELIMITER);
         sb.append(this.getPositionY());
+        sb.append(Constants.LEVEL_OBJECT_DELIMITER);
+        sb.append(this.getImagePath());
 
         return sb.toString();
     }

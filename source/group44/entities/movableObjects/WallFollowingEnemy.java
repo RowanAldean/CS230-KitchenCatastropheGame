@@ -28,8 +28,30 @@ public class WallFollowingEnemy extends Enemy {
      *            Position Y of the {@link WallFollowingEnemy}.
      */
     public WallFollowingEnemy(Level level, String name, int positionX,
-                              int positionY) {
-        super(level, name, positionX, positionY, 0, 0, Constants.WALL_FOLLOWING_ENEMY_PATH);
+            int positionY) {
+        super(level, name, positionX, positionY, 0, 0,
+                Constants.WALL_FOLLOWING_ENEMY_PATH);
+    }
+
+    /**
+     * Creates a new instance of {@link WallFollowingEnemy}.
+     *
+     * @param level
+     *            The {@link Level} where the {@link WallFollowingEnemy} is
+     *            located.
+     * @param name
+     *            Name of the {@link WallFollowingEnemy}.
+     * @param positionX
+     *            Position X of the {@link WallFollowingEnemy}.
+     * @param positionY
+     *            Position Y of the {@link WallFollowingEnemy}.
+     * @param imagePath
+     *            Path to the Image representing {@link WallFollowingEnemy} in
+     *            the game.
+     */
+    public WallFollowingEnemy(Level level, String name, int positionX,
+            int positionY, String imagePath) {
+        super(level, name, positionX, positionY, 0, 0, imagePath);
     }
 
     /**
@@ -69,7 +91,7 @@ public class WallFollowingEnemy extends Enemy {
             // BOTTOM FREE, obstacle BOTTOM LEFT || RIGHT
             else if (this.isObstacleBottom() == false
                     && (this.isObstacleBottomLeft()
-                    || this.isObstacleBottomRight())) {
+                            || this.isObstacleBottomRight())) {
                 this.setDirectionDown();
             }
             // else
@@ -102,7 +124,7 @@ public class WallFollowingEnemy extends Enemy {
             // RIGHT FREE, obstacle TOP RIGHT || BOTTOM RIGHT
             else if (this.isObstacleRight() == false
                     && (this.isObstacleTopRight()
-                    || this.isObstacleBottomRight())) {
+                            || this.isObstacleBottomRight())) {
                 this.setDirectionRight();
             }
             // else
@@ -304,6 +326,8 @@ public class WallFollowingEnemy extends Enemy {
         sb.append(this.getPositionX());
         sb.append(Constants.LEVEL_OBJECT_DELIMITER);
         sb.append(this.getPositionY());
+        sb.append(Constants.LEVEL_OBJECT_DELIMITER);
+        sb.append(this.getImagePath());
 
         return sb.toString();
     }
