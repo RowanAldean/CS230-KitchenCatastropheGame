@@ -1,19 +1,18 @@
 package group44.game.scenes;
 
-import static group44.Constants.WINDOW_HEIGHT;
-import static group44.Constants.WINDOW_WIDTH;
-
-import java.util.ArrayList;
-
 import group44.controllers.LevelManager;
 import group44.game.layoutControllers.LevelEditorStartupLayoutController;
 import group44.models.LevelInfo;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+
+import static group44.Constants.WINDOW_HEIGHT;
+import static group44.Constants.WINDOW_WIDTH;
 
 public class LevelEditorStartupScene {
     private LevelEditorStartupLayoutController controller;
@@ -58,8 +57,7 @@ public class LevelEditorStartupScene {
     }
 
     private void setUpButtons() {
-        Button createButton = this.controller.getCreate();
-        createButton.setOnMouseClicked(this::createButtonOnClick);
+        this.controller.getCreate().setOnMouseClicked(this::createButtonOnClick);
         this.controller.getEdit().setOnMouseClicked(this::editButtonOnClick);
         this.controller.getDelete()
                 .setOnMouseClicked(this::deleteButtonOnClick);
@@ -67,11 +65,7 @@ public class LevelEditorStartupScene {
     }
 
     private void createButtonOnClick(MouseEvent e) {
-        LevelInfo info = this.controller.getLevels().getSelectionModel()
-                .getSelectedItem();
-        if (info != null) {
-            System.out.println("Create button clicked\n" + info);
-        }
+        new LevelEditorScene(this.stage);
     }
 
     private void editButtonOnClick(MouseEvent e) {
