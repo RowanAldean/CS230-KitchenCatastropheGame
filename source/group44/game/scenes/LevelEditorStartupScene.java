@@ -72,7 +72,7 @@ public class LevelEditorStartupScene {
         LevelInfo info = this.controller.getLevels().getSelectionModel()
                 .getSelectedItem();
         if (info != null) {
-            System.out.println("Edit button clicked\n" + info);
+            new LevelEditorScene(this.stage, info.getId());
         }
     }
 

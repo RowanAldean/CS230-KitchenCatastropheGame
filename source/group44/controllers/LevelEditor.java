@@ -88,12 +88,7 @@ public class LevelEditor implements ILevelEditor {
     }
 
     @Override
-    public void remove(int x, int y) throws CellNotFoundException {
-        if (this.level.getGrid()[x][y] == null) {
-            throw new CellNotFoundException(String
-                    .format(ERROR_CELL_NOT_FOUND_EXCEPTION_MESSAGE, x, y));
-        }
-
+    public void remove(int x, int y) {
         this.level.getGrid()[x][y] = null;
     }
 
@@ -105,5 +100,11 @@ public class LevelEditor implements ILevelEditor {
     @Override
     public void save() throws IOException {
         LevelManager.save(this.level);
+    }
+
+
+    @Override
+    public Level getLevel() {
+        return this.level;
     }
 }

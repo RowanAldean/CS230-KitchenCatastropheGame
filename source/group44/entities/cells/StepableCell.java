@@ -121,7 +121,7 @@ public abstract class StepableCell extends Cell {
      * @param object
      *            the new {@link MovableObject}.
      */
-    protected void setMovableObject(MovableObject object) {
+    public void setMovableObject(MovableObject object) {
         this.movableObject = object;
     }
 

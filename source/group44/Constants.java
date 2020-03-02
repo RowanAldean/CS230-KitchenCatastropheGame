@@ -71,14 +71,22 @@ public final class Constants {
     public static final String TYPE_TELEPORTER_LINK = "teleporterLink";
 
     // Titles
+    public static final String TITLE_DUMB_TARGETING_ENEMY = "Dumb Targeting Enemy";
     public static final String TITLE_FIRE = "Fire";
     public static final String TITLE_FIREBOOTS = "Fireboots";
     public static final String TITLE_FLIPPERS = "Flippers";
     public static final String TITLE_GOAL = "Goal";
     public static final String TITLE_GROUND = "Ground";
+    public static final String TITLE_KEY_DOOR = "Key Door";
+    public static final String TITLE_PLAYER = "Player";
+    public static final String TITLE_SMART_TARGETING_ENEMY = "Smart Targeting Enemy";
+    public static final String TITLE_STRAIGHT_WALKING_ENEMY = "Straight Walking Enemy";
+    public static final String TITLE_TELEPORTER = "Teleporter";
     public static final String TITLE_TOKEN = "Token";
     public static final String TITLE_TOKEN_ACCUMULATOR = "Token Accumulator";
+    public static final String TITLE_TOKEN_DOOR = "Token Door";
     public static final String TITLE_WALL = "Wall";
+    public static final String TITLE_WALL_FOLLOWING_ENEMY = "Wall Following Enemy";
     public static final String TITLE_WATER = "Water";
 
     // The size of each cell

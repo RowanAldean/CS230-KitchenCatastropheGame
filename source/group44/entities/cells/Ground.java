@@ -48,7 +48,8 @@ public class Ground extends StepableCell {
      *            Position X of the {@link Ground} in the {@link Level}.
      */
     public Ground(Level level, int positionX, int positionY) {
-        super(level, Constants.TITLE_GROUND, positionX, positionY, Constants.GROUND_PATH);
+        super(level, Constants.TITLE_GROUND, positionX, positionY,
+                Constants.GROUND_PATH);
     }
 
     /**
@@ -86,7 +87,7 @@ public class Ground extends StepableCell {
      *            {@link CollectableItem} placed on the {@link Ground}.
      */
     public Ground(Level level, int positionX, int positionY,
-                  CollectableItem collectableItem) {
+            CollectableItem collectableItem) {
         this(level, positionX, positionY, Constants.GROUND_PATH);
         this.collectableItem = collectableItem;
     }
@@ -124,9 +125,9 @@ public class Ground extends StepableCell {
      *            The {@link MovableObject} on the cell.
      */
     public Ground(Level level, int positionX, int positionY,
-                  MovableObject steppedItem) {
-        super(level, Constants.TITLE_GROUND, positionX, positionY, Constants.GROUND_PATH,
-                steppedItem);
+            MovableObject steppedItem) {
+        super(level, Constants.TITLE_GROUND, positionX, positionY,
+                Constants.GROUND_PATH, steppedItem);
     }
 
     /**
@@ -138,6 +139,16 @@ public class Ground extends StepableCell {
         CollectableItem item = this.collectableItem;
         this.collectableItem = null;
         return item;
+    }
+
+    /**
+     * Sets a {@link CollectableItem} on the {@link Ground}.
+     *
+     * @param item
+     *            the {@link CollectableItem}.
+     */
+    public void setCollectableItem(CollectableItem item) {
+        this.collectableItem = item;
     }
 
     /**

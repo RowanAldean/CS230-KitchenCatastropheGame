@@ -1,18 +1,7 @@
 package group44.game.scenes;
 
-import static group44.Constants.WINDOW_HEIGHT;
-import static group44.Constants.WINDOW_WIDTH;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Optional;
-
-import group44.controllers.IPropertyController;
 import group44.controllers.Leaderboard;
 import group44.controllers.LevelManager;
-import group44.controllers.PropertyController;
-import group44.entities.collectableItems.TokenAccumulator;
 import group44.exceptions.CollisionException;
 import group44.exceptions.ParsingException;
 import group44.game.Level;
@@ -20,7 +9,6 @@ import group44.game.LevelFinishStatus;
 import group44.game.layoutControllers.MainGameWindowController;
 import group44.models.GTimer;
 import group44.models.Profile;
-import group44.models.PropertyInfo;
 import group44.models.Record;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +23,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Optional;
+
+import static group44.Constants.WINDOW_HEIGHT;
+import static group44.Constants.WINDOW_WIDTH;
 
 /**
  * This class displays the scene where the game happens. It sets up the timer,
@@ -191,10 +187,9 @@ public class GameScene {
     private void setUpHome(MouseEvent event) {
         timer.stopTimer();
         try {
-            this.currentLevel.setTime(timer.getCurrentTimeTaken());
+            this.currentLevel.setTime(GTimer.getCurrentTimeTaken());
             LevelManager.save(this.currentLevel, this.currentProfile.getId());
         } catch (IOException e) {
-            // TODO: @Bogdan Mihai - REVIEW
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Saving current progress failed.");
@@ -226,7 +221,7 @@ public class GameScene {
             myController.getOnScreenMessage().setVisible(true);
             a1.setTitle("Congrats on finishing the level!");
             Leaderboard.addOrUpdate(currentProfile.getId(),
-                    currentLevel.getId(), timer.getCurrentTimeTaken());
+                    currentLevel.getId(), GTimer.getCurrentTimeTaken());
             ObservableList<Record> top3Records = Leaderboard
                     .getTopThreeRecords(currentLevel.getId());
 
@@ -247,14 +242,13 @@ public class GameScene {
                 a1.setContentText("Top times and your time: \n"
                         + builder.toString() + Leaderboard.getRecord(
                                 currentProfile.getId(), currentLevel.getId()));
-            } // TODO: Here add the times with append
+            }
         } else {
             //Display death message
             myController.getOnScreenMessage().textProperty().setValue("YOU COULDN'T HANDLE THIS KITCHEN! Rest In Peace");
             myController.getOnScreenMessage().setVisible(true);
             //Display post-death menu
             a1.setTitle("And then I took an arrow to the knee!");
-            // TODO: Here add the times with append
             a1.setContentText(
                     "Just a suggestion: \n Practice makes it perfect! \n");
         }

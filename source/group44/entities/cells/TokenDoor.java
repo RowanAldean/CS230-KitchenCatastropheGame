@@ -3,7 +3,6 @@ package group44.entities.cells;
 import group44.Constants;
 import group44.annotations.Editable;
 import group44.entities.collectableItems.CollectableItem;
-import group44.entities.collectableItems.Key;
 import group44.entities.collectableItems.TokenAccumulator;
 import group44.entities.movableObjects.MovableObject;
 import group44.game.CollisionCheckResult;
@@ -23,11 +22,26 @@ public class TokenDoor extends Door {
     private int tokensNeeded;
 
     /**
-     * This creates a new {@link KeyDoor} and associates a unlocking
-     * {@link Key.KeyType} with it.
+     * Creates a new {@link TokenDoor}.
      *
      * @param level
-     *            The {@link Level} where the {@link KeyDoor} is located.
+     *            The {@link Level} where the {@link TokenDoor} is located.
+     * @param title
+     *            Title of the {@link Door}.
+     * @param positionX
+     *            Position X in the game.
+     * @param positionY
+     *            Position Y in the game.
+     */
+    public TokenDoor(Level level, String title, int positionX, int positionY) {
+        this(level, title, positionX, positionY, 1, false);
+    }
+
+    /**
+     * This creates a new {@link TokenDoor}.
+     *
+     * @param level
+     *            The {@link Level} where the {@link TokenDoor} is located.
      * @param title
      *            Title of the {@link Door}.
      * @param positionX
@@ -44,8 +58,8 @@ public class TokenDoor extends Door {
      *            Open/Closed state of the door.
      */
     public TokenDoor(Level level, String title, int positionX, int positionY,
-            String lockedImagePath, String unlockedImagePath,
-            int tokensNeeded, boolean isOpen) {
+            String lockedImagePath, String unlockedImagePath, int tokensNeeded,
+            boolean isOpen) {
         super(level, title, positionX, positionY, lockedImagePath,
                 unlockedImagePath, isOpen);
 
@@ -53,11 +67,10 @@ public class TokenDoor extends Door {
     }
 
     /**
-     * This creates a new {@link KeyDoor} and associates a unlocking
-     * {@link Key.KeyType} with it.
+     * This creates a new {@link TokenDoor}.
      *
      * @param level
-     *            The {@link Level} where the {@link KeyDoor} is located.
+     *            The {@link Level} where the {@link TokenDoor} is located.
      * @param title
      *            Title of the {@link Door}.
      * @param positionX
@@ -69,7 +82,8 @@ public class TokenDoor extends Door {
      * @param isOpen
      *            Open/Closed state of the door.
      */
-    public TokenDoor(Level level, String title, int positionX, int positionY, int tokensNeeded, boolean isOpen) {
+    public TokenDoor(Level level, String title, int positionX, int positionY,
+            int tokensNeeded, boolean isOpen) {
         super(level, title, positionX, positionY,
                 Constants.CLOSED_TOKEN_DOOR_PATH,
                 Constants.OPEN_TOKEN_DOOR_PATH, isOpen);
@@ -79,6 +93,7 @@ public class TokenDoor extends Door {
 
     /**
      * Getter method for returning number of tokens needed for this door.
+     *
      * @return Number of tokens needed.
      */
     public int getTokensNeeded() {

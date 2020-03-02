@@ -30,12 +30,9 @@ public class Teleporter extends StepableCell {
      *            The position X in the game.
      * @param positionY
      *            The position Y in the game.
-     * @param imagePath
-     *            Path to the Image representing {@link Teleporter} in the game.
      */
-    public Teleporter(Level level, String title, int positionX, int positionY,
-            String imagePath) {
-        super(level, title, positionX, positionY, imagePath);
+    public Teleporter(Level level, String title, int positionX, int positionY) {
+        super(level, title, positionX, positionY, Constants.TELEPORTER_PATH);
     }
 
     /**
@@ -50,9 +47,12 @@ public class Teleporter extends StepableCell {
      *            The position X in the game.
      * @param positionY
      *            The position Y in the game.
+     * @param imagePath
+     *            Path to the Image representing {@link Teleporter} in the game.
      */
-    public Teleporter(Level level, String title, int positionX, int positionY) {
-        super(level, title, positionX, positionY, Constants.TELEPORTER_PATH);
+    public Teleporter(Level level, String title, int positionX, int positionY,
+            String imagePath) {
+        super(level, title, positionX, positionY, imagePath);
     }
 
     /**

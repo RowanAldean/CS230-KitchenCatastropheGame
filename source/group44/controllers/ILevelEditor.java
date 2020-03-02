@@ -29,6 +29,13 @@ public interface ILevelEditor {
     int getGridHeight();
 
     /**
+     * Returns the currently edited {@link Level}.
+     *
+     * @return the level.
+     */
+    Level getLevel();
+
+    /**
      * Adds the {@link Cell} to a specific location in the {@link Level}.
      *
      * @param x
@@ -49,10 +56,8 @@ public interface ILevelEditor {
      *            The X coordinate.
      * @param y
      *            The Y coordinate.
-     * @throws CellNotFoundException
-     *             when the position is empty.
      */
-    void remove(int x, int y) throws CellNotFoundException;
+    void remove(int x, int y);
 
     /**
      * Returns the {@link Cell} at a specific position.
