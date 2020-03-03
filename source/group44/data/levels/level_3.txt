@@ -237,7 +237,7 @@ ground,11,14,resources/cells/floor.png
 ground,11,15,resources/cells/floor.png
 ground,11,16,resources/cells/floor.png
 ground,11,17,resources/cells/floor.png
-ground,11,18,resources/cells/floor.png,dumbTargetingEnemy,Dumb targeting enemy,11,18,,
+ground,11,18,resources/cells/floor.png,dumbTargetingEnemy,Dumb targeting enemy,11,18,resources/Enemies/Pickle/MrPickleFront.png
 wall,11,19,resources/WallCounter.png
 wall,12,0,resources/WallCounter.png
 ground,12,1,resources/cells/floor.png
