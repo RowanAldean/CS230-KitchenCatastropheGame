@@ -142,6 +142,15 @@ public class Ground extends StepableCell {
     }
 
     /**
+     * Returns {@link CollectableItem} placed on the {@link Ground}.
+     *
+     * @return {@link CollectableItem} on the {@link Ground}.
+     */
+    public CollectableItem getCollectableItem() {
+        return this.collectableItem;
+    }
+
+    /**
      * Sets a {@link CollectableItem} on the {@link Ground}.
      *
      * @param item

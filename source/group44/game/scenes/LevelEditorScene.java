@@ -2,7 +2,9 @@ package group44.game.scenes;
 
 import group44.Constants;
 import group44.controllers.ILevelEditor;
+import group44.controllers.IPropertyController;
 import group44.controllers.LevelEditor;
+import group44.controllers.PropertyController;
 import group44.entities.LevelObject;
 import group44.entities.cells.*;
 import group44.entities.collectableItems.CollectableItem;
@@ -17,6 +19,7 @@ import group44.exceptions.PositionTakenException;
 import group44.game.Level;
 import group44.game.layoutControllers.LevelEditorController;
 import group44.models.LevelObjectImage;
+import group44.models.PropertyInfo;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -25,6 +28,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
@@ -68,6 +73,8 @@ public class LevelEditorScene {
     private ILevelEditor levelEditor;
     private LevelObjectImage draggedImage;
 
+    private IPropertyController propertyController;
+
     // Current level displayed.
     private Integer height = Constants.LEVEL_DISPLAY_SIZE;
     private Integer width = Constants.LEVEL_DISPLAY_SIZE;
@@ -75,7 +82,8 @@ public class LevelEditorScene {
     /**
      * Creates a new {@link LevelEditorScene} to create new {@link Level}.
      *
-     * @param primaryStage represents the window where the stages are displayed.
+     * @param primaryStage
+     *            represents the window where the stages are displayed.
      */
     public LevelEditorScene(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -94,6 +102,8 @@ public class LevelEditorScene {
             this.controller.getHeightInput().setText(String.valueOf(height));
             this.controller.getWidthInput().setText(String.valueOf(width));
 
+            this.propertyController = new PropertyController();
+
             this.primaryStage.setScene(scene);
             this.primaryStage.show();
 
@@ -107,8 +117,10 @@ public class LevelEditorScene {
     /**
      * Creates a new {@link LevelEditorScene} to edit existing {@link Level}.
      *
-     * @param primaryStage the stage to display window.
-     * @param levelId      an Id of a {@link Level} to edit.
+     * @param primaryStage
+     *            the stage to display window.
+     * @param levelId
+     *            an Id of a {@link Level} to edit.
      */
     public LevelEditorScene(Stage primaryStage, int levelId) {
         this(primaryStage);
@@ -178,9 +190,9 @@ public class LevelEditorScene {
         LevelObjectImage tokenImage = new LevelObjectImage(
                 new File(Constants.TOKEN_PATH).toURI().toString(),
                 Token.class.getName());
-//        LevelObjectImage keyImage = new LevelObjectImage(
-//        new File(Constants.KEY_PATH).toURI().toString(),
-//                Key.class.getName());
+        // LevelObjectImage keyImage = new LevelObjectImage(
+        // new File(Constants.KEY_PATH).toURI().toString(),
+        // Key.class.getName());
         LevelObjectImage closedKeyDoorImage = new LevelObjectImage(
                 new File(Constants.CLOSED_KEY_DOOR_PATH).toURI().toString(),
                 KeyDoor.class.getName());
@@ -191,33 +203,45 @@ public class LevelEditorScene {
                 new File(Constants.PLAYER_PATH).toURI().toString(),
                 Player.class.getName());
         LevelObjectImage dumbEnemeyImage = new LevelObjectImage(
-                new File(Constants.DUMB_TARGETING_ENEMY_PATH).toURI().toString(),
+                new File(Constants.DUMB_TARGETING_ENEMY_PATH).toURI()
+                        .toString(),
                 DumbTargetingEnemy.class.getName());
         LevelObjectImage smartEnemyImage = new LevelObjectImage(
-                new File(Constants.SMART_TARGETING_ENEMY_PATH).toURI().toString(),
+                new File(Constants.SMART_TARGETING_ENEMY_PATH).toURI()
+                        .toString(),
                 SmartTargetingEnemy.class.getName());
         LevelObjectImage straightEnemyImage = new LevelObjectImage(
-                new File(Constants.STRAIGHT_WALKING_ENEMY_PATH).toURI().toString(),
+                new File(Constants.STRAIGHT_WALKING_ENEMY_PATH).toURI()
+                        .toString(),
                 StraightWalkingEnemy.class.getName());
         LevelObjectImage wallEnemyImage = new LevelObjectImage(
-                new File(Constants.WALL_FOLLOWING_ENEMY_PATH).toURI().toString(),
+                new File(Constants.WALL_FOLLOWING_ENEMY_PATH).toURI()
+                        .toString(),
                 WallFollowingEnemy.class.getName());
         ImageView fire = createImageViewForLevelObjectImage(fireImage);
         ImageView water = createImageViewForLevelObjectImage(waterImage);
         ImageView wall = createImageViewForLevelObjectImage(wallImage);
         ImageView ground = createImageViewForLevelObjectImage(groundImage);
         ImageView goal = createImageViewForLevelObjectImage(goalImage);
-        ImageView teleporter = createImageViewForLevelObjectImage(teleporterImage);
-        ImageView fireBoots = createImageViewForLevelObjectImage(fireBootsImage);
+        ImageView teleporter = createImageViewForLevelObjectImage(
+                teleporterImage);
+        ImageView fireBoots = createImageViewForLevelObjectImage(
+                fireBootsImage);
         ImageView flippers = createImageViewForLevelObjectImage(flippersImage);
         ImageView token = createImageViewForLevelObjectImage(tokenImage);
-        ImageView closedKeyDoor = createImageViewForLevelObjectImage(closedKeyDoorImage);
-        ImageView closedTokenDoor = createImageViewForLevelObjectImage(closedTokenDoorImage);
+        ImageView closedKeyDoor = createImageViewForLevelObjectImage(
+                closedKeyDoorImage);
+        ImageView closedTokenDoor = createImageViewForLevelObjectImage(
+                closedTokenDoorImage);
         ImageView player = createImageViewForLevelObjectImage(playerImage);
-        ImageView dumbTargetingEnemy = createImageViewForLevelObjectImage(dumbEnemeyImage);
-        ImageView smartTargetingEnemy = createImageViewForLevelObjectImage(smartEnemyImage);
-        ImageView straightTargetingEnemy = createImageViewForLevelObjectImage(straightEnemyImage);
-        ImageView wallTargetingEnemy = createImageViewForLevelObjectImage(wallEnemyImage);
+        ImageView dumbTargetingEnemy = createImageViewForLevelObjectImage(
+                dumbEnemeyImage);
+        ImageView smartTargetingEnemy = createImageViewForLevelObjectImage(
+                smartEnemyImage);
+        ImageView straightTargetingEnemy = createImageViewForLevelObjectImage(
+                straightEnemyImage);
+        ImageView wallTargetingEnemy = createImageViewForLevelObjectImage(
+                wallEnemyImage);
 
         this.controller.getContainer().add(fire, 0, 0);
         this.controller.getContainer().add(water, 1, 0);
@@ -257,7 +281,8 @@ public class LevelEditorScene {
     /**
      * Creates an {@link ImageView} for specified {@link LevelObjectImage}.
      *
-     * @param image the {@link LevelObjectImage}.
+     * @param image
+     *            the {@link LevelObjectImage}.
      * @return the created {@link ImageView}.
      */
     private ImageView createImageViewForLevelObjectImage(
@@ -266,20 +291,6 @@ public class LevelEditorScene {
         view.setFitHeight(EDITOR_LEVEL_OBJECT_WIDTH);
         view.setFitWidth(EDITOR_LEVEL_OBJECT_WIDTH);
 
-        return view;
-    }
-
-    /**
-     * Creates {@link ImageView} from the {@link LevelObject}.
-     *
-     * @param object the {@link LevelObject} to display in {@link ImageView}.
-     * @return {@link ImageView} displaying {@link LevelObject}.
-     */
-    private ImageView createImageView(LevelObject object) {
-        ImageView view = new ImageView(object.getImage());
-        view.setFitHeight(Constants.GRID_CELL_HEIGHT);
-        view.setFitWidth(Constants.GRID_CELL_WIDTH);
-        view.setPreserveRatio(true);
         return view;
     }
 
@@ -297,7 +308,15 @@ public class LevelEditorScene {
             for (int y = 0; y < this.levelEditor.getGridHeight(); ++y) {
                 Cell cell = this.levelEditor.get(x, y);
 
-                this.controller.getBoardGame().add(createImageView(cell), x, y);
+                Canvas canvas = new Canvas(Constants.GRID_CELL_WIDTH,
+                        Constants.GRID_CELL_HEIGHT);
+                GraphicsContext gc = canvas.getGraphicsContext2D();
+                this.registerEventHandlerForCanvas(canvas);
+
+                cell.draw(gc, 0, 0, Constants.GRID_CELL_WIDTH,
+                        Constants.GRID_CELL_HEIGHT);
+
+                this.controller.getBoardGame().add(canvas, x, y);
             }
         }
 
@@ -309,27 +328,27 @@ public class LevelEditorScene {
      * Registers event handlers.
      */
     private void registerEventHandlers() {
-        this.controller.getConfirm()
-                .setOnMouseClicked(event -> {
-                    int width = Integer
-                            .parseInt(controller.getWidthInput().getText());
-                    int height = Integer.parseInt(
-                            controller.getHeightInput().getText());
+        this.controller.getConfirm().setOnMouseClicked(event -> {
+            int width = Integer.parseInt(controller.getWidthInput().getText());
+            int height = Integer
+                    .parseInt(controller.getHeightInput().getText());
 
-                    createLevelEditor(width, height);
-                    displayLevel();
-                    registerEventHandlersForGridPane();
-                    disableUserResizeInput();
-                    controller.getSave().setDisable(false);
-                });
+            createLevelEditor(width, height);
+            displayLevel();
+            registerEventHandlersForGridPane();
+            disableUserResizeInput();
+            controller.getSave().setDisable(false);
+        });
 
         // Validating user input - level dimension
         this.controller.getHeightInput().textProperty()
-                .addListener((observable, oldValue, newValue) -> validateLevelDimension(observable, oldValue, newValue,
-                        height));
+                .addListener((observable, oldValue,
+                        newValue) -> validateLevelDimension(observable,
+                                oldValue, newValue, height));
         this.controller.getWidthInput().textProperty()
-                .addListener((observable, oldValue, newValue) -> validateLevelDimension(observable, oldValue, newValue,
-                        width));
+                .addListener((observable, oldValue,
+                        newValue) -> validateLevelDimension(observable,
+                                oldValue, newValue, width));
         this.controller.getSave().setOnMouseClicked(event -> {
             try {
                 levelEditor.save();
@@ -359,82 +378,147 @@ public class LevelEditorScene {
      */
     private void registerEventHandlersForGridPane() {
 
-        this.controller.getBoardGame()
-                .setOnDragOver(event -> {
-                    Dragboard db = event.getDragboard();
-                    if (db.hasImage()) {
-                        event.acceptTransferModes(TransferMode.COPY);
-                    }
-                    event.consume();
-                });
+        this.controller.getBoardGame().setOnDragOver(event -> {
+            Dragboard db = event.getDragboard();
+            if (db.hasImage()) {
+                event.acceptTransferModes(TransferMode.COPY);
+            }
+            event.consume();
+        });
 
-        this.controller.getBoardGame()
-                .setOnDragDropped(event -> {
-                    Dragboard db = event.getDragboard();
-                    boolean success = false;
-                    Image image = db.getImage();
+        this.controller.getBoardGame().setOnDragDropped(event -> {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
 
-                    Node node = event.getPickResult().getIntersectedNode();
-                    if (db.hasImage()) {
-                        Integer cIndex = GridPane.getColumnIndex(node);
-                        Integer rIndex = GridPane.getRowIndex(node);
-                        int x = cIndex == null ? 0 : cIndex;
-                        int y = rIndex == null ? 0 : rIndex;
+            Canvas canvas = (Canvas) event.getPickResult().getIntersectedNode();
+            if (db.hasImage()) {
+                Integer cIndex = GridPane.getColumnIndex(canvas);
+                Integer rIndex = GridPane.getRowIndex(canvas);
+                int x = cIndex == null ? 0 : cIndex;
+                int y = rIndex == null ? 0 : rIndex;
 
-                        // Prevent user from replacing walls
-                        if (x > 0 && y > 0
-                                && x < levelEditor.getGridWidth() - 1
-                                && y < levelEditor.getGridHeight() - 1) {
+                // Prevent user from replacing walls
+                if (x > 0 && y > 0 && x < levelEditor.getGridWidth() - 1
+                        && y < levelEditor.getGridHeight() - 1) {
 
-                            LevelObject levelObject = createLevelObjectByName(
-                                    draggedImage.getLabel(), x, y);
-                            // TODO: The Drag&Drop sometimes doesn't work - find out why
-                            try {
-                                if (levelObject instanceof Cell) {
-                                    if (levelEditor.get(x, y) != null) {
-                                        levelEditor.remove(x, y);
-                                    }
-
-                                    levelEditor.add(x, y, (Cell) levelObject);
-
-                                } else if (levelObject instanceof CollectableItem && this.levelEditor.get(x, y) instanceof Ground) {
-                                    ((Ground) this.levelEditor.get(x, y)).setCollectableItem((CollectableItem) levelObject);
-                                } else if (levelObject instanceof MovableObject && this.levelEditor.get(x, y) instanceof StepableCell) {
-                                    ((StepableCell) this.levelEditor.get(x, y)).setMovableObject((MovableObject) levelObject);
-                                }
-
-                                setBoardCell(image, x, y);
-                                success = true;
-                            } catch (PositionTakenException e) {
-                                System.err.println(e.getMessage());
-                                e.printStackTrace();
+                    LevelObject levelObject = createLevelObjectByName(
+                            draggedImage.getLabel(), x, y);
+                    try {
+                        if (levelObject instanceof Cell) {
+                            if (levelEditor.get(x, y) != null) {
+                                levelEditor.remove(x, y);
                             }
 
-                            // TODO: Move this to a separate method and recall when creating default level or loading existing one
-                            node.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent event) {
-                                    if (event.getButton().equals(MouseButton.PRIMARY)) {
-                                        if (event.getClickCount() == 2) {
-                                            //TODO: Call IPropertyManager here
-                                            System.out.println("xdworks");
-                                        }
-                                    }
-                                }
-                            });
+                            levelEditor.add(x, y, (Cell) levelObject);
+
+                        } else if (levelObject instanceof CollectableItem
+                                && this.levelEditor.get(x,
+                                        y) instanceof Ground) {
+                            ((Ground) this.levelEditor.get(x, y))
+                                    .setCollectableItem(
+                                            (CollectableItem) levelObject);
+                        } else if (levelObject instanceof MovableObject
+                                && this.levelEditor.get(x,
+                                        y) instanceof StepableCell) {
+                            ((StepableCell) this.levelEditor.get(x, y))
+                                    .setMovableObject(
+                                            (MovableObject) levelObject);
                         }
 
-                    }
-                    event.setDropCompleted(success);
-                    event.consume();
-                });
+                        this.levelEditor.get(x, y).draw(
+                                canvas.getGraphicsContext2D(), 0, 0,
+                                Constants.GRID_CELL_WIDTH,
+                                Constants.GRID_CELL_HEIGHT);
 
+                        success = true;
+                    } catch (PositionTakenException e) {
+                        System.err.println(e.getMessage());
+                        e.printStackTrace();
+                    }
+
+                    registerEventHandlerForCanvas(canvas);
+                }
+
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
+    }
+
+    /**
+     * Registers event handlers for {@link Canvas} displaying currently edited
+     * {@link Level}.
+     *
+     * @param canvas
+     *            the {@link Canvas} to work with.
+     */
+    private void registerEventHandlerForCanvas(Canvas canvas) {
+        canvas.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
+                    if (event.getClickCount() == 2) {
+                        Node node = (Node) event.getSource();
+                        int x = controller.getBoardGame().getColumnIndex(node);
+                        int y = controller.getBoardGame().getRowIndex(node);
+
+                        Cell cell = levelEditor.get(x, y);
+
+                        boolean isSteppedOn = (cell instanceof Ground
+                                && ((Ground) cell).isSteppedOn());
+                        boolean hasCollectable = (cell instanceof Ground
+                                && ((Ground) cell).hasCollectableItem());
+                        boolean isDoor = (cell instanceof Door);
+
+                        if (isDoor) {
+                            propertyController.setActiveObject(cell);
+                        }
+                        if (isSteppedOn) {
+                            propertyController.setActiveObject(
+                                    ((StepableCell) cell).getMovableObject());
+                        }
+                        if (hasCollectable && !isSteppedOn) {
+                            propertyController.setActiveObject(
+                                    ((Ground) cell).getCollectableItem());
+                        }
+
+
+                        if (isDoor | isSteppedOn | hasCollectable) {
+                            generatePropertiesWindow(
+                                    propertyController.getProperties());
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Generates Property window.
+     *
+     * @param infos
+     *            properties to be displayed in the window.
+     */
+    private void generatePropertiesWindow(PropertyInfo[] propertyInfos) {
+        // 1) Add save button to FXML to rewrite values in fields
+        // 2) When generating GUI, you can use "id" (not fx:id) to map
+        // TextFields to PropertyInfos
+        // 2.1) You will need to do it manually (loop) - right now, there is no
+        // methods in PropertiesController that would do that for you
+
+        for (PropertyInfo info : propertyInfos) {
+            System.out.println(String.format("%s (%s): %s", info.getKey(),
+                    info.getTypeInfo(),
+                    info.getValue() == null ? "null" : info.getValue()));
+        }
+        System.out.println();
     }
 
     /**
      * Registers event handlers for {@link ImageView}.
      *
-     * @param view the {@link ImageView} to use.
+     * @param view
+     *            the {@link ImageView} to use.
      */
     private void registerEventHandlerForImageView(ImageView view) {
         view.setOnDragDetected(event -> {
@@ -456,10 +540,14 @@ public class LevelEditorScene {
     /**
      * Validates user input for {@link Level} width and height.
      *
-     * @param target     the field in which to write the value.
-     * @param observable the {@link TextField} in which the value has changed.
-     * @param oldValue   the old value.
-     * @param newValue   the new value.
+     * @param target
+     *            the field in which to write the value.
+     * @param observable
+     *            the {@link TextField} in which the value has changed.
+     * @param oldValue
+     *            the old value.
+     * @param newValue
+     *            the new value.
      */
     private void validateLevelDimension(
             ObservableValue<? extends String> observable, String oldValue,
@@ -497,8 +585,10 @@ public class LevelEditorScene {
     /**
      * Creates a new {@link LevelEditor} with default {@link Level}.
      *
-     * @param width  the width of the new {@link Level}.
-     * @param height the height of the new {@link Level}.
+     * @param width
+     *            the width of the new {@link Level}.
+     * @param height
+     *            the height of the new {@link Level}.
      */
     private void createLevelEditor(int width, int height) {
         this.levelEditor = new LevelEditor(width, height);
@@ -531,46 +621,11 @@ public class LevelEditorScene {
         }
     }
 
-    // TODO: Comment
-    public void setBoardCell(Image icon, int x, int y) {
-        ImageView oldObject = getNodeFromGridPane(
-                this.controller.getBoardGame(), x, y);
-        oldObject.setImage(icon);
-    }
-
-    // TODO: Comment
-    // TODO: Is there a better way?
-    private ImageView getNodeFromGridPane(GridPane gridPane, int col, int row) {
-        Node result = null;
-        ObservableList<Node> children = gridPane.getChildren();
-
-        for (int i = 0; i < children.size(); ++i) {
-            int nodeRow;
-            int nodeCol;
-            Node node = children.get(i);
-            if (GridPane.getRowIndex(node) == null) {
-                nodeRow = 0;
-            } else {
-                nodeRow = GridPane.getRowIndex(node);
-            }
-            if (GridPane.getColumnIndex(node) == null) {
-                nodeCol = 0;
-            } else {
-                nodeCol = GridPane.getColumnIndex(node);
-            }
-            if (nodeRow == row && nodeCol == col) {
-                result = node;
-                break;
-            }
-        }
-
-        return (ImageView) result;
-    }
-
     /**
      * Creates a new {@link LevelObject} from its name.
      *
-     * @param name name of the {@link LevelObject}.
+     * @param name
+     *            name of the {@link LevelObject}.
      * @return the created {@link LevelObject}.
      */
     private LevelObject createLevelObjectByName(String name, int x, int y) {
@@ -579,80 +634,89 @@ public class LevelEditorScene {
 
         // TODO: Use Contants instead of Strings
         switch (className[className.length - 1]) {
-            case "Fire": {
-                cell = new Fire(this.levelEditor.getLevel(), x, y);
-                break;
-            }
-            case "Water": {
-                cell = new Water(this.levelEditor.getLevel(), x, y);
-                break;
-            }
-            case "Wall": {
-                cell = new Wall(this.levelEditor.getLevel(), x, y);
-                break;
-            }
-            case "Goal": {
-                cell = new Goal(this.levelEditor.getLevel(), x, y);
-                break;
-            }
-            case "Ground": {
-                cell = new Ground(this.levelEditor.getLevel(), x, y);
-                break;
-            }
-            case "Token":{
-                cell = new Token(this.levelEditor.getLevel());
-                break;
-            }
-            case "Teleporter":{
-                cell = new Teleporter(this.levelEditor.getLevel(), Constants.TITLE_TELEPORTER, x, y);
-                break;
-            }
-            case "TokenDoor":{
-                cell = new TokenDoor(this.levelEditor.getLevel(), Constants.TITLE_TOKEN_DOOR, x, y);
-                break;
-            }
-            case "KeyDoor":{
-                cell = new KeyDoor(this.levelEditor.getLevel(), Constants.TITLE_KEY_DOOR, x, y, KeyType.BLUE, false);
-                break;
-            }
-            case "DumbTargetingEnemy":{
-                cell = new DumbTargetingEnemy(this.levelEditor.getLevel(), Constants.TITLE_DUMB_TARGETING_ENEMY, x, y);
-                break;
-            }
-            case "SmartTargetingEnemy":{
-                cell = new SmartTargetingEnemy(this.levelEditor.getLevel(), Constants.TITLE_SMART_TARGETING_ENEMY, x, y);
-                break;
-            }
-            case "StraightWalkingEnemy":{
-                cell = new StraightWalkingEnemy(this.levelEditor.getLevel(), Constants.TITLE_STRAIGHT_WALKING_ENEMY, x, y, 1, 0);
-                break;
-            }
-            case "WallFollowingEnemy":{
-                cell = new WallFollowingEnemy(this.levelEditor.getLevel(), Constants.TITLE_WALL_FOLLOWING_ENEMY, x, y);
-                break;
-            }
-            case "Flippers":{
-                cell = new Flippers(this.levelEditor.getLevel());
-                break;
-            }
-            case "FireBoots":{
-                cell = new FireBoots(this.levelEditor.getLevel());
-                break;
-            }
-            case "Player":{
-                cell = new Player(this.levelEditor.getLevel(), Constants.TITLE_PLAYER, x, y, 0, 0);
-                break;
-            }
-            default: {
-                break;
-            }
+        case "Fire": {
+            cell = new Fire(this.levelEditor.getLevel(), x, y);
+            break;
+        }
+        case "Water": {
+            cell = new Water(this.levelEditor.getLevel(), x, y);
+            break;
+        }
+        case "Wall": {
+            cell = new Wall(this.levelEditor.getLevel(), x, y);
+            break;
+        }
+        case "Goal": {
+            cell = new Goal(this.levelEditor.getLevel(), x, y);
+            break;
+        }
+        case "Ground": {
+            cell = new Ground(this.levelEditor.getLevel(), x, y);
+            break;
+        }
+        case "Token": {
+            cell = new Token(this.levelEditor.getLevel());
+            break;
+        }
+        case "Teleporter": {
+            cell = new Teleporter(this.levelEditor.getLevel(),
+                    Constants.TITLE_TELEPORTER, x, y);
+            break;
+        }
+        case "TokenDoor": {
+            cell = new TokenDoor(this.levelEditor.getLevel(),
+                    Constants.TITLE_TOKEN_DOOR, x, y);
+            break;
+        }
+        case "KeyDoor": {
+            cell = new KeyDoor(this.levelEditor.getLevel(),
+                    Constants.TITLE_KEY_DOOR, x, y, KeyType.BLUE, false);
+            break;
+        }
+        case "DumbTargetingEnemy": {
+            cell = new DumbTargetingEnemy(this.levelEditor.getLevel(),
+                    Constants.TITLE_DUMB_TARGETING_ENEMY, x, y);
+            break;
+        }
+        case "SmartTargetingEnemy": {
+            cell = new SmartTargetingEnemy(this.levelEditor.getLevel(),
+                    Constants.TITLE_SMART_TARGETING_ENEMY, x, y);
+            break;
+        }
+        case "StraightWalkingEnemy": {
+            cell = new StraightWalkingEnemy(this.levelEditor.getLevel(),
+                    Constants.TITLE_STRAIGHT_WALKING_ENEMY, x, y, 1, 0);
+            break;
+        }
+        case "WallFollowingEnemy": {
+            cell = new WallFollowingEnemy(this.levelEditor.getLevel(),
+                    Constants.TITLE_WALL_FOLLOWING_ENEMY, x, y);
+            break;
+        }
+        case "Flippers": {
+            cell = new Flippers(this.levelEditor.getLevel());
+            break;
+        }
+        case "FireBoots": {
+            cell = new FireBoots(this.levelEditor.getLevel());
+            break;
+        }
+        case "Player": {
+            cell = new Player(this.levelEditor.getLevel(),
+                    Constants.TITLE_PLAYER, x, y, 0, 0);
+            break;
+        }
+        default: {
+            break;
+        }
         }
 
         // TODO: throw new UnknownCellException(name)
         if (cell != null) {
             System.out.println(cell);
         } else {
-            System.err.println("LevelEditorScene.createCellByName(String, int, int) failed!");
+            System.err.println(
+                    "LevelEditorScene.createCellByName(String, int, int) failed!");
         }
 
         return cell;

@@ -102,21 +102,6 @@ public class GameScene {
             e.printStackTrace();
         }
         primaryStage.setTitle("Kitchen Catastrophe");
-
-
-//        IPropertyController propertyController = new PropertyController();
-//        for (int x = 0; x < this.currentLevel.getGridWidth(); x++) {
-//            for (int y = 0; y < this.currentLevel.getGridHeight(); y++) {
-//                propertyController.setActiveObject(this.currentLevel.getGrid()[x][y]);
-//
-//                PropertyInfo[] propertyInfos = propertyController.getProperties();
-//                for (PropertyInfo info : propertyInfos) {
-//                    System.out.println(String.format("%s (%s): %s", info.getKey(), info.getTypeInfo(), info.getValue() == null ? "null" : info.getValue()));
-//                }
-//
-//                System.out.println();
-//            }
-//        }
     }
 
     /**

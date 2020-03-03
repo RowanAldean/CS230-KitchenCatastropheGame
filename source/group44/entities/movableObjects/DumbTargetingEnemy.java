@@ -140,7 +140,7 @@ public class DumbTargetingEnemy extends Enemy {
     /**
      * Returns a string representation of a Dumb Targeting Enemy.
      *
-     * @return the string repsesentation of a Dumb Targeting Enemy.
+     * @return the string representation of a Dumb Targeting Enemy.
      */
     @Override
     public String toString() {
@@ -157,8 +157,7 @@ public class DumbTargetingEnemy extends Enemy {
 
         builder.append(this.getPositionY());
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
-        
-        builder.append(Constants.LEVEL_OBJECT_DELIMITER);
+
         builder.append(this.getImagePath());
 
         return builder.toString();
