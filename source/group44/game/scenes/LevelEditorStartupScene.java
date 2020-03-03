@@ -27,6 +27,7 @@ public class LevelEditorStartupScene {
         try {
             Parent root = fxmlLoader.load();
 
+            root.getStylesheets().add("group44/resources/application.css");
             root.setId("root");
             Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
