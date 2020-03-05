@@ -9,6 +9,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Controller for the Level Editor.
+ * @author bogdan Mihai
+ * @version 1.0
+ *
+ */
 public class LevelEditorController {
     @FXML
     private BorderPane root;

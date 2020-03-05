@@ -13,7 +13,8 @@ import javafx.scene.layout.VBox;
  * layout in the code. It also contains the appropriate getters and setters for
  * the widgets.
  *
- * @author Bogdan
+ * @author Bogdan Mihai
+ * @version 1.0
  */
 public class MainGameWindowController {
     @FXML

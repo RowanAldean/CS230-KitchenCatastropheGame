@@ -14,6 +14,12 @@ import javafx.util.Callback;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+/**
+ * Layout controller for the Level Editor startup.
+ *
+ * @author Bogdan Mihai
+ * @version 1.0
+ */
 public class LevelEditorStartupLayoutController {
     @FXML
     private ListView<LevelInfo> levels;

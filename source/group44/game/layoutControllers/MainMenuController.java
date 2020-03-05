@@ -13,7 +13,8 @@ import javafx.scene.layout.BorderPane;
  * in the code. It also contains the appropriate getters and setters for the
  * widgets.
  *
- * @author Bogdan
+ * @author Bogdan Mihai
+ * @version 1.0
  */
 public class MainMenuController {
     @FXML
