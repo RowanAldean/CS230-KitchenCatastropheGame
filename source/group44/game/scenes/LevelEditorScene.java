@@ -10,6 +10,7 @@ import group44.entities.cells.*;
 import group44.entities.collectableItems.CollectableItem;
 import group44.entities.collectableItems.FireBoots;
 import group44.entities.collectableItems.Flippers;
+import group44.entities.collectableItems.Key;
 import group44.entities.collectableItems.Key.KeyType;
 import group44.entities.collectableItems.Token;
 import group44.entities.movableObjects.*;
@@ -63,6 +64,7 @@ public class LevelEditorScene {
 
     private static final String ERROR_SAVING_FAILED_TITLE = "Level Editor";
     private static final String ERROR_SAVING_FAILED_HEADER = "Saving failed";
+
 
     /**
      * The controller associated with the scene.
@@ -182,40 +184,40 @@ public class LevelEditorScene {
                 new File(Constants.TELEPORTER_PATH).toURI().toString(),
                 Teleporter.class.getName());
         LevelObjectImage fireBootsImage = new LevelObjectImage(
-                new File(Constants.FIRE_BOOTS_PATH).toURI().toString(),
+                new File(Constants.LEVEL_EDITOR_FIRE_BOOTS_PATH).toURI().toString(),
                 FireBoots.class.getName());
         LevelObjectImage flippersImage = new LevelObjectImage(
-                new File(Constants.FLIPPERS_PATH).toURI().toString(),
+                new File(Constants.LEVEL_EDITOR_FLIPPERS_PATH).toURI().toString(),
                 Flippers.class.getName());
         LevelObjectImage tokenImage = new LevelObjectImage(
-                new File(Constants.TOKEN_PATH).toURI().toString(),
+                new File(Constants.LEVEL_EDITOR_TOKEN_PATH).toURI().toString(),
                 Token.class.getName());
-        // LevelObjectImage keyImage = new LevelObjectImage(
-        // new File(Constants.KEY_PATH).toURI().toString(),
-        // Key.class.getName());
+        LevelObjectImage keyImage = new LevelObjectImage(
+                new File(Constants.LEVEL_EDITOR_KEY).toURI().toString(),
+                Key.class.getName());
         LevelObjectImage closedKeyDoorImage = new LevelObjectImage(
-                new File(Constants.CLOSED_KEY_DOOR_PATH).toURI().toString(),
+                new File(String.format(Constants.CLOSED_KEY_DOOR_PATH, KeyType.RED.name())).toURI().toString(),
                 KeyDoor.class.getName());
         LevelObjectImage closedTokenDoorImage = new LevelObjectImage(
                 new File(Constants.CLOSED_TOKEN_DOOR_PATH).toURI().toString(),
                 TokenDoor.class.getName());
         LevelObjectImage playerImage = new LevelObjectImage(
-                new File(Constants.PLAYER_PATH).toURI().toString(),
+                new File(Constants.LEVEL_EDITOR_PLAYER_PATH).toURI().toString(),
                 Player.class.getName());
         LevelObjectImage dumbEnemeyImage = new LevelObjectImage(
-                new File(Constants.DUMB_TARGETING_ENEMY_PATH).toURI()
+                new File(Constants.LEVEL_EDITOR_DUMB_TARGETING_ENEMY_PATH).toURI()
                         .toString(),
                 DumbTargetingEnemy.class.getName());
         LevelObjectImage smartEnemyImage = new LevelObjectImage(
-                new File(Constants.SMART_TARGETING_ENEMY_PATH).toURI()
+                new File(Constants.LEVEL_EDITOR_SMART_TARGETING_ENEMY_PATH).toURI()
                         .toString(),
                 SmartTargetingEnemy.class.getName());
         LevelObjectImage straightEnemyImage = new LevelObjectImage(
-                new File(Constants.STRAIGHT_WALKING_ENEMY_PATH).toURI()
+                new File(Constants.LEVEL_EDITOR_STRAIGHT_WALKING_ENEMY_PATH).toURI()
                         .toString(),
                 StraightWalkingEnemy.class.getName());
         LevelObjectImage wallEnemyImage = new LevelObjectImage(
-                new File(Constants.WALL_FOLLOWING_ENEMY_PATH).toURI()
+                new File(Constants.LEVEL_EDITOR_WALL_FOLLOWING_ENEMY_PATH).toURI()
                         .toString(),
                 WallFollowingEnemy.class.getName());
         ImageView fire = createImageViewForLevelObjectImage(fireImage);
@@ -229,6 +231,7 @@ public class LevelEditorScene {
                 fireBootsImage);
         ImageView flippers = createImageViewForLevelObjectImage(flippersImage);
         ImageView token = createImageViewForLevelObjectImage(tokenImage);
+        ImageView key = createImageViewForLevelObjectImage(keyImage);
         ImageView closedKeyDoor = createImageViewForLevelObjectImage(
                 closedKeyDoorImage);
         ImageView closedTokenDoor = createImageViewForLevelObjectImage(
@@ -252,13 +255,14 @@ public class LevelEditorScene {
         this.controller.getContainer().add(fireBoots, 0, 3);
         this.controller.getContainer().add(flippers, 1, 3);
         this.controller.getContainer().add(token, 0, 4);
-        this.controller.getContainer().add(closedKeyDoor, 1, 4);
-        this.controller.getContainer().add(closedTokenDoor, 0, 5);
-        this.controller.getContainer().add(player, 1, 5);
-        this.controller.getContainer().add(dumbTargetingEnemy, 0, 6);
-        this.controller.getContainer().add(smartTargetingEnemy, 1, 6);
-        this.controller.getContainer().add(straightTargetingEnemy, 0, 7);
-        this.controller.getContainer().add(wallTargetingEnemy, 1, 7);
+        this.controller.getContainer().add(key, 1, 4);
+        this.controller.getContainer().add(closedKeyDoor, 0, 5); //HERE
+        this.controller.getContainer().add(closedTokenDoor, 1, 5);
+        this.controller.getContainer().add(player, 0, 6);
+        this.controller.getContainer().add(dumbTargetingEnemy, 1, 6);
+        this.controller.getContainer().add(smartTargetingEnemy, 0, 7);
+        this.controller.getContainer().add(straightTargetingEnemy, 1, 7);
+        this.controller.getContainer().add(wallTargetingEnemy, 0, 8);
 
         this.registerEventHandlerForImageView(fire);
         this.registerEventHandlerForImageView(water);
@@ -269,6 +273,7 @@ public class LevelEditorScene {
         this.registerEventHandlerForImageView(fireBoots);
         this.registerEventHandlerForImageView(flippers);
         this.registerEventHandlerForImageView(token);
+        this.registerEventHandlerForImageView(key);
         this.registerEventHandlerForImageView(closedKeyDoor);
         this.registerEventHandlerForImageView(closedTokenDoor);
         this.registerEventHandlerForImageView(player);
@@ -629,6 +634,7 @@ public class LevelEditorScene {
      * @return the created {@link LevelObject}.
      */
     private LevelObject createLevelObjectByName(String name, int x, int y) {
+        System.out.print(name);
         LevelObject cell = null;
         String[] className = name.split("\\.");
 
@@ -668,9 +674,13 @@ public class LevelEditorScene {
                     Constants.TITLE_TOKEN_DOOR, x, y);
             break;
         }
+        case "Key": {
+            cell = new Key(this.levelEditor.getLevel(), KeyType.RED);
+            break;
+        }
         case "KeyDoor": {
             cell = new KeyDoor(this.levelEditor.getLevel(),
-                    Constants.TITLE_KEY_DOOR, x, y, KeyType.BLUE, false);
+                    Constants.TITLE_KEY_DOOR, x, y, KeyType.RED, false);
             break;
         }
         case "DumbTargetingEnemy": {
@@ -715,6 +725,7 @@ public class LevelEditorScene {
         if (cell != null) {
             System.out.println(cell);
         } else {
+            System.err.print(name);
             System.err.println(
                     "LevelEditorScene.createCellByName(String, int, int) failed!");
         }

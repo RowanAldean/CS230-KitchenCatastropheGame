@@ -42,6 +42,17 @@ public final class Constants {
     public static final String STRAIGHT_WALKING_ENEMY_PATH = FILE_SOURCE + "resources/Enemies/Carrot/MrCarrotFront.png";
     public static final String WALL_FOLLOWING_ENEMY_PATH = FILE_SOURCE + "resources/Enemies/Hotdog/MrHotDogFront.png";
 
+    // Level editor - tile paths
+    public static final String LEVEL_EDITOR_KEY = FILE_SOURCE + "resources/LevelEditor/GreyKey.png";
+    public static final String LEVEL_EDITOR_FIRE_BOOTS_PATH = FILE_SOURCE + "resources/LevelEditor/fireBoots.png";
+    public static final String LEVEL_EDITOR_FLIPPERS_PATH = FILE_SOURCE + "resources/LevelEditor/flippers.png";
+    public static final String LEVEL_EDITOR_TOKEN_PATH = FILE_SOURCE + "resources/LevelEditor/token.png";
+    public static final String LEVEL_EDITOR_PLAYER_PATH = FILE_SOURCE + "resources/LevelEditor/PlayerFront.png";
+    public static final String LEVEL_EDITOR_DUMB_TARGETING_ENEMY_PATH = FILE_SOURCE + "resources/LevelEditor/MrPickleFront.png";
+    public static final String LEVEL_EDITOR_SMART_TARGETING_ENEMY_PATH = FILE_SOURCE + "resources/LevelEditor/MrEggFront.png";
+    public static final String LEVEL_EDITOR_WALL_FOLLOWING_ENEMY_PATH = FILE_SOURCE + "resources/LevelEditor/MrHotDogFront.png";
+    public static final String LEVEL_EDITOR_STRAIGHT_WALKING_ENEMY_PATH = FILE_SOURCE + "resources/LevelEditor/MrCarrotFront.png";
+
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;
 
