@@ -43,7 +43,7 @@ public abstract class Door extends StepableCell {
      */
     public Door(Level level, String title, int positionX, int positionY,
                 String lockedImagePath, String unlockedImagePath, boolean isOpen) {
-        super(level, title, positionX, positionY, lockedImagePath);
+        super(level, title, positionX, positionY, isOpen ? unlockedImagePath : lockedImagePath);
 
         this.unlockedImagePath = unlockedImagePath;
 
