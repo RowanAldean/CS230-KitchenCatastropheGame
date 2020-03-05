@@ -53,7 +53,7 @@ import static group44.Constants.WINDOW_WIDTH;
 /**
  * The scene for {@link LevelEditor}.
  *
- * @author Tomas Svejnoha, Bogdan Mihai, Rowan Aldean
+ * @author Tomas Svejnoha, Bogdan Mihai, Rowan Aldean, Oliver Morris
  * @version 1.0
  */
 public class LevelEditorScene {
@@ -363,12 +363,12 @@ public class LevelEditorScene {
         // Validating user input - level dimension
         this.controller.getHeightInput().textProperty()
                 .addListener((observable, oldValue,
-                        newValue) -> validateLevelDimension(observable,
-                                oldValue, newValue, height));
+                              newValue) -> validateLevelDimension(observable,
+                        oldValue, newValue, height));
         this.controller.getWidthInput().textProperty()
                 .addListener((observable, oldValue,
-                        newValue) -> validateLevelDimension(observable,
-                                oldValue, newValue, width));
+                              newValue) -> validateLevelDimension(observable,
+                        oldValue, newValue, width));
         this.controller.getSave().setOnMouseClicked(event -> {
             try {
                 levelEditor.save();
@@ -411,6 +411,8 @@ public class LevelEditorScene {
             event.consume();
         });
 
+
+
         this.controller.getBoardGame().setOnDragDropped(event -> {
             Dragboard db = event.getDragboard();
             boolean success = false;
@@ -438,13 +440,13 @@ public class LevelEditorScene {
 
                         } else if (levelObject instanceof CollectableItem
                                 && this.levelEditor.get(x,
-                                        y) instanceof Ground) {
+                                y) instanceof Ground) {
                             ((Ground) this.levelEditor.get(x, y))
                                     .setCollectableItem(
                                             (CollectableItem) levelObject);
                         } else if (levelObject instanceof MovableObject
                                 && this.levelEditor.get(x,
-                                        y) instanceof StepableCell) {
+                                y) instanceof StepableCell) {
                             ((StepableCell) this.levelEditor.get(x, y))
                                     .setMovableObject(
                                             (MovableObject) levelObject);
@@ -557,78 +559,82 @@ public class LevelEditorScene {
 
             switch (type) {
 
-            // only editable int is number of tokens
-            case Int:
-                if (name.equals("Tokens Needed")) {
-                    TextField intField = new TextField(
-                            String.valueOf((int) genericValue));
-                    intField.setId("tokens");
-                    gp.add(intField, 1, i);
-                } else {
-                    Label intLabel = new Label(
-                            String.valueOf((int) genericValue));
-                    gp.add(intLabel, 1, i);
-                }
-                break;
+                // only editable int is number of tokens
+                case Int:
+                    if (name.equals("Tokens Needed")) {
+                        TextField intField = new TextField(
+                                String.valueOf((int) genericValue));
+                        intField.setId("tokens");
+                        gp.add(intField, 1, i);
+                    } else {
+                        Label intLabel = new Label(
+                                String.valueOf((int) genericValue));
+                        gp.add(intLabel, 1, i);
+                    }
+                    break;
 
-            // display string properties in a label as they don't need to be
-            // edited
-            case String:
-                Label strLabel = new Label((String) genericValue);
-                gp.add(strLabel, 1, i);
-                break;
+                // display string properties in a label as they don't need to be
+                // edited
+                case String:
+                    Label strLabel = new Label((String) genericValue);
+                    gp.add(strLabel, 1, i);
+                    break;
 
-            // isOpen property is displayed in a radio button
-            case Boolean:
-                RadioButton boolButton = new RadioButton();
-                boolButton.setSelected((boolean) genericValue);
-                boolButton.setId("isOpen");
-                gp.add(boolButton, 1, i);
-                break;
+                // isOpen property is displayed in a radio button
+                case Boolean:
+                    RadioButton boolButton = new RadioButton();
+                    boolButton.setSelected((boolean) genericValue);
+                    boolButton.setId("isOpen");
+                    gp.add(boolButton, 1, i);
+                    break;
 
-            // all possible key types are held in a combo box
-            case KeyType:
-                ComboBox<String> comboKey = new ComboBox<>();
-                String[] keys = { KeyType.BLUE.name(), KeyType.RED.name(),
-                        KeyType.GOLD.name(), KeyType.GREEN.name() };
-                comboKey.setItems(
-                        FXCollections.observableList(Arrays.asList(keys)));
-                comboKey.getSelectionModel()
-                        .select(((KeyType) genericValue).name());
-                comboKey.setId("keyType");
-                gp.add(comboKey, 1, i);
-                break;
+                // all possible key types are held in a combo box
+                case KeyType:
+                    ComboBox<String> comboKey = new ComboBox<>();
+                    String[] keys = { KeyType.BLUE.name(), KeyType.RED.name(),
+                            KeyType.GOLD.name(), KeyType.GREEN.name() };
+                    comboKey.setItems(
+                            FXCollections.observableList(Arrays.asList(keys)));
+                    comboKey.getSelectionModel()
+                            .select(((KeyType) genericValue).name());
+                    comboKey.setId("keyType");
+                    gp.add(comboKey, 1, i);
+                    break;
 
-            // teleporter partner is displayed in a label
-            // TODO: allow user to select a new teleporter.
-            case Teleporter:
-                Teleporter partner = (Teleporter) genericValue;
-                Label tpLabel = new Label(String.format("Teleporter at %d, %d",
-                        partner.getPositionX(), partner.getPositionY()));
-                gp.add(tpLabel, 1, i);
-                break;
+                // teleporter partner is displayed in a label
+                case Teleporter:
+                    Teleporter partner = (Teleporter) genericValue;
+                    TextField tpField = new TextField("Select Teleporter to Link");
 
-            // movable object cannot be edited
-            case MovableObject:
-                Label moLabel;
-                if (genericValue == null) {
-                    moLabel = new Label("None");
-                } else {
-                    moLabel = new Label(info.getValue().toString());
-                }
-                gp.add(moLabel, 1, i);
-                break;
+                    if (partner != null) {
+                        String[] partnerInfo = partner.toString().split(",");
+                        tpField.setText(String.format("%s,%s", partnerInfo[2], partnerInfo[3]));
+                    }
+                    tpField.setId("telePair");
+                    gp.add(tpField, 1, i);
+                    break;
 
-            // collectible item cannot be edited
-            case CollectableItem:
-                Label ciLabel;
-                if (genericValue == null) {
-                    ciLabel = new Label("None");
-                } else {
-                    ciLabel = new Label(info.getValue().toString());
-                }
-                gp.add(ciLabel, 1, i);
-                break;
+                // movable object cannot be edited
+                case MovableObject:
+                    Label moLabel;
+                    if (genericValue == null) {
+                        moLabel = new Label("None");
+                    } else {
+                        moLabel = new Label(info.getValue().toString());
+                    }
+                    gp.add(moLabel, 1, i);
+                    break;
+
+                // collectible item cannot be edited
+                case CollectableItem:
+                    Label ciLabel;
+                    if (genericValue == null) {
+                        ciLabel = new Label("None");
+                    } else {
+                        ciLabel = new Label(info.getValue().toString());
+                    }
+                    gp.add(ciLabel, 1, i);
+                    break;
             }
             // display property name
             Label propertyName = new Label(name);
@@ -659,9 +665,7 @@ public class LevelEditorScene {
             TextField tokens = (TextField) gp.lookup("#tokens");
             RadioButton isOpen = (RadioButton) gp.lookup("#isOpen");
             ComboBox<String> keyType = (ComboBox<String>) gp.lookup("#keyType");
-
-            // TODO: allow user to change paired teleporter.
-            Button telePair = null;// = (Button) gp.lookup(#telePair);
+            TextField telePair = (TextField) gp.lookup("#telePair");
 
             KeyType reqKey = null;
             String keyTitle = "";
@@ -687,46 +691,46 @@ public class LevelEditorScene {
             // set the titles and paths for keys and doors
             if (keyType != null) {
                 switch (keyType.getSelectionModel().getSelectedItem()) {
-                case "BLUE":
-                    reqKey = KeyType.BLUE;
-                    keyTitle = "Blue key";
-                    keyPath = String.format(Constants.KEY_PATH, "blue");
-                    doorTitle = "Blue Door";
-                    closedDoorPath = String
-                            .format(Constants.CLOSED_KEY_DOOR_PATH, "Blue");
-                    openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
-                            "Blue");
-                    break;
-                case "RED":
-                    reqKey = KeyType.RED;
-                    keyTitle = "Red key";
-                    keyPath = String.format(Constants.KEY_PATH, "red");
-                    doorTitle = "Red Door";
-                    closedDoorPath = String
-                            .format(Constants.CLOSED_KEY_DOOR_PATH, "Red");
-                    openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
-                            "Red");
-                    break;
-                case "GREEN":
-                    reqKey = KeyType.GREEN;
-                    keyTitle = "Green key";
-                    keyPath = String.format(Constants.KEY_PATH, "green");
-                    doorTitle = "Green Door";
-                    closedDoorPath = String
-                            .format(Constants.CLOSED_KEY_DOOR_PATH, "Green");
-                    openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
-                            "Green");
-                    break;
-                case "GOLD":
-                    reqKey = KeyType.GOLD;
-                    keyTitle = "Gold key";
-                    keyPath = String.format(Constants.KEY_PATH, "gold");
-                    doorTitle = "Gold Door";
-                    closedDoorPath = String
-                            .format(Constants.CLOSED_KEY_DOOR_PATH, "Gold");
-                    openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
-                            "Gold");
-                    break;
+                    case "BLUE":
+                        reqKey = KeyType.BLUE;
+                        keyTitle = "Blue key";
+                        keyPath = String.format(Constants.KEY_PATH, "blue");
+                        doorTitle = "Blue Door";
+                        closedDoorPath = String
+                                .format(Constants.CLOSED_KEY_DOOR_PATH, "Blue");
+                        openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
+                                "Blue");
+                        break;
+                    case "RED":
+                        reqKey = KeyType.RED;
+                        keyTitle = "Red key";
+                        keyPath = String.format(Constants.KEY_PATH, "red");
+                        doorTitle = "Red Door";
+                        closedDoorPath = String
+                                .format(Constants.CLOSED_KEY_DOOR_PATH, "Red");
+                        openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
+                                "Red");
+                        break;
+                    case "GREEN":
+                        reqKey = KeyType.GREEN;
+                        keyTitle = "Green key";
+                        keyPath = String.format(Constants.KEY_PATH, "green");
+                        doorTitle = "Green Door";
+                        closedDoorPath = String
+                                .format(Constants.CLOSED_KEY_DOOR_PATH, "Green");
+                        openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
+                                "Green");
+                        break;
+                    case "GOLD":
+                        reqKey = KeyType.GOLD;
+                        keyTitle = "Gold key";
+                        keyPath = String.format(Constants.KEY_PATH, "gold");
+                        doorTitle = "Gold Door";
+                        closedDoorPath = String
+                                .format(Constants.CLOSED_KEY_DOOR_PATH, "Gold");
+                        openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
+                                "Gold");
+                        break;
                 }
             }
 
@@ -743,7 +747,6 @@ public class LevelEditorScene {
                     propertyController.setPropertyValue(new PropertyInfo(
                             "Is Open", isOpen.selectedProperty().getValue(),
                             PropertyInfo.TypeInfo.Boolean));
-
                     try {
                         // For your own safety, don't use this kind of black magic on your own.
                         Field keyField = propertyController.getClass().getDeclaredField(REFLECTION_ACTIVE_OBJECT);
@@ -844,11 +847,17 @@ public class LevelEditorScene {
             }
 
             // set the parameters for a teleporter
-            /*
-             * if (isTeleporter) { try {
-             *
-             * }catch (NoSuchFieldException ignored) {} }
-             */
+            if (isTeleporter) {
+                try {
+                    String tpStr = telePair.getText();
+                    String[] tpInfo = tpStr.split(",");
+                    int tpX = Integer.parseInt(tpInfo[0]);
+                    int tpY = Integer.parseInt(tpInfo[1]);
+                    Teleporter tp = (Teleporter) this.levelEditor.get(tpX, tpY);
+                    propertyController.setPropertyValue(new PropertyInfo("Linked Teleporter",
+                            tp, PropertyInfo.TypeInfo.Teleporter));
+                }catch (NoSuchFieldException ignored) {}
+            }
 
             generatePropertiesWindow();
 
@@ -985,85 +994,85 @@ public class LevelEditorScene {
 
         // TODO: Use Contants instead of Strings
         switch (className[className.length - 1]) {
-        case "Fire": {
-            cell = new Fire(this.levelEditor.getLevel(), x, y);
-            break;
-        }
-        case "Water": {
-            cell = new Water(this.levelEditor.getLevel(), x, y);
-            break;
-        }
-        case "Wall": {
-            cell = new Wall(this.levelEditor.getLevel(), x, y);
-            break;
-        }
-        case "Goal": {
-            cell = new Goal(this.levelEditor.getLevel(), x, y);
-            break;
-        }
-        case "Ground": {
-            cell = new Ground(this.levelEditor.getLevel(), x, y);
-            break;
-        }
-        case "Token": {
-            cell = new Token(this.levelEditor.getLevel());
-            break;
-        }
-        case "Teleporter": {
-            cell = new Teleporter(this.levelEditor.getLevel(),
-                    Constants.TITLE_TELEPORTER, x, y);
-            break;
-        }
-        case "TokenDoor": {
-            cell = new TokenDoor(this.levelEditor.getLevel(),
-                    Constants.TITLE_TOKEN_DOOR, x, y);
-            break;
-        }
-        case "Key": {
-            cell = new Key(this.levelEditor.getLevel(), KeyType.RED);
-            break;
-        }
-        case "KeyDoor": {
-            cell = new KeyDoor(this.levelEditor.getLevel(),
-                    Constants.TITLE_KEY_DOOR, x, y, KeyType.RED, false);
-            break;
-        }
-        case "DumbTargetingEnemy": {
-            cell = new DumbTargetingEnemy(this.levelEditor.getLevel(),
-                    Constants.TITLE_DUMB_TARGETING_ENEMY, x, y);
-            break;
-        }
-        case "SmartTargetingEnemy": {
-            cell = new SmartTargetingEnemy(this.levelEditor.getLevel(),
-                    Constants.TITLE_SMART_TARGETING_ENEMY, x, y);
-            break;
-        }
-        case "StraightWalkingEnemy": {
-            cell = new StraightWalkingEnemy(this.levelEditor.getLevel(),
-                    Constants.TITLE_STRAIGHT_WALKING_ENEMY, x, y, 1, 0);
-            break;
-        }
-        case "WallFollowingEnemy": {
-            cell = new WallFollowingEnemy(this.levelEditor.getLevel(),
-                    Constants.TITLE_WALL_FOLLOWING_ENEMY, x, y);
-            break;
-        }
-        case "Flippers": {
-            cell = new Flippers(this.levelEditor.getLevel());
-            break;
-        }
-        case "FireBoots": {
-            cell = new FireBoots(this.levelEditor.getLevel());
-            break;
-        }
-        case "Player": {
-            cell = new Player(this.levelEditor.getLevel(),
-                    Constants.TITLE_PLAYER, x, y, 0, 0);
-            break;
-        }
-        default: {
-            break;
-        }
+            case "Fire": {
+                cell = new Fire(this.levelEditor.getLevel(), x, y);
+                break;
+            }
+            case "Water": {
+                cell = new Water(this.levelEditor.getLevel(), x, y);
+                break;
+            }
+            case "Wall": {
+                cell = new Wall(this.levelEditor.getLevel(), x, y);
+                break;
+            }
+            case "Goal": {
+                cell = new Goal(this.levelEditor.getLevel(), x, y);
+                break;
+            }
+            case "Ground": {
+                cell = new Ground(this.levelEditor.getLevel(), x, y);
+                break;
+            }
+            case "Token": {
+                cell = new Token(this.levelEditor.getLevel());
+                break;
+            }
+            case "Teleporter": {
+                cell = new Teleporter(this.levelEditor.getLevel(),
+                        Constants.TITLE_TELEPORTER, x, y);
+                break;
+            }
+            case "TokenDoor": {
+                cell = new TokenDoor(this.levelEditor.getLevel(),
+                        Constants.TITLE_TOKEN_DOOR, x, y);
+                break;
+            }
+            case "Key": {
+                cell = new Key(this.levelEditor.getLevel(), KeyType.RED);
+                break;
+            }
+            case "KeyDoor": {
+                cell = new KeyDoor(this.levelEditor.getLevel(),
+                        Constants.TITLE_KEY_DOOR, x, y, KeyType.RED, false);
+                break;
+            }
+            case "DumbTargetingEnemy": {
+                cell = new DumbTargetingEnemy(this.levelEditor.getLevel(),
+                        Constants.TITLE_DUMB_TARGETING_ENEMY, x, y);
+                break;
+            }
+            case "SmartTargetingEnemy": {
+                cell = new SmartTargetingEnemy(this.levelEditor.getLevel(),
+                        Constants.TITLE_SMART_TARGETING_ENEMY, x, y);
+                break;
+            }
+            case "StraightWalkingEnemy": {
+                cell = new StraightWalkingEnemy(this.levelEditor.getLevel(),
+                        Constants.TITLE_STRAIGHT_WALKING_ENEMY, x, y, 1, 0);
+                break;
+            }
+            case "WallFollowingEnemy": {
+                cell = new WallFollowingEnemy(this.levelEditor.getLevel(),
+                        Constants.TITLE_WALL_FOLLOWING_ENEMY, x, y);
+                break;
+            }
+            case "Flippers": {
+                cell = new Flippers(this.levelEditor.getLevel());
+                break;
+            }
+            case "FireBoots": {
+                cell = new FireBoots(this.levelEditor.getLevel());
+                break;
+            }
+            case "Player": {
+                cell = new Player(this.levelEditor.getLevel(),
+                        Constants.TITLE_PLAYER, x, y, 0, 0);
+                break;
+            }
+            default: {
+                break;
+            }
         }
 
         // TODO: throw new UnknownCellException(name)

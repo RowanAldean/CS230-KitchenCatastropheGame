@@ -26,8 +26,10 @@ public abstract class LevelObject {
     /** {@link Level} where the {@link LevelObject} is located. */
     private Level level;
     /** Position X of the {@link LevelObject}. */
+    @Editable
     private int positionX;
     /** Position Y of the {@link LevelObject}. */
+    @Editable
     private int positionY;
 
     /**

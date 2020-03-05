@@ -64,7 +64,7 @@ public final class LevelSaver {
         for (Teleporter t1 : teleporters) {
             if (!listedTeleporters.contains(t1)) {
                 Teleporter t2 = t1.getLinkedTeleporter();
-                writer.printf(TELEPORTER_LINK_PATTERN, t1.getPositionX(), t1.getPositionY(),
+                writer.printf(TELEPORTER_LINK_PATTERN + "\n", t1.getPositionX(), t1.getPositionY(),
                         t2.getPositionX(), t2.getPositionY());
                 listedTeleporters.add(t1);
                 listedTeleporters.add(t2);
