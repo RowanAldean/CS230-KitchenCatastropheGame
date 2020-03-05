@@ -15,25 +15,31 @@ public class Fire extends StepableCell {
     /**
      * Creates a new instance of {@link Fire}.
      *
-     * @param level
-     *            The {@link Level} where the {@link Fire} is located.
-     * @param positionX
-     *            The position X of the {@link Fire} in the game.
-     * @param positionY
-     *            The position Y of the {@link Fire} in the game.
-     * @param imagePath
-     *            Path to the Image which represents the {@link Fire} in the
-     *            game.
+     * @param level     The {@link Level} where the {@link Fire} is located.
+     * @param positionX The position X of the {@link Fire} in the game.
+     * @param positionY The position Y of the {@link Fire} in the game.
+     * @param imagePath Path to the Image which represents the {@link Fire} in the
+     *                  game.
      */
     public Fire(Level level, int positionX, int positionY, String imagePath) {
         super(level, Constants.TITLE_FIRE, positionX, positionY, imagePath);
     }
 
     /**
+     * Creates a new instance of {@link Fire}.
+     *
+     * @param level     The {@link Level} where the {@link Fire} is located.
+     * @param positionX The position X of the {@link Fire} in the game.
+     * @param positionY The position Y of the {@link Fire} in the game.
+     */
+    public Fire(Level level, int positionX, int positionY) {
+        super(level, Constants.TITLE_FIRE, positionX, positionY, Constants.FIRE_PATH);
+    }
+
+    /**
      * Interacts with {@link MovableObject} which stepped on the cell.
      *
-     * @param object
-     *            The {@link MovableObject} which stepped in the {@link Fire}.
+     * @param object The {@link MovableObject} which stepped in the {@link Fire}.
      */
     @Override
     protected void onStepped(MovableObject object) {

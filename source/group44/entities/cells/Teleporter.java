@@ -1,6 +1,7 @@
 package group44.entities.cells;
 
 import group44.Constants;
+import group44.annotations.Editable;
 import group44.entities.LevelObject;
 import group44.entities.movableObjects.MovableObject;
 import group44.game.Level;
@@ -13,44 +14,62 @@ import group44.game.Level;
  * @version 1.0
  */
 public class Teleporter extends StepableCell {
-    /** Linked teleporter. */
+    /**
+     * Linked teleporter.
+     */
+    @Editable
     private Teleporter linkedTeleporter;
 
     /**
      * Creates a new instance of {@link Teleporter} with linked
      * {@link Teleporter}.
      *
-     * @param level
-     *            The {@link Level} where the {@link Teleporter} is located.
-     * @param title
-     *            The title of the {@link Teleporter}.
-     * @param positionX
-     *            The position X in the game.
-     * @param positionY
-     *            The position Y in the game.
-     * @param imagePath
-     *            Path to the Image representing {@link Teleporter} in the game.
+     * @param level     The {@link Level} where the {@link Teleporter} is located.
+     * @param title     The title of the {@link Teleporter}.
+     * @param positionX The position X in the game.
+     * @param positionY The position Y in the game.
+     */
+    public Teleporter(Level level, String title, int positionX, int positionY) {
+        super(level, title, positionX, positionY, Constants.TELEPORTER_PATH);
+    }
+
+    /**
+     * Creates a new instance of {@link Teleporter} with linked
+     * {@link Teleporter}.
+     *
+     * @param level     The {@link Level} where the {@link Teleporter} is located.
+     * @param title     The title of the {@link Teleporter}.
+     * @param positionX The position X in the game.
+     * @param positionY The position Y in the game.
+     * @param imagePath Path to the Image representing {@link Teleporter} in the game.
      */
     public Teleporter(Level level, String title, int positionX, int positionY,
-            String imagePath) {
+                      String imagePath) {
         super(level, title, positionX, positionY, imagePath);
     }
 
     /**
      * Links the teleporter with another instance of Teleporter.
      *
-     * @param linkedTeleporter
-     *            the teleporter to link with.
+     * @param linkedTeleporter the teleporter to link with.
      */
     public void setLinkedTeleporter(Teleporter linkedTeleporter) {
         this.linkedTeleporter = linkedTeleporter;
     }
 
     /**
+     * Returns the linked teleporter.
+     *
+     * @return linked Teleporter.
+     */
+    public Teleporter getLinkedTeleporter() {
+        return this.linkedTeleporter;
+    }
+
+    /**
      * Teleports the {@link MovableObject} to the linked teleporter.
      *
-     * @param object
-     *            {@link MovableObject} that stepped on the {@link Teleporter}.
+     * @param object {@link MovableObject} that stepped on the {@link Teleporter}.
      */
     @Override
     protected void onStepped(MovableObject object) {
@@ -63,8 +82,7 @@ public class Teleporter extends StepableCell {
      * Teleports the {@link MovableObject} to the linked {@link Teleporter} if
      * there is some.
      *
-     * @param object
-     *            the {@link MovableObject} to teleport.
+     * @param object the {@link MovableObject} to teleport.
      * @return true if the teleportation was successful; false otherwise.
      */
     private Boolean teleport(MovableObject object) {
@@ -72,20 +90,20 @@ public class Teleporter extends StepableCell {
             LevelObject[][] surroudingArea = this
                     .getSurroundingArea(this.linkedTeleporter);
 
-            for (int x = 0; x < surroudingArea.length; x++) {
-                for (int y = 0; y < surroudingArea[0].length; y++) {
-                    LevelObject levelObject = surroudingArea[x][y];
+            //this will convert the velocity of the object into a position in the surrounding area
+            int newPosInSurroundX = 1 + object.getVelocityX();
+            int newPosInSurroundY = 1 + object.getVelocityY();
 
-                    if (levelObject instanceof Ground
-                            && ((Ground) surroudingArea[x][y])
-                                    .isSteppedOn() == false) {
-                        StepableCell stepableCell = (Ground) surroudingArea[x][y];
-                        stepableCell.stepOn(object);
-                        object.setPosition(stepableCell.getPositionX(),
-                                stepableCell.getPositionY());
-                        return true;
-                    }
-                }
+            //get the tile the object will move to
+            LevelObject newTile = surroudingArea[newPosInSurroundX][newPosInSurroundY];
+
+            //check if the move can be completed
+            if (newTile instanceof Ground && !((Ground) newTile).isSteppedOn()) {
+                StepableCell stepableCell = (Ground) newTile;
+                stepableCell.stepOn(object);
+                object.setPosition(stepableCell.getPositionX(),
+                        stepableCell.getPositionY());
+                return true;
             }
         }
         return false;
@@ -95,10 +113,9 @@ public class Teleporter extends StepableCell {
      * Returns the {@link LevelObject}s surrounding the {@link LevelObject}
      * passed as a parameter.
      *
-     * @param object
-     *            the surrounded {@link LevelObject}.
+     * @param object the {@link LevelObject} to get the surrounding area from.
      * @return an array of {@link LevelObject}s surrounding the object passed as
-     *         a parameter.
+     * a parameter.
      */
     private LevelObject[][] getSurroundingArea(LevelObject object) {
         int gridWidth = this.getLevel().getGridWidth();
@@ -199,17 +216,14 @@ public class Teleporter extends StepableCell {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(Constants.TYPE_TELEPORTER);
 
+        builder.append(Constants.TYPE_TELEPORTER);
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getTitle());
-
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getPositionX());
-
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getPositionY());
-
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getImagePath());
 

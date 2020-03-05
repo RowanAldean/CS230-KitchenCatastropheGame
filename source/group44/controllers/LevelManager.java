@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 import group44.Constants;
@@ -17,15 +18,21 @@ import group44.models.LevelInfo;
 /**
  * Manages and loads Levels.
  *
- * @author Tomas Svejnoha
+ * @author Tomas Svejnoha.
  * @version 1.0
  */
 public class LevelManager {
-    /** RegEx for files with levels. */
+    /**
+     * RegEx for files with levels.
+     */
     private static final String LEVEL_FILE_PATTERN = "^level_[0-9]+\\.txt$";
-    /** Error message pattern when file is not found. */
+    /**
+     * Error message pattern when file is not found.
+     */
     private static final String ERROR_LEVELID_NOT_FOUND = "Unable to find level with id=%d.";
-    /** Metadata about all levels. */
+    /**
+     * Metadata about all levels.
+     */
     private static ArrayList<LevelInfo> levelInfos = new ArrayList<>();
 
     /**
@@ -59,8 +66,7 @@ public class LevelManager {
     /**
      * Loads metadata about levels in a folder.
      *
-     * @param directory
-     *            directory containing all {@link Level} files.
+     * @param directory directory containing all {@link Level} files.
      */
     private static void load(String directory) {
         LevelManager.levelInfos.clear();
@@ -75,8 +81,7 @@ public class LevelManager {
     /**
      * Returns a list of files containing definitions of {@link Level}s.
      *
-     * @param directory
-     *            the directory with {@link Level}s.
+     * @param directory the directory with {@link Level}s.
      * @return the list of {@link Level} files.
      */
     private static ArrayList<File> getLevelFiles(File directory) {
@@ -97,9 +102,7 @@ public class LevelManager {
     /**
      * Returns a {@link LevelInfo} of the {@link Level}.
      *
-     * @param file
-     *            - {@link File} containing the {@link Level} definition.
-     *
+     * @param file - {@link File} containing the {@link Level} definition.
      * @return the information about the {@link Level}; null if not found.
      */
     private static LevelInfo getLevelInfo(File file) {
@@ -136,16 +139,11 @@ public class LevelManager {
     /**
      * Returns a loaded {@link Level}.
      *
-     * @param levelInfo
-     *            information about the {@link Level} to load.
+     * @param levelInfo information about the {@link Level} to load.
      * @return the loaded {@link Level}.
-     *
-     * @throws CollisionException
-     *             when two cells are at the same position.
-     * @throws ParsingException
-     *             when trying to parse invalid data type.
-     * @throws FileNotFoundException
-     *             when level file is not found.
+     * @throws CollisionException    when two cells are at the same position.
+     * @throws ParsingException      when trying to parse invalid data type.
+     * @throws FileNotFoundException when level file is not found.
      */
     public static Level load(LevelInfo levelInfo)
             throws FileNotFoundException, CollisionException, ParsingException {
@@ -155,19 +153,12 @@ public class LevelManager {
     /**
      * Returns a loaded {@link Level}.
      *
-     * @param levelId
-     *            id of the level to load.
+     * @param levelId id of the level to load.
      * @return the loaded {@link Level}.
-     *
-     * @throws CollisionException
-     *             when two cells are at the same position.
-     * @throws ParsingException
-     *             when trying to parse invalid data type.
-     * @throws FileNotFoundException
-     *             when level file is not found.
-     * @throws IllegalArgumentException
-     *             when Level with levelId is not found.
-     *
+     * @throws CollisionException       when two cells are at the same position.
+     * @throws ParsingException         when trying to parse invalid data type.
+     * @throws FileNotFoundException    when level file is not found.
+     * @throws IllegalArgumentException when Level with levelId is not found.
      */
     public static Level load(int levelId) throws FileNotFoundException,
             CollisionException, ParsingException, IllegalArgumentException {
@@ -183,9 +174,7 @@ public class LevelManager {
     /**
      * Looks for a level with id in the loaded levels.
      *
-     * @param id
-     *            id of a level to load.
-     *
+     * @param id id of a level to load.
      * @return the {@link LevelInfo} for the level with id.
      */
     private static LevelInfo getLevelInfo(int id) {
@@ -200,13 +189,9 @@ public class LevelManager {
     /**
      * Saves the current state of the level.
      *
-     * @param level
-     *            level to save.
-     * @param profileId
-     *            profile id of the user.
-     *
-     * @throws IOException
-     *             when saving failed.
+     * @param level     level to save.
+     * @param profileId profile id of the user.
+     * @throws IOException when saving failed.
      */
     public static void save(Level level, final int profileId)
             throws IOException {
@@ -217,20 +202,26 @@ public class LevelManager {
     }
 
     /**
+     * Saves a level.
+     *
+     * @param level The level to save.
+     * @throws IOException when saving failed.
+     */
+    public static void save(Level level) throws IOException {
+        String path = String.format(
+                Constants.FOLDER_LEVELS + Constants.FILE_LEVEL, level.getId());
+        LevelSaver.save(level, path);
+    }
+
+    /**
      * Loads the saved level.
      *
-     * @param levelId
-     *            id of the level to load.
-     * @param profileId
-     *            id of the user who saved the game.
+     * @param levelId   id of the level to load.
+     * @param profileId id of the user who saved the game.
      * @return the loaded {@link Level}.
-     *
-     * @throws ParsingException
-     *             when two cells are at the same position.
-     * @throws CollisionException
-     *             when trying to parse invalid data type.
-     * @throws FileNotFoundException
-     *             when level file is not found.
+     * @throws ParsingException      when two cells are at the same position.
+     * @throws CollisionException    when trying to parse invalid data type.
+     * @throws FileNotFoundException when level file is not found.
      */
     public static Level resume(int levelId, int profileId)
             throws FileNotFoundException, CollisionException, ParsingException {
@@ -240,10 +231,8 @@ public class LevelManager {
     /**
      * Deletes saved level for profile id.
      *
-     * @param levelId
-     *            id of the level.
-     * @param profileId
-     *            id of the profile.
+     * @param levelId   id of the level.
+     * @param profileId id of the profile.
      */
     public static void deleteTempData(int levelId, int profileId) {
         LevelInfo info = getLevelInfoForFile(levelId, profileId);
@@ -254,12 +243,55 @@ public class LevelManager {
     }
 
     /**
+     * Deletes a {@link Level} with Id.
+     *
+     * @param levelId id of the {@link Level} to delete.
+     */
+    public static void deleteLevel(int levelId) {
+        LevelInfo info = getLevelInfo(levelId);
+
+        if (info != null && info.getFile().exists()) {
+            info.getFile().delete();
+            Leaderboard.deleteLevelRecords(levelId);
+            Leaderboard.renumberFollowingLevels(levelId);
+            renumberFollowingLevels(levelId, info.getFile().getPath());
+        }
+    }
+
+    /**
+     * Renumber all following levels.
+     *
+     * @param levelId the deleted level.
+     */
+    private static void renumberFollowingLevels(int levelId, String prevPath) {
+        Collections.sort(levelInfos,
+                (a, b) -> Integer.compare(a.getId(), b.getId()));
+        for (LevelInfo levelInfo : levelInfos) {
+            if (levelInfo.getId() == levelId + 1) {
+                try {
+                    Level level = LevelManager.load(levelInfo);
+                    level.setId(level.getId() - 1);
+                    LevelManager.save(level);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                String tmpPath = levelInfo.getFile().getPath();
+                levelInfo.getFile().renameTo(new File(prevPath));
+                prevPath = tmpPath;
+                levelId++;
+            }
+        }
+
+        File file = new File(prevPath);
+        file.delete();
+    }
+
+    /**
      * Indicates whether the player has an unfinished level with id.
      *
-     * @param levelId
-     *            id of the level.
-     * @param profileId
-     *            id of the profile.
+     * @param levelId   id of the level.
+     * @param profileId id of the profile.
      * @return true if there is a level with id saved; otherwise false.
      */
     public static boolean hasUnfinishedLevel(int levelId, int profileId) {
@@ -270,10 +302,8 @@ public class LevelManager {
     /**
      * Returns a {@link LevelInfo} for level.
      *
-     * @param levelId
-     *            id of the level we want to load.
-     * @param profileId
-     *            id of the profile for which we want to load.
+     * @param levelId   id of the level we want to load.
+     * @param profileId id of the profile for which we want to load.
      * @return {@link LevelInfo} about the level.
      */
     private static LevelInfo getLevelInfoForFile(int levelId, int profileId) {

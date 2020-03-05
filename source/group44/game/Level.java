@@ -27,6 +27,8 @@ public class Level {
 
     /** Level id. */
     private int id;
+    /** Custom level */
+    private boolean custom;
     /** 2D game array. */
     private Cell[][] grid; // The 2D game array
     /** How many cells on X and Y display. */
@@ -59,9 +61,10 @@ public class Level {
      *             If the display size is less than 3, is not odd, or exceeds a
      *             size of a grid.
      */
-    public Level(int id, int gridWidth, int gridHeight, int displaySize,
+    public Level(int id, boolean isItCustom, int gridWidth, int gridHeight, int displaySize,
             int time) {
         this.id = id;
+        this.custom = isItCustom;
         this.grid = new Cell[gridWidth][gridHeight];
         if (displaySize < MIN_DISPLAY_SIZE || displaySize > gridWidth
                 || displaySize > gridHeight || displaySize % 2 != 1) {
@@ -118,6 +121,16 @@ public class Level {
      */
     public int getId() {
         return this.id;
+    }
+
+    /**
+     * Sets the Id of the {@link Level}.
+     *
+     * @param id
+     *            the new id.
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -317,5 +330,13 @@ public class Level {
         System.out.println("Level.finish()");
         this.isFinished = true;
         this.finishStatus = status;
+    }
+
+    /**
+     * States if a level is a custom level or not
+     * @return
+     */
+    public Boolean isCustom() {
+        return this.custom;
     }
 }

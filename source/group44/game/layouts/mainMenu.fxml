@@ -25,8 +25,8 @@
                            stylesheets="@/group44/resources/application.css" text="New Profile"/>
                </children>
             </HBox>
-            <Button id="button" fx:id="motd" alignment="CENTER" mnemonicParsing="false"
-                    stylesheets="@/group44/resources/application.css" text="MOTD Viewer" textAlignment="CENTER"
+            <Button id="button" fx:id="levelEditorButton" alignment="CENTER" mnemonicParsing="false"
+                    stylesheets="@/group44/resources/application.css" text="Level Editor" textAlignment="CENTER"
                     textOverrun="CLIP"/>
          </children>
       </VBox>

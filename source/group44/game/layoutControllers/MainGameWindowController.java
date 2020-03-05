@@ -13,7 +13,8 @@ import javafx.scene.layout.VBox;
  * layout in the code. It also contains the appropriate getters and setters for
  * the widgets.
  *
- * @author Bogdan
+ * @author Bogdan Mihai
+ * @version 1.0
  */
 public class MainGameWindowController {
     @FXML
@@ -27,7 +28,11 @@ public class MainGameWindowController {
     @FXML
     private Canvas canvas;
     @FXML
+    private Label onScreenMessage;
+    @FXML
     private Label timeLabel;
+    @FXML
+    private Label tokenAmount;
     @FXML
     private VBox menuBox;
     @FXML
@@ -40,6 +45,7 @@ public class MainGameWindowController {
     @FXML
     public void initialize() {
         menuBox.setVisible(false);
+        onScreenMessage.setVisible(false);
     }
 
     public Button getHomeButton() {
@@ -96,6 +102,22 @@ public class MainGameWindowController {
 
     public Label getTimeLabel() {
         return timeLabel;
+    }
+
+    public Label getOnScreenMessage() {
+        return onScreenMessage;
+    }
+
+    public void setOnScreenMessage(Label onScreenMessage) {
+        this.onScreenMessage = onScreenMessage;
+    }
+
+    public Label getTokenAmount() {
+        return tokenAmount;
+    }
+
+    public void setTokenAmount(int tokenAmount) {
+        this.tokenAmount.textProperty().setValue(Integer.toString(tokenAmount));
     }
 
     public void setMovableObjects(Pane movableObjects) {

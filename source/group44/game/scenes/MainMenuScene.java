@@ -19,7 +19,7 @@ import javafx.stage.Stage;
  * player to the desired scenes. It also allows the player to select the desired
  * profile.
  *
- * @author Mihai
+ * @author Bogdan Mihai
  * @version 1.0
  */
 public class MainMenuScene {
@@ -34,24 +34,23 @@ public class MainMenuScene {
      * respective controller and adds listeners to the buttons. It also displays
      * the scene.
      *
-     * @param primaryStage
-     *            is the stage where the scene will be displayed.
+     * @param primaryStage is the stage where the scene will be displayed.
      */
     public MainMenuScene(Stage primaryStage) {
-        // Load the FXML file.
+        //Load the FXML file.
         FXMLLoader fxmlLoader = new FXMLLoader(
                 getClass().getResource("/group44/game/layouts/mainMenu.fxml"));
         this.primaryStage = primaryStage;
         try {
-            // Setting the root.
+            //Setting the root.
             Parent root = fxmlLoader.load();
-            // Setting the stage and adding my custom style to it.
+            //Setting the stage and adding my custom style to it.
             root.getStylesheets().add("group44/resources/application.css");
             root.setId("root");
             Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
             MainMenuController tempController = fxmlLoader.getController();
             setController(tempController);
-            // Adding the listeners for the buttons on the scene.
+            //Adding the listeners for the buttons on the scene.
             setUpButtons();
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -66,8 +65,7 @@ public class MainMenuScene {
      * This method sets the globally available controller to the current
      * controller.
      *
-     * @param mainMenuController
-     *            The current controller.
+     * @param mainMenuController The current controller.
      */
     private void setController(MainMenuController mainMenuController) {
         this.mainMenuController = mainMenuController;
@@ -76,8 +74,7 @@ public class MainMenuScene {
     /**
      * This method instantiates the LevelSelectorScene class.
      *
-     * @param e
-     *            The mouse event created by the press on the play button.
+     * @param e The mouse event created by the press on the play button.
      */
     private void pressPlay(MouseEvent e) {
         new LevelSelectorScene(primaryStage, currentProfile);
@@ -86,9 +83,8 @@ public class MainMenuScene {
     /**
      * This method instantiates the ProfileCreatorScene class.
      *
-     * @param e
-     *            The mouse event created by the press on the new profile
-     *            button.
+     * @param e The mouse event created by the press on the new profile
+     *          button.
      */
     private void newProfile(MouseEvent e) {
         new ProfileCreatorScene(primaryStage);
@@ -97,14 +93,12 @@ public class MainMenuScene {
     /**
      * This method instantiates the LeaderboardScene class.
      *
-     * @param e
-     *            The mouse event created by the press on the leaderboard
-     *            button.
+     * @param e The mouse event created by the press on the leaderboard
+     *          button.
      */
-    /**
-     * This method adds the listeners to the buttons on screen. The quit button
-     * needs a listener, will add that in a future commit.
-     */
+
+    //This method adds the listeners to the buttons on screen. The quit button
+    //needs a listener, will add that in a future commit.
     private void closeGame(MouseEvent e) {
         primaryStage.close();
     }
@@ -137,14 +131,14 @@ public class MainMenuScene {
                 });
     }
 
-    private void showMOTD(MouseEvent e) {
-        new MOTDScene(primaryStage);
+    private void showLevelEditorStartupWindow(MouseEvent e) {
+        new LevelEditorStartupScene(primaryStage);
     }
 
     private void setUpButtons() {
         profilesListener();
         mainMenuController.getNewProfile().setOnMouseClicked(this::newProfile);
         mainMenuController.getQuit().setOnMouseClicked(this::closeGame);
-        mainMenuController.getMOTD().setOnMouseClicked(this::showMOTD);
+        mainMenuController.getLevelEditorButton().setOnMouseClicked(this::showLevelEditorStartupWindow);
     }
 }

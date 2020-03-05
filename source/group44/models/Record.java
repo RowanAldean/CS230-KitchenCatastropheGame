@@ -15,22 +15,25 @@ import group44.game.Level;
  * @version 1.0
  */
 public class Record implements Comparable<Record> {
-    /** The profile. */
+    /**
+     * The profile.
+     */
     private Profile profile;
-    /** The id of the level. */
+    /**
+     * The id of the level.
+     */
     private int levelId;
-    /** The time taken. */
+    /**
+     * The time taken.
+     */
     private long time;
 
     /**
      * Creates a new istance of {@link Record}.
      *
-     * @param profile
-     *            {@link Profile} linked to the record.
-     * @param levelId
-     *            Id of the associated {@link Level}.
-     * @param time
-     *            time taken to finish the level.
+     * @param profile {@link Profile} linked to the record.
+     * @param levelId Id of the associated {@link Level}.
+     * @param time    time taken to finish the level.
      */
     public Record(Profile profile, int levelId, long time) {
         this.profile = profile;
@@ -57,6 +60,15 @@ public class Record implements Comparable<Record> {
     }
 
     /**
+     * Sets the id of the associated {@link Level} to the new value.
+     *
+     * @param id the new id.
+     */
+    public void setLevelId(int id) {
+        this.levelId = id;
+    }
+
+    /**
      * Returns the time taken by the user to finish the {@link Level}.
      *
      * @return the time taken.
@@ -68,8 +80,7 @@ public class Record implements Comparable<Record> {
     /**
      * Updates the time taken to finish the {@link Level}.
      *
-     * @param time
-     *            the new time taken.
+     * @param time the new time taken.
      */
     public void setTime(long time) {
         this.time = time;
@@ -78,8 +89,7 @@ public class Record implements Comparable<Record> {
     /**
      * Compares {@link Record}s based on the time taken to finish the level.
      *
-     * @param o
-     *            the {@link Record} to compare.
+     * @param o the {@link Record} to compare.
      */
     @Override
     public int compareTo(Record o) {

@@ -13,7 +13,8 @@ import javafx.scene.layout.BorderPane;
  * in the code. It also contains the appropriate getters and setters for the
  * widgets.
  *
- * @author Bogdan
+ * @author Bogdan Mihai
+ * @version 1.0
  */
 public class MainMenuController {
     @FXML
@@ -33,7 +34,7 @@ public class MainMenuController {
     @FXML
     private Button quit;
     @FXML
-    private Button motd;
+    private Button levelEditorButton;
     @FXML
     private ImageView logo;
 
@@ -94,12 +95,12 @@ public class MainMenuController {
         return profileSelection;
     }
 
-    public void setMOTD(Button motd) {
-        this.motd = motd;
+    public void setlevelEditorButton(Button levelEditorButton) {
+        this.levelEditorButton = levelEditorButton;
     }
 
-    public Button getMOTD() {
-        return motd;
+    public Button getLevelEditorButton() {
+        return levelEditorButton;
     }
 
     public void setQuit(Button quit) {

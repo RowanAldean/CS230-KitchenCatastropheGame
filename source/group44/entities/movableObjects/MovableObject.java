@@ -1,5 +1,6 @@
 package group44.entities.movableObjects;
 
+import group44.annotations.Editable;
 import group44.entities.LevelObject;
 import group44.entities.cells.Cell;
 import group44.entities.cells.StepableCell;
@@ -15,32 +16,31 @@ import group44.game.LevelFinishStatus;
  * @version 1.0
  */
 public abstract class MovableObject extends LevelObject {
-    /** Velocity X of the object. */
+    /**
+     * Velocity X of the object.
+     */
+    @Editable
     private int velocityX;
-    /** Velocity Y of the object. */
+    /**
+     * Velocity Y of the object.
+     */
+    @Editable
     private int velocityY;
 
     /**
      * Creates a new {@link MovableObject}.
      *
-     * @param level
-     *            The {@link Level} where the {@link MovableObject} is located.
-     * @param title
-     *            Title of the object.
-     * @param positionX
-     *            Position X in the game.
-     * @param positionY
-     *            Position Y in the game.
-     * @param velocityX
-     *            Velocity X of the instance.
-     * @param velocityY
-     *            Velocity Y of the instance.
-     * @param imagePath
-     *            Path to the Image representing {@link MovableObject} in the
-     *            game.
+     * @param level     The {@link Level} where the {@link MovableObject} is located.
+     * @param title     Title of the object.
+     * @param positionX Position X in the game.
+     * @param positionY Position Y in the game.
+     * @param velocityX Velocity X of the instance.
+     * @param velocityY Velocity Y of the instance.
+     * @param imagePath Path to the Image representing {@link MovableObject} in the
+     *                  game.
      */
     public MovableObject(Level level, String title, int positionX,
-            int positionY, int velocityX, int velocityY, String imagePath) {
+                         int positionY, int velocityX, int velocityY, String imagePath) {
         super(level, title, positionX, positionY, imagePath);
 
         this.setVelocityX(velocityX);
@@ -59,8 +59,7 @@ public abstract class MovableObject extends LevelObject {
     /**
      * Sets the velocity on the X axis.
      *
-     * @param vx
-     *            velocity X.
+     * @param vx velocity X.
      */
     public void setVelocityX(int vx) {
         this.velocityX = vx;
@@ -78,8 +77,7 @@ public abstract class MovableObject extends LevelObject {
     /**
      * Sets the velocity on the Y axis.
      *
-     * @param vy
-     *            velocity Y.
+     * @param vy velocity Y.
      */
     public void setVelocityY(int vy) {
         this.velocityY = vy;
@@ -88,8 +86,7 @@ public abstract class MovableObject extends LevelObject {
     /**
      * Kills the {@link MovableObject} and removes it from the grid.
      *
-     * @param object
-     *            {@link LevelObject} trying to kill the {@link MovableObject}.
+     * @param object {@link LevelObject} trying to kill the {@link MovableObject}.
      */
     public void die(LevelObject object) {
         // Remove MovableObject from the grid
@@ -116,11 +113,9 @@ public abstract class MovableObject extends LevelObject {
      * Returns the {@link StepableCell} on which the {@link MovableObject} is
      * located.
      *
-     * @param object
-     *            the {@link MovableObject}.
-     * 
+     * @param object the {@link MovableObject}.
      * @return if found, the {@link StepableCell} where the object is located,
-     *         otherwise null.
+     * otherwise null.
      */
     protected StepableCell getStepableCellAtMovableObjectPosition(
             MovableObject object) {
@@ -137,27 +132,24 @@ public abstract class MovableObject extends LevelObject {
      * Returns the next {@link StepableCell} the {@link MovableObject} will step
      * on.
      *
-     * @param object
-     *            The instance of {@link MovableObject}.
-     * @param velocityX
-     *            velocity X of the object.
-     * @param velocityY
-     *            velocity Y of the object.
+     * @param object    The instance of {@link MovableObject}.
+     * @param velocityX velocity X of the object.
+     * @param velocityY velocity Y of the object.
      * @return the next {@link StepableCell} the {@link MovableObject} will step
-     *         on; null if {@link Wall} or out of range.
+     * on; null if {@link Wall} or out of range.
      */
     protected StepableCell getNextStepableCellInVelocity(MovableObject object,
-            int velocityX, int velocityY) {
+                                                         int velocityX, int velocityY) {
         Cell[][] grid = this.getLevel().getGrid();
         StepableCell cell = this.getStepableCellAtMovableObjectPosition(object);
 
-        // Next position based on current position and velocity
+        // Next position based on current position and velocity.
         int nextCellIndexX = cell.getPositionX() + velocityX;
         int nextCellIndexY = cell.getPositionY() + velocityY;
 
         // Return StepableCell if the next step is in the boundaries of
         // the grid;
-        // otherwise null
+        // otherwise null.
         if (0 <= nextCellIndexX
                 && nextCellIndexX < this.getLevel().getGridWidth()
                 && 0 <= nextCellIndexY
@@ -172,8 +164,7 @@ public abstract class MovableObject extends LevelObject {
      * Method executed when the {@link MovableObject} object collides with some
      * {@link LevelObject}.
      *
-     * @param result
-     *            the {@link CollisionCheckResult} with the collision status.
+     * @param result the {@link CollisionCheckResult} with the collision status.
      */
     protected abstract void onCollided(CollisionCheckResult result);
 }

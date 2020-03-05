@@ -17,21 +17,31 @@ public class WallFollowingEnemy extends Enemy {
     /**
      * Creates a new instance of {@link WallFollowingEnemy}.
      *
-     * @param level
-     *            The {@link Level} where the {@link WallFollowingEnemy} is
-     *            located.
-     * @param name
-     *            Name of the {@link WallFollowingEnemy}.
-     * @param positionX
-     *            Position X of the {@link WallFollowingEnemy}.
-     * @param positionY
-     *            Position Y of the {@link WallFollowingEnemy}.
-     * @param imagePath
-     *            Path to the Image representing the {@link WallFollowingEnemy}
-     *            on the screen.
+     * @param level     The {@link Level} where the {@link WallFollowingEnemy}
+     *                  is located.
+     * @param name      Name of the {@link WallFollowingEnemy}.
+     * @param positionX Position X of the {@link WallFollowingEnemy}.
+     * @param positionY Position Y of the {@link WallFollowingEnemy}.
      */
     public WallFollowingEnemy(Level level, String name, int positionX,
-            int positionY, String imagePath) {
+                              int positionY) {
+        super(level, name, positionX, positionY, 0, 0,
+                Constants.WALL_FOLLOWING_ENEMY_PATH);
+    }
+
+    /**
+     * Creates a new instance of {@link WallFollowingEnemy}.
+     *
+     * @param level     The {@link Level} where the {@link WallFollowingEnemy}
+     *                  is located.
+     * @param name      Name of the {@link WallFollowingEnemy}.
+     * @param positionX Position X of the {@link WallFollowingEnemy}.
+     * @param positionY Position Y of the {@link WallFollowingEnemy}.
+     * @param imagePath Path to the Image representing {@link WallFollowingEnemy}
+     *                  in the game.
+     */
+    public WallFollowingEnemy(Level level, String name, int positionX,
+                              int positionY, String imagePath) {
         super(level, name, positionX, positionY, 0, 0, imagePath);
     }
 
@@ -39,8 +49,7 @@ public class WallFollowingEnemy extends Enemy {
      * Method invoked after the {@link WallFollowingEnemy} collided with another
      * {@link MovableObject}.
      *
-     * @param result
-     *            the {@link CollisionCheckResult} with the collision status.
+     * @param result the {@link CollisionCheckResult} with the collision status.
      */
     @Override
     protected void onCollided(CollisionCheckResult result) {
@@ -56,71 +65,69 @@ public class WallFollowingEnemy extends Enemy {
      */
     @Override
     protected void computeVelocity() {
-        // NOT moving, try to set velocity
+        //NOT moving, try to set velocity.
         if (this.getVelocityX() == 0 && this.getVelocityY() == 0) {
             this.tryToSetVelocity();
             return;
         }
 
-        // Moving horizontally
+        //Moving horizontally:
         if (this.getVelocityY() == 0) {
-            // TOP FREE, obstacle TOP LEFT || RIGHT
+            //TOP FREE, obstacle TOP LEFT || RIGHT:
             if (this.isObstacleTop() == false && (this.isObstacleTopLeft()
                     || this.isObstacleTopRight())) {
                 this.setDirectionUp();
             }
-            // BOTTOM FREE, obstacle BOTTOM LEFT || RIGHT
+            //BOTTOM FREE, obstacle BOTTOM LEFT || RIGHT:
             else if (this.isObstacleBottom() == false
                     && (this.isObstacleBottomLeft()
-                            || this.isObstacleBottomRight())) {
+                    || this.isObstacleBottomRight())) {
                 this.setDirectionDown();
             }
-            // else
             else {
-                // moving LEFT, obstacle LEFT, right FREE
+                //moving LEFT, obstacle LEFT, right FREE:
                 if (this.getVelocityX() == -1 && this.isObstacleLeft()
                         && this.isObstacleRight() == false) {
                     this.setDirectionRight();
                 }
-                // moving RIGHT, obstacle RIGHT, left FREE
+                //moving RIGHT, obstacle RIGHT, left FREE:
                 else if (this.getVelocityX() == 1
                         && this.isObstacleLeft() == false
                         && this.isObstacleRight()) {
                     this.setDirectionLeft();
                 }
-                // obstacle LEFT, obstacle RIGHT
+                //obstacle LEFT, obstacle RIGHT:
                 else if (this.isObstacleLeft() && this.isObstacleRight()) {
                     this.doNotMove();
                 }
             }
         }
 
-        // Moving vertically
+        //Moving vertically:
         else {
-            // LEFT FREE, obstacle TOP LEFT || BOTTOM LEFT
+            //LEFT FREE, obstacle TOP LEFT || BOTTOM LEFT:
             if (this.isObstacleLeft() == false && (this.isObstacleTopLeft()
                     || this.isObstacleBottomLeft())) {
                 this.setDirectionLeft();
             }
-            // RIGHT FREE, obstacle TOP RIGHT || BOTTOM RIGHT
+            //RIGHT FREE, obstacle TOP RIGHT || BOTTOM RIGHT:
             else if (this.isObstacleRight() == false
                     && (this.isObstacleTopRight()
-                            || this.isObstacleBottomRight())) {
+                    || this.isObstacleBottomRight())) {
                 this.setDirectionRight();
             }
-            // else
             else {
-                // moving UP, obstacle UP, bottom FREE
+                //moving UP, obstacle UP, bottom FREE:
                 if (this.getVelocityY() == -1 && this.isObstacleTop()
                         && this.isObstacleBottom() == false) {
                     this.setDirectionDown();
                 }
-                // moving DOWN, obstacle DOWN, top FREE
+                //moving DOWN, obstacle DOWN, top FREE:
                 else if (this.getVelocityY() == 1 && this.isObstacleBottom()
                         && this.isObstacleTop() == false) {
                     this.setDirectionUp();
                 }
-                // obstacle UP, obstacle DOWN
+                //obstacle UP, obstacle DOWN:
                 else if (this.isObstacleTop() && this.isObstacleBottom()) {
                     this.doNotMove();
                 }
@@ -301,7 +308,6 @@ public class WallFollowingEnemy extends Enemy {
 
         sb.append(Constants.TYPE_WALL_FOLLOWING_ENEMY);
         sb.append(Constants.LEVEL_OBJECT_DELIMITER);
-
         sb.append(this.getTitle());
         sb.append(Constants.LEVEL_OBJECT_DELIMITER);
         sb.append(this.getPositionX());
