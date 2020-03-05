@@ -9,6 +9,8 @@ import group44.models.LevelInfo;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -19,6 +21,10 @@ import static group44.Constants.WINDOW_HEIGHT;
 import static group44.Constants.WINDOW_WIDTH;
 
 public class LevelEditorStartupScene {
+    private static final String UNAUTHORISED_OPERATION_TITLE = "Unable to delete level";
+    private static final String UNAUTHORISED_OPERATION_HEADER = "You can't delete provided levels.";
+    private static final String UNAUTHORISED_OPERATION_MESSAGE = "You can only delete custom levels.";
+
     private LevelEditorStartupLayoutController controller;
     private Stage stage;
 
@@ -89,6 +95,12 @@ public class LevelEditorStartupScene {
                 if(LevelLoader.parseLevel(info).isCustom() == true){
                     LevelManager.deleteLevel(info.getId());
                     this.loadLevels();
+                } else {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle(UNAUTHORISED_OPERATION_TITLE);
+                    alert.setHeaderText(UNAUTHORISED_OPERATION_HEADER);
+                    alert.setContentText(UNAUTHORISED_OPERATION_MESSAGE);
+                    alert.showAndWait();
                 }
             } catch (CollisionException | ParsingException | FileNotFoundException ex) {
                 ex.printStackTrace();
