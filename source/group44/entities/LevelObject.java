@@ -19,7 +19,6 @@ public abstract class LevelObject {
     @Editable
     private String title;
     /** Path to the image representing the {@link LevelObject} in the game. */
-    @Editable
     private String imagePath;
     /** Image representing the {@link LevelObject} in the game. */
     private Image image;

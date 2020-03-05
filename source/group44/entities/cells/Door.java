@@ -20,7 +20,6 @@ public abstract class Door extends StepableCell {
     @Editable
     private boolean isOpen;
     /** Path to the image representing unlocked door. */
-    @Editable
     private String unlockedImagePath;
     /** Image representing unlocked door. */
     private Image unlockedImage;
