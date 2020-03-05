@@ -1,4 +1,4 @@
-1,11,11,0
+1,11,11,0,false
 wall,0,0,resources/WallCounter.png
 wall,0,1,resources/WallCounter.png
 wall,0,2,resources/WallCounter.png

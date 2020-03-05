@@ -1,9 +1,18 @@
 package group44.game.layoutControllers;
 
+import group44.controllers.LevelManager;
+import group44.controllers.parsers.LevelLoader;
+import group44.exceptions.CollisionException;
+import group44.exceptions.ParsingException;
 import group44.models.LevelInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.util.Callback;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class LevelEditorStartupLayoutController {
     @FXML
@@ -20,32 +29,21 @@ public class LevelEditorStartupLayoutController {
     public ListView<LevelInfo> getLevels() {
         return levels;
     }
-    public void setLevels(ListView<LevelInfo> levels) {
-        this.levels = levels;
-    }
+
     public Button getCreate() {
         return create;
     }
-    public void setCreate(Button create) {
-        this.create = create;
-    }
+
     public Button getEdit() {
         return edit;
     }
-    public void setEdit(Button edit) {
-        this.edit = edit;
-    }
+
     public Button getDelete() {
         return delete;
     }
-    public void setDelete(Button delete) {
-        this.delete = delete;
-    }
+
     public Button getBack() {
         return back;
-    }
-    public void setBack(Button back) {
-        this.back = back;
     }
 
 }

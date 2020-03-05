@@ -17,7 +17,7 @@ public final class Constants {
 
     // Tile Paths
     public static final String WALL_PATH = FILE_SOURCE + "resources/WallCounter.png";
-    public static final String GROUND_PATH = FILE_SOURCE + "resources/floor.png";
+    public static final String GROUND_PATH = FILE_SOURCE + "resources/cells/floor.png";
     public static final String WATER_PATH = FILE_SOURCE + "resources/cells/water.png";
     public static final String FIRE_PATH = FILE_SOURCE + "resources/cells/fire.png";
     public static final String GOAL_PATH = FILE_SOURCE + "resources/cells/goal.png";

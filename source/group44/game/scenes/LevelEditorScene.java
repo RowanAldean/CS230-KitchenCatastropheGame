@@ -228,6 +228,10 @@ public class LevelEditorScene {
                 new File(Constants.LEVEL_EDITOR_WALL_FOLLOWING_ENEMY_PATH).toURI()
                         .toString(),
                 WallFollowingEnemy.class.getName());
+        LevelObjectImage GreyKeyImage = new LevelObjectImage(
+                new File(Constants.CLOSED_KEY_DOOR_PATH).toURI()
+                        .toString(),
+                KeyDoor.class.getName());
         ImageView fire = createImageViewForLevelObjectImage(fireImage);
         ImageView water = createImageViewForLevelObjectImage(waterImage);
         ImageView wall = createImageViewForLevelObjectImage(wallImage);
@@ -253,6 +257,8 @@ public class LevelEditorScene {
                 straightEnemyImage);
         ImageView wallTargetingEnemy = createImageViewForLevelObjectImage(
                 wallEnemyImage);
+        ImageView GreyKey = createImageViewForLevelObjectImage(
+                GreyKeyImage);
 
         this.controller.getContainer().add(fire, 0, 0);
         this.controller.getContainer().add(water, 1, 0);
@@ -289,6 +295,7 @@ public class LevelEditorScene {
         this.registerEventHandlerForImageView(smartTargetingEnemy);
         this.registerEventHandlerForImageView(straightTargetingEnemy);
         this.registerEventHandlerForImageView(wallTargetingEnemy);
+        this.registerEventHandlerForImageView(GreyKey);
     }
 
     /**
@@ -365,6 +372,7 @@ public class LevelEditorScene {
         this.controller.getSave().setOnMouseClicked(event -> {
             try {
                 levelEditor.save();
+                new LevelEditorStartupScene(this.primaryStage);
             } catch (IOException e) {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle(ERROR_SAVING_FAILED_TITLE);

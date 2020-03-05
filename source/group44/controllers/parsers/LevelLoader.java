@@ -70,9 +70,10 @@ public class LevelLoader {
             int width = lineScanner.nextInt();
             int height = lineScanner.nextInt();
             int time = lineScanner.nextInt();
+            boolean isCustom = lineScanner.nextBoolean();
             lineScanner.close();
 
-            level = new Level(id, width, height, Constants.LEVEL_DISPLAY_SIZE,
+            level = new Level(id, isCustom, width, height, Constants.LEVEL_DISPLAY_SIZE,
                     time);
             parseLevel(level, fileScanner);
 

@@ -20,7 +20,7 @@ import group44.game.Level;
  */
 public final class LevelSaver {
     /** Header pattern of the Level file. */
-    private static final String LEVEL_HEADER_PATTERN = "%d,%d,%d,%d";
+    private static final String LEVEL_HEADER_PATTERN = "%d,%d,%d,%d,%b";
     private static final String TELEPORTER_LINK_PATTERN = "teleporterLink,%d,%d,%d,%d";
 
     private LevelSaver() {
@@ -45,7 +45,7 @@ public final class LevelSaver {
 
         PrintWriter writer = new PrintWriter(file);
         writer.printf(LEVEL_HEADER_PATTERN + "\n", level.getId(),
-                level.getGridWidth(), level.getGridHeight(), level.getTime());
+                level.getGridWidth(), level.getGridHeight(), level.getTime(), level.isCustom());
 
         ArrayList<Teleporter> teleporters = new ArrayList<>();
 

@@ -63,7 +63,7 @@ public class LevelEditor implements ILevelEditor {
             }
         }
 
-        this.level = new Level(++id, width, height,
+        this.level = new Level(++id, true, width, height,
                 Constants.LEVEL_DISPLAY_SIZE, 0);
     }
 
@@ -100,6 +100,7 @@ public class LevelEditor implements ILevelEditor {
     @Override
     public void save() throws IOException {
         LevelManager.save(this.level);
+        Leaderboard.deleteLevelRecords(this.level.getId());
     }
 
 

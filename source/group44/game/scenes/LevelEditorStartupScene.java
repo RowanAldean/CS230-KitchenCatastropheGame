@@ -1,6 +1,9 @@
 package group44.game.scenes;
 
 import group44.controllers.LevelManager;
+import group44.controllers.parsers.LevelLoader;
+import group44.exceptions.CollisionException;
+import group44.exceptions.ParsingException;
 import group44.game.layoutControllers.LevelEditorStartupLayoutController;
 import group44.models.LevelInfo;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static group44.Constants.WINDOW_HEIGHT;
@@ -81,8 +85,14 @@ public class LevelEditorStartupScene {
         LevelInfo info = this.controller.getLevels().getSelectionModel()
                 .getSelectedItem();
         if (info != null) {
-            LevelManager.deleteLevel(info.getId());
-            this.loadLevels();
+            try {
+                if(LevelLoader.parseLevel(info).isCustom() == true){
+                    LevelManager.deleteLevel(info.getId());
+                    this.loadLevels();
+                }
+            } catch (CollisionException | ParsingException | FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
