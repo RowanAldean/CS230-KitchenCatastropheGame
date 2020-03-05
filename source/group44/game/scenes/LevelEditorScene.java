@@ -378,6 +378,8 @@ public class LevelEditorScene {
             }
         });
 
+        this.controller.getCancel().setOnMouseClicked(event -> {new LevelEditorStartupScene(this.primaryStage);});
+
         this.controller.getSaveProperties().setOnMouseClicked(event -> {
             updateCellProperties();
         });

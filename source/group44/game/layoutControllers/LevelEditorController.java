@@ -35,6 +35,8 @@ public class LevelEditorController {
     @FXML
     private Button save;
     @FXML
+    private Button cancel;
+    @FXML
     private Button saveProperties;
 
     private GridPane boardGame;
@@ -69,10 +71,6 @@ public class LevelEditorController {
         return boardScroll;
     }
 
-    public ScrollPane getDragPanel() {
-        return dragPanel;
-    }
-
     public TextField getHeightInput() {
         return heightInput;
     }
@@ -81,12 +79,12 @@ public class LevelEditorController {
         return widthInput;
     }
 
-    public VBox getLeftControlBox() {
-        return leftControlBox;
-    }
-
     public Button getSave() {
         return save;
+    }
+
+    public Button getCancel() {
+        return cancel;
     }
 
     public Button getSaveProperties() {
