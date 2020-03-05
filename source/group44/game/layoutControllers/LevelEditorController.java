@@ -19,7 +19,7 @@ public class LevelEditorController {
     @FXML
     private Button width;
     @FXML
-    private GridPane propertiesGridPane;
+    private VBox propertiesContainer;
     @FXML
     private ScrollPane boardScroll;
     @FXML
@@ -34,6 +34,8 @@ public class LevelEditorController {
     private GridPane container;
     @FXML
     private Button save;
+    @FXML
+    private Button saveProperties;
 
     private GridPane boardGame;
 
@@ -59,8 +61,8 @@ public class LevelEditorController {
         return width;
     }
 
-    public GridPane getPropertiesGridPane() {
-        return propertiesGridPane;
+    public VBox getPropertiesContainer() {
+        return propertiesContainer;
     }
 
     public ScrollPane getBoardScroll() {
@@ -87,6 +89,10 @@ public class LevelEditorController {
         return save;
     }
 
+    public Button getSaveProperties() {
+        return saveProperties;
+    }
+
     public GridPane getContainer() {
         return container;
     }
@@ -98,6 +104,4 @@ public class LevelEditorController {
     public void setBoardGame(GridPane boardGame) {
         this.boardGame = boardGame;
     }
-
-
 }

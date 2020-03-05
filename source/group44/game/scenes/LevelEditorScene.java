@@ -7,6 +7,7 @@ import group44.controllers.LevelEditor;
 import group44.controllers.PropertyController;
 import group44.entities.LevelObject;
 import group44.entities.cells.*;
+import group44.entities.cells.Cell;
 import group44.entities.collectableItems.CollectableItem;
 import group44.entities.collectableItems.FireBoots;
 import group44.entities.collectableItems.Flippers;
@@ -23,26 +24,28 @@ import group44.models.LevelObjectImage;
 import group44.models.PropertyInfo;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Arrays;
 
 import static group44.Constants.WINDOW_HEIGHT;
 import static group44.Constants.WINDOW_WIDTH;
@@ -55,12 +58,15 @@ import static group44.Constants.WINDOW_WIDTH;
  */
 public class LevelEditorScene {
     private static final int EDITOR_LEVEL_OBJECT_WIDTH = 40;
+    private static final String REFLECTION_ACTIVE_OBJECT = "activeObject";
 
     // TODO: Add error messages
     private static final String ERROR_FILE_NOT_FOUND_EXCEPTION_MESSAGE = "";
     private static final String ERROR_ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE = "";
     private static final String ERROR_COLLISION_EXCEPTION_MESSAGE = "";
     private static final String ERROR_PARSING_EXCEPTION_MESSAGE = "";
+
+    private static final String ERROR_REFLECTION = "Avada kedavra";
 
     private static final String ERROR_SAVING_FAILED_TITLE = "Level Editor";
     private static final String ERROR_SAVING_FAILED_HEADER = "Saving failed";
@@ -76,6 +82,8 @@ public class LevelEditorScene {
     private LevelObjectImage draggedImage;
 
     private IPropertyController propertyController;
+    private LevelObject activeLevelObject;
+    private Canvas activeLevelObjectCanvas;
 
     // Current level displayed.
     private Integer height = Constants.LEVEL_DISPLAY_SIZE;
@@ -365,6 +373,10 @@ public class LevelEditorScene {
                 alert.showAndWait();
             }
         });
+
+        this.controller.getSaveProperties().setOnMouseClicked(event -> {
+            updateCellProperties();
+        });
     }
 
     /**
@@ -463,34 +475,46 @@ public class LevelEditorScene {
             public void handle(MouseEvent event) {
                 if (event.getButton().equals(MouseButton.PRIMARY)) {
                     if (event.getClickCount() == 2) {
-                        Node node = (Node) event.getSource();
-                        int x = controller.getBoardGame().getColumnIndex(node);
-                        int y = controller.getBoardGame().getRowIndex(node);
+                        Canvas canvas = (Canvas) event.getSource();
+                        activeLevelObjectCanvas = canvas;
+                        int x = controller.getBoardGame()
+                                .getColumnIndex(canvas);
+                        int y = controller.getBoardGame().getRowIndex(canvas);
 
                         Cell cell = levelEditor.get(x, y);
+                        activeLevelObject = cell;
 
+                        boolean isTeleporter = (cell instanceof Teleporter);
                         boolean isSteppedOn = (cell instanceof Ground
                                 && ((Ground) cell).isSteppedOn());
                         boolean hasCollectable = (cell instanceof Ground
                                 && ((Ground) cell).hasCollectableItem());
                         boolean isDoor = (cell instanceof Door);
 
+                        // allow door type & properties to be changed
                         if (isDoor) {
                             propertyController.setActiveObject(cell);
                         }
+
+                        if (isTeleporter) {
+                            propertyController.setActiveObject(cell);
+                        }
+
                         if (isSteppedOn) {
-                            propertyController.setActiveObject(
-                                    ((StepableCell) cell).getMovableObject());
+                            MovableObject movableObject = ((StepableCell) cell)
+                                    .getMovableObject();
+                            propertyController.setActiveObject(movableObject);
                         }
+
                         if (hasCollectable && !isSteppedOn) {
-                            propertyController.setActiveObject(
-                                    ((Ground) cell).getCollectableItem());
+                            CollectableItem collectableItem = ((Ground) cell)
+                                    .getCollectableItem();
+                            propertyController.setActiveObject(collectableItem);
                         }
 
-
-                        if (isDoor | isSteppedOn | hasCollectable) {
-                            generatePropertiesWindow(
-                                    propertyController.getProperties());
+                        if (isDoor | isSteppedOn | hasCollectable
+                                | isTeleporter) {
+                            generatePropertiesWindow();
                         }
                     }
                 }
@@ -500,23 +524,336 @@ public class LevelEditorScene {
 
     /**
      * Generates Property window.
-     *
-     * @param infos
-     *            properties to be displayed in the window.
      */
-    private void generatePropertiesWindow(PropertyInfo[] propertyInfos) {
-        // 1) Add save button to FXML to rewrite values in fields
-        // 2) When generating GUI, you can use "id" (not fx:id) to map
-        // TextFields to PropertyInfos
-        // 2.1) You will need to do it manually (loop) - right now, there is no
-        // methods in PropertiesController that would do that for you
+    private void generatePropertiesWindow() {
 
+        PropertyInfo[] propertyInfos = propertyController.getProperties();
+
+        VBox container = controller.getPropertiesContainer();
+        // clear the children to ensure only relevant properties are shown
+        container.getChildren().clear();
+
+        // container to hold individual properties
+        Pane propertyBox = new Pane();
+        GridPane gp = new GridPane();
+        gp.setId("propertyGrid");
+        gp.setHgap(10);
+
+        int i = 0;
         for (PropertyInfo info : propertyInfos) {
-            System.out.println(String.format("%s (%s): %s", info.getKey(),
-                    info.getTypeInfo(),
-                    info.getValue() == null ? "null" : info.getValue()));
+
+            // get the property information
+            String name = info.getKey();
+            PropertyInfo.TypeInfo type = info.getTypeInfo();
+            Object genericValue = info.getValue();
+
+            switch (type) {
+
+            // only editable int is number of tokens
+            case Int:
+                if (name.equals("Tokens Needed")) {
+                    TextField intField = new TextField(
+                            String.valueOf((int) genericValue));
+                    intField.setId("tokens");
+                    gp.add(intField, 1, i);
+                } else {
+                    Label intLabel = new Label(
+                            String.valueOf((int) genericValue));
+                    gp.add(intLabel, 1, i);
+                }
+                break;
+
+            // display string properties in a label as they don't need to be
+            // edited
+            case String:
+                Label strLabel = new Label((String) genericValue);
+                gp.add(strLabel, 1, i);
+                break;
+
+            // isOpen property is displayed in a radio button
+            case Boolean:
+                RadioButton boolButton = new RadioButton();
+                boolButton.setSelected((boolean) genericValue);
+                boolButton.setId("isOpen");
+                gp.add(boolButton, 1, i);
+                break;
+
+            // all possible key types are held in a combo box
+            case KeyType:
+                ComboBox<String> comboKey = new ComboBox<>();
+                String[] keys = { KeyType.BLUE.name(), KeyType.RED.name(),
+                        KeyType.GOLD.name(), KeyType.GREEN.name() };
+                comboKey.setItems(
+                        FXCollections.observableList(Arrays.asList(keys)));
+                comboKey.getSelectionModel()
+                        .select(((KeyType) genericValue).name());
+                comboKey.setId("keyType");
+                gp.add(comboKey, 1, i);
+                break;
+
+            // teleporter partner is displayed in a label
+            // TODO: allow user to select a new teleporter.
+            case Teleporter:
+                Teleporter partner = (Teleporter) genericValue;
+                Label tpLabel = new Label(String.format("Teleporter at %d, %d",
+                        partner.getPositionX(), partner.getPositionY()));
+                gp.add(tpLabel, 1, i);
+                break;
+
+            // movable object cannot be edited
+            case MovableObject:
+                Label moLabel;
+                if (genericValue == null) {
+                    moLabel = new Label("None");
+                } else {
+                    moLabel = new Label(info.getValue().toString());
+                }
+                gp.add(moLabel, 1, i);
+                break;
+
+            // collectible item cannot be edited
+            case CollectableItem:
+                Label ciLabel;
+                if (genericValue == null) {
+                    ciLabel = new Label("None");
+                } else {
+                    ciLabel = new Label(info.getValue().toString());
+                }
+                gp.add(ciLabel, 1, i);
+                break;
+            }
+            // display property name
+            Label propertyName = new Label(name);
+            propertyName.setWrapText(true);
+            gp.add(propertyName, 0, i);
+            i++;
         }
-        System.out.println();
+        // add grid containing properties to the scene
+        propertyBox.getChildren().add(gp);
+        container.getChildren().add(propertyBox);
+    }
+
+    /**
+     * Updates the properties of the active cell when the save button is
+     * pressed.
+     */
+    private void updateCellProperties() {
+        // get the gridpane from the scene
+        GridPane gp = (GridPane) controller.getRoot().lookup("#propertyGrid");
+
+        boolean isKeyDoor = false, isKey = false, isTokenDoor = false,
+                isTeleporter = false;
+
+        // if the gp is null then no changes need to be made
+        if (!(gp == null)) {
+            // if there is a text field then a token door must have been
+            // selected
+            TextField tokens = (TextField) gp.lookup("#tokens");
+            RadioButton isOpen = (RadioButton) gp.lookup("#isOpen");
+            ComboBox<String> keyType = (ComboBox<String>) gp.lookup("#keyType");
+
+            // TODO: allow user to change paired teleporter.
+            Button telePair = null;// = (Button) gp.lookup(#telePair);
+
+            KeyType reqKey = null;
+            String keyTitle = "";
+            String keyPath = "";
+            String doorTitle = "";
+            String closedDoorPath = Constants.CLOSED_TOKEN_DOOR_PATH;
+            String openDoorPath = Constants.OPEN_TOKEN_DOOR_PATH;
+
+            if (tokens != null && isOpen != null && keyType == null
+                    && telePair == null) {
+                isTokenDoor = true;
+            } else if (tokens == null && isOpen != null && keyType != null
+                    && telePair == null) {
+                isKeyDoor = true;
+            } else if (tokens == null && isOpen == null && keyType != null
+                    && telePair == null) {
+                isKey = true;
+            } else if (tokens == null && isOpen == null && keyType == null
+                    && telePair != null) {
+                isTeleporter = true;
+            }
+
+            // set the titles and paths for keys and doors
+            if (keyType != null) {
+                switch (keyType.getSelectionModel().getSelectedItem()) {
+                case "BLUE":
+                    reqKey = KeyType.BLUE;
+                    keyTitle = "Blue key";
+                    keyPath = String.format(Constants.KEY_PATH, "blue");
+                    doorTitle = "Blue Door";
+                    closedDoorPath = String
+                            .format(Constants.CLOSED_KEY_DOOR_PATH, "Blue");
+                    openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
+                            "Blue");
+                    break;
+                case "RED":
+                    reqKey = KeyType.RED;
+                    keyTitle = "Red key";
+                    keyPath = String.format(Constants.KEY_PATH, "red");
+                    doorTitle = "Red Door";
+                    closedDoorPath = String
+                            .format(Constants.CLOSED_KEY_DOOR_PATH, "Red");
+                    openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
+                            "Red");
+                    break;
+                case "GREEN":
+                    reqKey = KeyType.GREEN;
+                    keyTitle = "Green key";
+                    keyPath = String.format(Constants.KEY_PATH, "green");
+                    doorTitle = "Green Door";
+                    closedDoorPath = String
+                            .format(Constants.CLOSED_KEY_DOOR_PATH, "Green");
+                    openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
+                            "Green");
+                    break;
+                case "GOLD":
+                    reqKey = KeyType.GOLD;
+                    keyTitle = "Gold key";
+                    keyPath = String.format(Constants.KEY_PATH, "gold");
+                    doorTitle = "Gold Door";
+                    closedDoorPath = String
+                            .format(Constants.CLOSED_KEY_DOOR_PATH, "Gold");
+                    openDoorPath = String.format(Constants.OPEN_KEY_DOOR_PATH,
+                            "Gold");
+                    break;
+                }
+            }
+
+            openDoorPath = openDoorPath.replace(Constants.FILE_SOURCE, "");
+            closedDoorPath = closedDoorPath.replace(Constants.FILE_SOURCE, "");
+            keyPath = keyPath.replace(Constants.FILE_SOURCE, "");
+
+            // set the parameters for a token door
+            if (isTokenDoor) {
+                try {
+                    propertyController.setPropertyValue(new PropertyInfo(
+                            "Tokens Needed", Integer.parseInt(tokens.getText()),
+                            PropertyInfo.TypeInfo.Int));
+                    propertyController.setPropertyValue(new PropertyInfo(
+                            "Is Open", isOpen.selectedProperty().getValue(),
+                            PropertyInfo.TypeInfo.Boolean));
+
+                    try {
+                        // For your own safety, don't use this kind of black magic on your own.
+                        Field keyField = propertyController.getClass().getDeclaredField(REFLECTION_ACTIVE_OBJECT);
+                        keyField.setAccessible(true);
+                        TokenDoor tokenDoor = (TokenDoor) keyField.get(propertyController);
+
+                        Image newImage = null;
+                        if (isOpen.selectedProperty().getValue()) {
+                            newImage = new Image(new File(Constants.FILE_SOURCE + openDoorPath).toURI().toString());
+                        } else {
+                            newImage = new Image(new File(Constants.FILE_SOURCE + closedDoorPath).toURI().toString());
+                        }
+
+                        tokenDoor.setImage(newImage);
+                    } catch (Exception e) {
+                        System.err.println(ERROR_REFLECTION);
+                        e.printStackTrace();
+                    }
+
+                } catch (NoSuchFieldException ignored) {
+                }
+            }
+
+            // set the parameters for a key door
+            if (isKeyDoor) {
+                try {
+                    propertyController.setPropertyValue(new PropertyInfo(
+                            "Is Open", isOpen.selectedProperty().getValue(),
+                            PropertyInfo.TypeInfo.Boolean));
+                    // set the door title
+                    propertyController.setPropertyValue(new PropertyInfo(
+                            "Title", doorTitle, PropertyInfo.TypeInfo.String));
+                    // set the key type
+                    propertyController
+                            .setPropertyValue(new PropertyInfo("Unlocking Key",
+                                    reqKey, PropertyInfo.TypeInfo.KeyType));
+                    // set the closed path
+                    propertyController.setPropertyValue(
+                            new PropertyInfo("Image Path", closedDoorPath,
+                                    PropertyInfo.TypeInfo.String));
+                    // set the open path
+                    propertyController.setPropertyValue(new PropertyInfo(
+                            "Unlocked Image Path", openDoorPath,
+                            PropertyInfo.TypeInfo.String));
+
+                    try {
+                        // For your own safety, don't use this kind of black magic on your own.
+                        Field keyField = propertyController.getClass().getDeclaredField(REFLECTION_ACTIVE_OBJECT);
+                        keyField.setAccessible(true);
+                        KeyDoor keyDoor = (KeyDoor) keyField.get(propertyController);
+
+                        Image newImage = null;
+                        if (isOpen.selectedProperty().getValue()) {
+                            newImage = new Image(new File(Constants.FILE_SOURCE + openDoorPath).toURI().toString());
+                        } else {
+                            newImage = new Image(new File(Constants.FILE_SOURCE + closedDoorPath).toURI().toString());
+                        }
+
+                        keyDoor.setImage(newImage);
+                    } catch (Exception e) {
+                        System.err.println(ERROR_REFLECTION);
+                        e.printStackTrace();
+                    }
+
+                } catch (NoSuchFieldException ignored) {
+                }
+            }
+
+            // set the parameters for a key
+            if (isKey) {
+                try {
+                    // set the key type
+                    propertyController.setPropertyValue(new PropertyInfo(
+                            "Key Type", reqKey, PropertyInfo.TypeInfo.KeyType));
+                    // set the key title
+                    propertyController.setPropertyValue(new PropertyInfo(
+                            "Title", keyTitle, PropertyInfo.TypeInfo.String));
+                    // set the key path
+                    propertyController
+                            .setPropertyValue(new PropertyInfo("Image Path",
+                                    keyPath, PropertyInfo.TypeInfo.String));
+                    try {
+                        // For your own safety, don't use this kind of black magic on your own.
+                        Field keyField = propertyController.getClass().getDeclaredField(REFLECTION_ACTIVE_OBJECT);
+                        keyField.setAccessible(true);
+                        Key key = (Key) keyField.get(propertyController);
+
+                        Image newImage = new Image(new File(Constants.FILE_SOURCE + keyPath).toURI().toString());
+                        key.setImage(newImage);
+                    } catch (Exception e) {
+                        System.err.println(ERROR_REFLECTION);
+                        e.printStackTrace();
+                    }
+
+                } catch (NoSuchFieldException ignored) {
+                    ignored.printStackTrace();
+                }
+            }
+
+            // set the parameters for a teleporter
+            /*
+             * if (isTeleporter) { try {
+             *
+             * }catch (NoSuchFieldException ignored) {} }
+             */
+
+            generatePropertiesWindow();
+
+            if (this.activeLevelObject != null) {
+                this.activeLevelObjectCanvas.getGraphicsContext2D().clearRect(0,
+                        0, Constants.GRID_CELL_HEIGHT,
+                        Constants.GRID_CELL_HEIGHT);
+                this.activeLevelObject.draw(
+                        this.activeLevelObjectCanvas.getGraphicsContext2D(), 0,
+                        0, Constants.GRID_CELL_WIDTH,
+                        Constants.GRID_CELL_HEIGHT);
+            }
+        }
     }
 
     /**

@@ -78,7 +78,7 @@ public class PropertyController implements IPropertyController {
                 if (info.getValue().getClass() != String.class) {
                     throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
                 }
-                field.set(this.activeObject, (String) info.getValue());
+                field.set(this.activeObject, info.getValue());
                 break;
             case Int:
                 if (info.getValue().getClass() != Integer.class) {
