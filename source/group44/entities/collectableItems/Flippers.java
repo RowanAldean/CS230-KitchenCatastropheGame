@@ -13,10 +13,8 @@ public class Flippers extends CollectableItem {
     /**
      * Creates a new instance of {@link Flippers} with position, and image.
      *
-     * @param level
-     *            The {@link Level} where the object is located.
-     * @param imagePath
-     *            Path to the Image representing {@link Flippers} in the game.
+     * @param level     The {@link Level} where the object is located.
+     * @param imagePath Path to the Image representing {@link Flippers} in the game.
      */
     public Flippers(Level level, String imagePath) {
         super(level, Constants.TITLE_FLIPPERS, imagePath);
@@ -25,8 +23,7 @@ public class Flippers extends CollectableItem {
     /**
      * Creates a new instance of {@link Flippers} with position, and image.
      *
-     * @param level
-     *            The {@link Level} where the object is located.
+     * @param level The {@link Level} where the object is located.
      */
     public Flippers(Level level) {
         super(level, Constants.TITLE_FLIPPERS, Constants.FLIPPERS_PATH);

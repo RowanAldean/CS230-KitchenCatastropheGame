@@ -15,12 +15,11 @@ import group44.models.LevelInfo;
 /**
  * An implementation of the {@link ILevelEditor} interface.
  *
- * @author Tomas Svejnoha
+ * @author Tomas Svejnoha.
  * @version 1.0
  */
 public class LevelEditor implements ILevelEditor {
     private static final String ERROR_POSITION_TAKEN_EXCEPTION_MESSAGE = "Position [%d][%d] is not empty.";
-    private static final String ERROR_CELL_NOT_FOUND_EXCEPTION_MESSAGE = "Position [%d][%d] is empty.";
 
     /**
      * {@link Level} loaded in a {@link LevelEditor}.
@@ -30,16 +29,11 @@ public class LevelEditor implements ILevelEditor {
     /**
      * Creates a {@link LevelEditor} and loads a {@link Level}.
      *
-     * @param levelId
-     *            An Id of a {@link Level} to load.
-     * @throws CollisionException
-     *             when two cells are at the same position.
-     * @throws ParsingException
-     *             when trying to parse invalid data type.
-     * @throws FileNotFoundException
-     *             when level file is not found.
-     * @throws IllegalArgumentException
-     *             when Level with levelId is not found.
+     * @param levelId An Id of a {@link Level} to load.
+     * @throws CollisionException       when two cells are at the same position.
+     * @throws ParsingException         when trying to parse invalid data type.
+     * @throws FileNotFoundException    when level file is not found.
+     * @throws IllegalArgumentException when Level with levelId is not found.
      */
     public LevelEditor(int levelId) throws FileNotFoundException,
             IllegalArgumentException, CollisionException, ParsingException {
@@ -49,10 +43,8 @@ public class LevelEditor implements ILevelEditor {
     /**
      * Creates a {@link LevelEditor} and a new {@link Level}.
      *
-     * @param width
-     *            Width of the {@link Level}.
-     * @param height
-     *            Height of the {@link Level}.
+     * @param width  Width of the {@link Level}.
+     * @param height Height of the {@link Level}.
      */
     public LevelEditor(int width, int height) {
         // Get the highest Id

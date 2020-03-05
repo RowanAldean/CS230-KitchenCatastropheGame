@@ -20,6 +20,12 @@ import java.util.ArrayList;
 import static group44.Constants.WINDOW_HEIGHT;
 import static group44.Constants.WINDOW_WIDTH;
 
+/**
+ * Start up scene for the level editor.
+ *
+ * @author Bogdan Mihai
+ * @verion 1.0
+ */
 public class LevelEditorStartupScene {
     private static final String UNAUTHORISED_OPERATION_TITLE = "Unable to delete level";
     private static final String UNAUTHORISED_OPERATION_HEADER = "You can't delete provided levels.";
@@ -92,7 +98,7 @@ public class LevelEditorStartupScene {
                 .getSelectedItem();
         if (info != null) {
             try {
-                if(LevelLoader.parseLevel(info).isCustom() == true){
+                if (LevelLoader.parseLevel(info).isCustom() == true) {
                     LevelManager.deleteLevel(info.getId());
                     this.loadLevels();
                 } else {

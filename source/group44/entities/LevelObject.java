@@ -15,36 +15,44 @@ import java.io.File;
  * @version 1.0
  */
 public abstract class LevelObject {
-    /** Title of the {@link LevelObject}. */
+    /**
+     * Title of the {@link LevelObject}.
+     */
     @Editable
     private String title;
-    /** Path to the image representing the {@link LevelObject} in the game. */
+    /**
+     * Path to the image representing the {@link LevelObject} in the game.
+     */
     private String imagePath;
-    /** Image representing the {@link LevelObject} in the game. */
+    /**
+     * Image representing the {@link LevelObject} in the game.
+     */
     private Image image;
-    /** {@link Level} where the {@link LevelObject} is located. */
+    /**
+     * {@link Level} where the {@link LevelObject} is located.
+     */
     private Level level;
-    /** Position X of the {@link LevelObject}. */
+    /**
+     * Position X of the {@link LevelObject}.
+     */
     @Editable
     private int positionX;
-    /** Position Y of the {@link LevelObject}. */
+    /**
+     * Position Y of the {@link LevelObject}.
+     */
     @Editable
     private int positionY;
 
     /**
      * Creates a new {@link LevelObject}.
      *
-     * @param level
-     *            The {@link Level} in which the {@link LevelObject} exists.
-     * @param title
-     *            Title of the object.
-     * @param positionX
-     *            Position X in the game.
-     * @param positionY
-     *            Position Y in the game.
+     * @param level     The {@link Level} in which the {@link LevelObject} exists.
+     * @param title     Title of the object.
+     * @param positionX Position X in the game.
+     * @param positionY Position Y in the game.
      */
     public LevelObject(Level level, String title, int positionX,
-            int positionY) {
+                       int positionY) {
         this.level = level;
         this.setTitle(title);
         this.setPosition(positionX, positionY);
@@ -53,19 +61,14 @@ public abstract class LevelObject {
     /**
      * Creates a new {@link LevelObject}.
      *
-     * @param level
-     *            The {@link Level} in which the {@link LevelObject} exists.
-     * @param title
-     *            Title of the object.
-     * @param positionX
-     *            Position X in the game.
-     * @param positionY
-     *            Position Y in the game.
-     * @param imagePath
-     *            Image path of the instance.
+     * @param level     The {@link Level} in which the {@link LevelObject} exists.
+     * @param title     Title of the object.
+     * @param positionX Position X in the game.
+     * @param positionY Position Y in the game.
+     * @param imagePath Image path of the instance.
      */
     public LevelObject(Level level, String title, int positionX, int positionY,
-            String imagePath) {
+                       String imagePath) {
         this(level, title, positionX, positionY);
         this.imagePath = imagePath;
 
@@ -92,8 +95,7 @@ public abstract class LevelObject {
     /**
      * Sets the title of an object.
      *
-     * @param newTitle
-     *            the title to set.
+     * @param newTitle the title to set.
      */
     public void setTitle(String newTitle) {
         this.title = newTitle;
@@ -120,8 +122,7 @@ public abstract class LevelObject {
     /**
      * Sets an image of the object.
      *
-     * @param image
-     *            the image.
+     * @param image the image.
      */
     public void setImage(Image image) {
         this.image = image;
@@ -157,10 +158,8 @@ public abstract class LevelObject {
     /**
      * Sets object position to x and y.
      *
-     * @param x
-     *            X coordinate.
-     * @param y
-     *            Y coordinate.
+     * @param x X coordinate.
+     * @param y Y coordinate.
      */
     public void setPosition(int x, int y) {
         this.positionX = x;
@@ -171,23 +170,18 @@ public abstract class LevelObject {
      * Draws the object in {@link GraphicsContext} if there is an Image
      * associated.
      *
-     * @param gc
-     *            {@link GraphicsContext} used to draw the object.
-     * @param x
-     *            The X coordinate in the {@link GraphicsContext} where to draw
-     *            the {@link LevelObject}.
-     * @param y
-     *            The Y coordinate in the {@link GraphicsContext} where to draw
-     *            the {@link LevelObject}.
-     * @param width
-     *            The width of the {@link LevelObject} in the
-     *            {@link GraphicsContext}.
-     * @param height
-     *            The height of the {@link LevelObject} in the
-     *            {@link GraphicsContext}.
+     * @param gc     {@link GraphicsContext} used to draw the object.
+     * @param x      The X coordinate in the {@link GraphicsContext} where to draw
+     *               the {@link LevelObject}.
+     * @param y      The Y coordinate in the {@link GraphicsContext} where to draw
+     *               the {@link LevelObject}.
+     * @param width  The width of the {@link LevelObject} in the
+     *               {@link GraphicsContext}.
+     * @param height The height of the {@link LevelObject} in the
+     *               {@link GraphicsContext}.
      */
     public void draw(GraphicsContext gc, double x, double y, double width,
-            double height) {
+                     double height) {
         if (this.getImage() != null) {
             gc.drawImage(this.getImage(), x, y, width, height);
         }

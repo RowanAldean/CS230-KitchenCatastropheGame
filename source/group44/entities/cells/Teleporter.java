@@ -14,7 +14,9 @@ import group44.game.Level;
  * @version 1.0
  */
 public class Teleporter extends StepableCell {
-    /** Linked teleporter. */
+    /**
+     * Linked teleporter.
+     */
     @Editable
     private Teleporter linkedTeleporter;
 
@@ -22,14 +24,10 @@ public class Teleporter extends StepableCell {
      * Creates a new instance of {@link Teleporter} with linked
      * {@link Teleporter}.
      *
-     * @param level
-     *            The {@link Level} where the {@link Teleporter} is located.
-     * @param title
-     *            The title of the {@link Teleporter}.
-     * @param positionX
-     *            The position X in the game.
-     * @param positionY
-     *            The position Y in the game.
+     * @param level     The {@link Level} where the {@link Teleporter} is located.
+     * @param title     The title of the {@link Teleporter}.
+     * @param positionX The position X in the game.
+     * @param positionY The position Y in the game.
      */
     public Teleporter(Level level, String title, int positionX, int positionY) {
         super(level, title, positionX, positionY, Constants.TELEPORTER_PATH);
@@ -39,27 +37,21 @@ public class Teleporter extends StepableCell {
      * Creates a new instance of {@link Teleporter} with linked
      * {@link Teleporter}.
      *
-     * @param level
-     *            The {@link Level} where the {@link Teleporter} is located.
-     * @param title
-     *            The title of the {@link Teleporter}.
-     * @param positionX
-     *            The position X in the game.
-     * @param positionY
-     *            The position Y in the game.
-     * @param imagePath
-     *            Path to the Image representing {@link Teleporter} in the game.
+     * @param level     The {@link Level} where the {@link Teleporter} is located.
+     * @param title     The title of the {@link Teleporter}.
+     * @param positionX The position X in the game.
+     * @param positionY The position Y in the game.
+     * @param imagePath Path to the Image representing {@link Teleporter} in the game.
      */
     public Teleporter(Level level, String title, int positionX, int positionY,
-            String imagePath) {
+                      String imagePath) {
         super(level, title, positionX, positionY, imagePath);
     }
 
     /**
      * Links the teleporter with another instance of Teleporter.
      *
-     * @param linkedTeleporter
-     *            the teleporter to link with.
+     * @param linkedTeleporter the teleporter to link with.
      */
     public void setLinkedTeleporter(Teleporter linkedTeleporter) {
         this.linkedTeleporter = linkedTeleporter;
@@ -70,15 +62,14 @@ public class Teleporter extends StepableCell {
      *
      * @return linked Teleporter.
      */
-    public Teleporter getLinkedTeleporter(){
+    public Teleporter getLinkedTeleporter() {
         return this.linkedTeleporter;
     }
 
     /**
      * Teleports the {@link MovableObject} to the linked teleporter.
      *
-     * @param object
-     *            {@link MovableObject} that stepped on the {@link Teleporter}.
+     * @param object {@link MovableObject} that stepped on the {@link Teleporter}.
      */
     @Override
     protected void onStepped(MovableObject object) {
@@ -91,8 +82,7 @@ public class Teleporter extends StepableCell {
      * Teleports the {@link MovableObject} to the linked {@link Teleporter} if
      * there is some.
      *
-     * @param object
-     *            the {@link MovableObject} to teleport.
+     * @param object the {@link MovableObject} to teleport.
      * @return true if the teleportation was successful; false otherwise.
      */
     private Boolean teleport(MovableObject object) {
@@ -123,10 +113,9 @@ public class Teleporter extends StepableCell {
      * Returns the {@link LevelObject}s surrounding the {@link LevelObject}
      * passed as a parameter.
      *
-     * @param object
-     *            the surrounded {@link LevelObject}.
+     * @param object the {@link LevelObject} to get the surrounding area from.
      * @return an array of {@link LevelObject}s surrounding the object passed as
-     *         a parameter.
+     * a parameter.
      */
     private LevelObject[][] getSurroundingArea(LevelObject object) {
         int gridWidth = this.getLevel().getGridWidth();
@@ -227,17 +216,14 @@ public class Teleporter extends StepableCell {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(Constants.TYPE_TELEPORTER);
 
+        builder.append(Constants.TYPE_TELEPORTER);
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getTitle());
-
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getPositionX());
-
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getPositionY());
-
         builder.append(Constants.LEVEL_OBJECT_DELIMITER);
         builder.append(this.getImagePath());
 

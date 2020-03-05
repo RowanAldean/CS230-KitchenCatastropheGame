@@ -15,11 +15,13 @@ import group44.game.Level;
 /**
  * Parses and saves the level into specified file.
  *
- * @author Tomas Svejnoha
+ * @author Tomas Svejnoha.
  * @version 1.0
  */
 public final class LevelSaver {
-    /** Header pattern of the Level file. */
+    /**
+     * Header pattern of the Level file.
+     */
     private static final String LEVEL_HEADER_PATTERN = "%d,%d,%d,%d,%b";
     private static final String TELEPORTER_LINK_PATTERN = "teleporterLink,%d,%d,%d,%d";
 
@@ -30,12 +32,9 @@ public final class LevelSaver {
     /**
      * Saves the level into file.
      *
-     * @param level
-     *            the level to save.
-     * @param path
-     *            path to the file.
-     * @throws IOException
-     *             when something goes terribly wrong.
+     * @param level the level to save.
+     * @param path  path to the file.
+     * @throws IOException when something goes terribly wrong.
      */
     public static void save(Level level, String path) throws IOException {
         File file = new File(path);

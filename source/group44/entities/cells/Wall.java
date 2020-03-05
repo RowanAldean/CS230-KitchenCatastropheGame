@@ -14,14 +14,10 @@ public class Wall extends Cell {
     /**
      * Creates a new instance of {@link Wall}.
      *
-     * @param level
-     *            The {@link Level} where the {@link Wall} is located.
-     * @param positionX
-     *            Position X in the {@link group44.game.Level}.
-     * @param positionY
-     *            Position Y in the {@link group44.game.Level}.
-     * @param imagePath
-     *            Path to the Image representing {@link Wall} in the game.
+     * @param level     The {@link Level} where the {@link Wall} is located.
+     * @param positionX Position X in the {@link group44.game.Level}.
+     * @param positionY Position Y in the {@link group44.game.Level}.
+     * @param imagePath Path to the Image representing {@link Wall} in the game.
      */
     public Wall(Level level, int positionX, int positionY, String imagePath) {
         super(level, Constants.TITLE_WALL, positionX, positionY, imagePath);
@@ -30,12 +26,9 @@ public class Wall extends Cell {
     /**
      * Creates a new instance of {@link Wall}.
      *
-     * @param level
-     *            The {@link Level} where the {@link Wall} is located.
-     * @param positionX
-     *            Position X in the {@link group44.game.Level}.
-     * @param positionY
-     *            Position Y in the {@link group44.game.Level}.
+     * @param level     The {@link Level} where the {@link Wall} is located.
+     * @param positionX Position X in the {@link group44.game.Level}.
+     * @param positionY Position Y in the {@link group44.game.Level}.
      */
     public Wall(Level level, int positionX, int positionY) {
         super(level, Constants.TITLE_WALL, positionX, positionY, Constants.WALL_PATH);

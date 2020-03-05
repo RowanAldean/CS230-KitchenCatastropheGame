@@ -1,5 +1,10 @@
 package group44;
 
+/**
+ * This file contains all the constants used throughout the project.
+ * @author Tomas Svejnoha, Oliver Morris.
+ * @version 1.0
+ */
 public final class Constants {
     private Constants() {
     }

@@ -11,17 +11,17 @@ import group44.game.Level;
  * @version 1.0
  */
 public class Key extends CollectableItem {
-    /** Type of the key needed to open the door. */
+    /**
+     * Type of the key needed to open the door.
+     */
     @Editable
     private KeyType keyType;
 
     /**
      * Creates a new instance of {@link Key} of specific colour type.
      *
-     * @param level
-     *            The {@link Level} where the {@link Key} is located.
-     * @param type
-     *            Colour type of the {@link Key}.
+     * @param level The {@link Level} where the {@link Key} is located.
+     * @param type  Colour type of the {@link Key}.
      */
     public Key(Level level, KeyType type) {
         super(level, type.getTitle(), type.getImagePath());
@@ -56,20 +56,29 @@ public class Key extends CollectableItem {
      * KeyCode and image path.
      */
     public enum KeyType {
-        /** Red key. */
+        //Red key.
         RED(1, "Red key"),
-        /** Blue key. */
+
+        //Blue key.
         BLUE(2, "Blue key"),
-        /** Green key. */
+
+        //Green key.
         GREEN(3, "Green key"),
-        /** Gold key. */
+
+        //Gold key
         GOLD(4, "Gold key");
 
-        /** Id of the key. */
+        /**
+         * Id of the key.
+         */
         private int code;
-        /** Title of the key. */
+        /**
+         * Title of the key.
+         */
         private String title;
-        /** Image path of the key. */
+        /**
+         * Image path of the key.
+         */
         private String imagePath;
 
         KeyType(int code, String title) {
@@ -112,7 +121,7 @@ public class Key extends CollectableItem {
          */
         public String getFormattedName() {
             String str = this.name().toLowerCase();
-            return str.substring(0,1).toUpperCase() + str.substring(1);
+            return str.substring(0, 1).toUpperCase() + str.substring(1);
         }
     }
 }

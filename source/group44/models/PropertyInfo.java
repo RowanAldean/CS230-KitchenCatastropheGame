@@ -25,12 +25,9 @@ public class PropertyInfo {
     /**
      * Creates a new {@link PropertyInfo}.
      *
-     * @param name
-     *            Name of the property.
-     * @param value
-     *            Value of the property.
-     * @param typeInfo
-     *            Data type of the property.
+     * @param name     Name of the property.
+     * @param value    Value of the property.
+     * @param typeInfo Data type of the property.
      */
     public PropertyInfo(String name, Object value, TypeInfo typeInfo) {
         this.name = name;
@@ -59,8 +56,7 @@ public class PropertyInfo {
     /**
      * Sets the value of the property.
      *
-     * @param value
-     *            new value.
+     * @param value new value.
      */
     public void setValue(Object value) {
         this.value = value;
@@ -75,12 +71,6 @@ public class PropertyInfo {
         return typeInfo;
     }
 
-    /**
-     * Represents all supported property types.
-     *
-     * @author Tomas Svejnoha
-     * @version 1.0
-     */
     public enum TypeInfo {
         String, Int, Boolean, CollectableItem, KeyType, MovableObject, Teleporter
     }

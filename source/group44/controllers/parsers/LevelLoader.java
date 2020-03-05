@@ -34,26 +34,23 @@ import group44.models.LevelInfo;
 /**
  * Loads and parses the level file into {@link Level}.
  *
- * @author Tomas Svejnoha, Amy Mason
+ * @author Tomas Svejnoha, Amy Mason.
  * @version 1.0
  */
 public class LevelLoader {
-    /** Pattern for a teleporter not found. */
+    /**
+     * Pattern for a teleporter not found.
+     */
     private static final String ERROR_MESSAGE_TELEPORTER_NOT_FOUND = "%s,%d,%d";
 
     /**
      * Parses level file and adds LevelObjects into level.
      *
-     * @param info
-     *            the {@link LevelInfo}.
+     * @param info the {@link LevelInfo}.
      * @return the parsed {@link Level}.
-     *
-     * @throws CollisionException
-     *             when two cells are at the same position.
-     * @throws ParsingException
-     *             when trying to parse invalid data type.
-     * @throws FileNotFoundException
-     *             when level file is not found.
+     * @throws CollisionException    when two cells are at the same position.
+     * @throws ParsingException      when trying to parse invalid data type.
+     * @throws FileNotFoundException when level file is not found.
      */
     public static Level parseLevel(LevelInfo info)
             throws CollisionException, ParsingException, FileNotFoundException {
@@ -89,15 +86,10 @@ public class LevelLoader {
     /**
      * Parses level file and adds LevelObjects into level.
      *
-     * @param level
-     *            the level to parse.
-     * @param fileScanner
-     *            scanner for the level file.
-     *
-     * @throws CollisionException
-     *             when two cells are at the same position.
-     * @throws ParsingException
-     *             when trying to parse invalid data type.
+     * @param level       the level to parse.
+     * @param fileScanner scanner for the level file.
+     * @throws CollisionException when two cells are at the same position.
+     * @throws ParsingException   when trying to parse invalid data type.
      */
     private static void parseLevel(Level level, Scanner fileScanner)
             throws CollisionException, ParsingException {
@@ -109,15 +101,10 @@ public class LevelLoader {
     /**
      * Parses line entry and adds LevelObjects into level.
      *
-     * @param level
-     *            the level where the entry is located.
-     * @param scanner
-     *            scanner with the serialised entry.
-     *
-     * @throws ParsingException
-     *             when trying to parse invalid data type.
-     * @throws CollisionException
-     *             when two cells are at the same position.
+     * @param level   the level where the entry is located.
+     * @param scanner scanner with the serialised entry.
+     * @throws ParsingException   when trying to parse invalid data type.
+     * @throws CollisionException when two cells are at the same position.
      */
     private static void parseEntry(Level level, Scanner scanner)
             throws ParsingException, CollisionException {
@@ -127,32 +114,32 @@ public class LevelLoader {
         Cell cell = null;
 
         switch (type) {
-        case Constants.TYPE_WALL:
-            cell = parseWallEntry(level, scanner);
-            break;
-        case Constants.TYPE_GROUND:
-            cell = parseGroundEntry(level, scanner);
-            break;
-        case Constants.TYPE_WATER:
-            cell = parseWaterEntry(level, scanner);
-            break;
-        case Constants.TYPE_FIRE:
-            cell = parseFireEntry(level, scanner);
-            break;
-        case Constants.TYPE_GOAL:
-            cell = parseGoalEntry(level, scanner);
-            break;
-        case Constants.TYPE_KEY_DOOR:
-            cell = parseKeyDoorEntry(level, scanner);
-            break;
-        case Constants.TYPE_TOKEN_DOOR:
-            cell = parseTokenDoorEntry(level, scanner);
-            break;
-        case Constants.TYPE_TELEPORTER:
-            cell = parseTeleporterEntry(level, scanner);
-            break;
-        case Constants.TYPE_TELEPORTER_LINK:
-            parseTeleporterLink(level, scanner);
+            case Constants.TYPE_WALL:
+                cell = parseWallEntry(level, scanner);
+                break;
+            case Constants.TYPE_GROUND:
+                cell = parseGroundEntry(level, scanner);
+                break;
+            case Constants.TYPE_WATER:
+                cell = parseWaterEntry(level, scanner);
+                break;
+            case Constants.TYPE_FIRE:
+                cell = parseFireEntry(level, scanner);
+                break;
+            case Constants.TYPE_GOAL:
+                cell = parseGoalEntry(level, scanner);
+                break;
+            case Constants.TYPE_KEY_DOOR:
+                cell = parseKeyDoorEntry(level, scanner);
+                break;
+            case Constants.TYPE_TOKEN_DOOR:
+                cell = parseTokenDoorEntry(level, scanner);
+                break;
+            case Constants.TYPE_TELEPORTER:
+                cell = parseTeleporterEntry(level, scanner);
+                break;
+            case Constants.TYPE_TELEPORTER_LINK:
+                parseTeleporterLink(level, scanner);
         }
 
         if (cell != null) {
@@ -165,11 +152,8 @@ public class LevelLoader {
     /**
      * Parses the line into cell.
      *
-     * @param level
-     *            the level where the Cell is located.
-     * @param scanner
-     *            scanner with the serialised cell.
-     *
+     * @param level   the level where the Cell is located.
+     * @param scanner scanner with the serialised cell.
      * @return the serialised {@link Wall} as a type {@link Cell}.
      */
     private static Cell parseWallEntry(Level level, Scanner scanner) {
@@ -183,11 +167,8 @@ public class LevelLoader {
     /**
      * Parses the line into cell.
      *
-     * @param level
-     *            the level where the Cell is located.
-     * @param scanner
-     *            scanner with the serialised cell.
-     *
+     * @param level   the level where the Cell is located.
+     * @param scanner scanner with the serialised cell.
      * @return the serialised {@link Ground} as a type of {@link StepableCell}.
      */
     private static StepableCell parseGroundEntry(Level level, Scanner scanner) {
@@ -235,11 +216,8 @@ public class LevelLoader {
     /**
      * Parses the line into cell.
      *
-     * @param level
-     *            the level where the Cell is located.
-     * @param scanner
-     *            scanner with the serialised cell.
-     *
+     * @param level   the level where the Cell is located.
+     * @param scanner scanner with the serialised cell.
      * @return the serialised {@link Water} as a type of {@link StepableCell}.
      */
     private static StepableCell parseWaterEntry(Level level, Scanner scanner) {
@@ -276,11 +254,8 @@ public class LevelLoader {
     /**
      * Parses the line into cell.
      *
-     * @param level
-     *            the level where the Cell is located.
-     * @param scanner
-     *            scanner with the serialised cell.
-     *
+     * @param level   the level where the Cell is located.
+     * @param scanner scanner with the serialised cell.
      * @return the serialised {@link Fire} as a type of {@link StepableCell}.
      */
     private static StepableCell parseFireEntry(Level level, Scanner scanner) {
@@ -317,16 +292,13 @@ public class LevelLoader {
     /**
      * Parses the line into cell.
      *
-     * @param level
-     *            the level where the Cell is located.
-     * @param scanner
-     *            scanner with the serialised Cell.
-     *
+     * @param level   the level where the Cell is located.
+     * @param scanner scanner with the serialised Cell.
      * @return the serialised {@link Key Door} as a type of
-     *         {@link StepableCell}.
+     * {@link StepableCell}.
      */
     private static StepableCell parseKeyDoorEntry(Level level,
-            Scanner scanner) {
+                                                  Scanner scanner) {
         String title = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
@@ -365,16 +337,13 @@ public class LevelLoader {
     /**
      * Parses the line into cell.
      *
-     * @param level
-     *            the level where the Cell is located.
-     * @param scanner
-     *            scanner with the serialised Cell.
-     *
+     * @param level   the level where the Cell is located.
+     * @param scanner scanner with the serialised Cell.
      * @return the serialised {@link Token Door} as a type of
-     *         {@link StepableCell}.
+     * {@link StepableCell}.
      */
     private static StepableCell parseTokenDoorEntry(Level level,
-            Scanner scanner) {
+                                                    Scanner scanner) {
         String title = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
@@ -413,11 +382,8 @@ public class LevelLoader {
     /**
      * Parses the line into cell.
      *
-     * @param level
-     *            the level where the Cell is located.
-     * @param scanner
-     *            scanner with the serialised cell.
-     *
+     * @param level   the level where the Cell is located.
+     * @param scanner scanner with the serialised cell.
      * @return the serialised {@link Goal} as a type of {@link StepableCell}.
      */
     private static StepableCell parseGoalEntry(Level level, Scanner scanner) {
@@ -454,16 +420,13 @@ public class LevelLoader {
     /**
      * Parses the line into cell.
      *
-     * @param level
-     *            - the level where the StepableCell is located.
-     * @param scanner
-     *            - scanner with the serialised cell.
-     *
+     * @param level   - the level where the StepableCell is located.
+     * @param scanner - scanner with the serialised cell.
      * @return the serialised {@link Teleporter} as a type of
-     *         {@link StepableCell}.
+     * {@link StepableCell}.
      */
     private static StepableCell parseTeleporterEntry(Level level,
-            Scanner scanner) {
+                                                     Scanner scanner) {
         String title = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
@@ -498,15 +461,12 @@ public class LevelLoader {
     /**
      * Parses the player on the scanned line.
      *
-     * @param level
-     *            the level where the player is located.
-     * @param scanner
-     *            scanner with the serialised player.
-     *
+     * @param level   the level where the player is located.
+     * @param scanner scanner with the serialised player.
      * @return the serialised {@link Player} as a type of {@link MovableObject}.
      */
     private static MovableObject parsePlayerEntry(Level level,
-            Scanner scanner) {
+                                                  Scanner scanner) {
         String name = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
@@ -537,16 +497,13 @@ public class LevelLoader {
     /**
      * Parses the Dumb Targeting Enemy on the scanned line.
      *
-     * @param level
-     *            the level where the enemy is located.
-     * @param scanner
-     *            scanner with the serialised enemy.
-     *
+     * @param level   the level where the enemy is located.
+     * @param scanner scanner with the serialised enemy.
      * @return the serialised {@link DumbTargetingEnemy} as a type of
-     *         {@link MovableObject}.
+     * {@link MovableObject}.
      */
     private static MovableObject parseDumbTargetingEnemyEntry(Level level,
-            Scanner scanner) {
+                                                              Scanner scanner) {
         String name = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
@@ -559,16 +516,13 @@ public class LevelLoader {
     /**
      * Parses the Straight Walking Enemy on the scanned line.
      *
-     * @param level
-     *            the level where the enemy is located.
-     * @param scanner
-     *            scanner with the serialised enemy.
-     *
+     * @param level   the level where the enemy is located.
+     * @param scanner scanner with the serialised enemy.
      * @return the serialised {@link StraightWalkingEnemy} as a type of
-     *         {@link MovableObject}.
+     * {@link MovableObject}.
      */
     private static MovableObject parseStraightWalkingEnemyEntry(Level level,
-            Scanner scanner) {
+                                                                Scanner scanner) {
         String name = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
@@ -583,16 +537,13 @@ public class LevelLoader {
     /**
      * Parses the Wall Following Enemy on the scanned line.
      *
-     * @param level
-     *            the level where the enemy is located.
-     * @param scanner
-     *            scanner with the serialised enemy.
-     *
+     * @param level   the level where the enemy is located.
+     * @param scanner scanner with the serialised enemy.
      * @return the serialised {@link WallFollowingEnemy} as a type of
-     *         {@link MovableObject}.
+     * {@link MovableObject}.
      */
     private static MovableObject parseWallFollowingEnemyEntry(Level level,
-            Scanner scanner) {
+                                                              Scanner scanner) {
         String name = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
@@ -605,16 +556,13 @@ public class LevelLoader {
     /**
      * Parses the Smart Targeting Enemy on the scanned line.
      *
-     * @param level
-     *            the level where the enemy is located.
-     * @param scanner
-     *            scanner with the serialised enemy.
-     *
+     * @param level   the level where the enemy is located.
+     * @param scanner scanner with the serialised enemy.
      * @return the serialised {@link SmartTargetingEnemy} as a type of
-     *         {@link MovableObject}.
+     * {@link MovableObject}.
      */
     private static MovableObject parseSmartTargetingEnemyEntry(Level level,
-            Scanner scanner) {
+                                                               Scanner scanner) {
         String name = scanner.next();
         int positionX = scanner.nextInt();
         int positionY = scanner.nextInt();
@@ -627,16 +575,13 @@ public class LevelLoader {
     /**
      * Parses the line into Collectable item - Fire Boots.
      *
-     * @param level
-     *            the level where the item is located.
-     * @param scanner
-     *            scanner with the serialised fire boots.
-     *
+     * @param level   the level where the item is located.
+     * @param scanner scanner with the serialised fire boots.
      * @return the serialised {@link FireBoots} as a type
-     *         {@link CollectableItem}.
+     * {@link CollectableItem}.
      */
     private static CollectableItem parseFireBootsEntry(Level level,
-            Scanner scanner) {
+                                                       Scanner scanner) {
         String imagePath = scanner.next();
 
         return new FireBoots(level, imagePath);
@@ -645,16 +590,13 @@ public class LevelLoader {
     /**
      * Parses the line into Collectable item - Flippers.
      *
-     * @param level
-     *            - the level where the item is located.
-     * @param scanner
-     *            - scanner with the serialised flippers.
-     *
+     * @param level   - the level where the item is located.
+     * @param scanner - scanner with the serialised flippers.
      * @return the serialised {@link Flippers} as a type
-     *         {@link CollectableItem}.
+     * {@link CollectableItem}.
      */
     private static CollectableItem parseFlipperEntry(Level level,
-            Scanner scanner) {
+                                                     Scanner scanner) {
         String imagePath = scanner.next();
 
         return new Flippers(level, imagePath);
@@ -663,11 +605,8 @@ public class LevelLoader {
     /**
      * Parses the line into Collectable item - Key.
      *
-     * @param level
-     *            the level where the item is located.
-     * @param scanner
-     *            scanner with the serialised key.
-     *
+     * @param level   the level where the item is located.
+     * @param scanner scanner with the serialised key.
      * @return the serialised {@link Key} as a type {@link CollectableItem}.
      */
     private static CollectableItem parseKeyEntry(Level level, Scanner scanner) {
@@ -680,15 +619,12 @@ public class LevelLoader {
     /**
      * Parses the line into Collectable item - Token.
      *
-     * @param level
-     *            the level where the item is located.
-     * @param scanner
-     *            scanner with the serialised token.
-     *
+     * @param level   the level where the item is located.
+     * @param scanner scanner with the serialised token.
      * @return the serialised {@link Token} as a type {@link CollectableItem}.
      */
     private static CollectableItem parseTokenEntry(Level level,
-            Scanner scanner) {
+                                                   Scanner scanner) {
         String imagePath = scanner.next();
 
         return new Token(level, imagePath);
@@ -697,34 +633,30 @@ public class LevelLoader {
     /**
      * Retrieves the Key Type.
      *
-     * @param keyTypeID
-     *            the key ID, specific to Key Type.
+     * @param keyTypeID the key ID, specific to Key Type.
      * @return the Key Type.
      */
     private static KeyType getKeyType(int keyTypeID) {
         switch (keyTypeID) {
-        case 1:
-            return KeyType.RED;
-        case 2:
-            return KeyType.BLUE;
-        case 3:
-            return KeyType.GREEN;
-        case 4:
-            return KeyType.GOLD;
-        default:
-            return KeyType.RED;
+            case 1:
+                return KeyType.RED;
+            case 2:
+                return KeyType.BLUE;
+            case 3:
+                return KeyType.GREEN;
+            case 4:
+                return KeyType.GOLD;
+            default:
+                return KeyType.RED;
         }
     }
 
     /**
      * Links teleporters together.
      *
-     * @param level
-     *            the level where the item is located.
-     * @param scanner
-     *            scanner with the serialised token.
-     * @throws ParsingException
-     *             when Teleporter is not found.
+     * @param level   the level where the item is located.
+     * @param scanner scanner with the serialised token.
+     * @throws ParsingException when Teleporter is not found.
      */
     private static void parseTeleporterLink(Level level, Scanner scanner)
             throws ParsingException {

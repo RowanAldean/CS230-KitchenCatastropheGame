@@ -211,7 +211,7 @@ public class GameScene {
                     .getTopThreeRecords(currentLevel.getId());
 
             // Is in TOP 3?
-            boolean isInTop3 = Leaderboard.isInTopThreeRecors(
+            boolean isInTop3 = Leaderboard.isInTopThreeRecords(
                     currentProfile.getId(), currentLevel.getId());
 
             StringBuilder builder = new StringBuilder();

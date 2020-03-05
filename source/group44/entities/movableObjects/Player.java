@@ -32,33 +32,30 @@ import javafx.scene.input.KeyEvent;
  * @version 1.0
  */
 public class Player extends MovableObject {
-    /** Pattern for serialising Player into string. */
+    /**
+     * Pattern for serialising Player into string.
+     */
     private static final String TO_STRING_PATTERN = "%s,%s,%d,%d,%d,%d,%s";
-    /** All collectable items the player has collected. */
+    /**
+     * All collectable items the player has collected.
+     */
     private ArrayList<CollectableItem> inventory;
 
     /**
      * Creates a new instance of {@link Player} at specific position in a
      * specific {@link Level}.
      *
-     * @param level
-     *            The {@link Level} where the {@link Player} is located.
-     * @param name
-     *            The name of the {@link Player}.
-     * @param positionX
-     *            Position X of the {@link Player}.
-     * @param positionY
-     *            Position Y of the {@link Player}.
-     * @param velocityX
-     *            Velocity X of the {@link Player}.
-     * @param velocityY
-     *            Velocity Y of the {@link Player}.
-     * @param imagePath
-     *            Path to the Image representing the {@link Player} on the
-     *            screen.
+     * @param level     The {@link Level} where the {@link Player} is located.
+     * @param name      The name of the {@link Player}.
+     * @param positionX Position X of the {@link Player}.
+     * @param positionY Position Y of the {@link Player}.
+     * @param velocityX Velocity X of the {@link Player}.
+     * @param velocityY Velocity Y of the {@link Player}.
+     * @param imagePath Path to the Image representing the {@link Player} on the
+     *                  screen.
      */
     public Player(Level level, String name, int positionX, int positionY,
-            int velocityX, int velocityY, String imagePath) {
+                  int velocityX, int velocityY, String imagePath) {
         super(level, name, positionX, positionY, velocityX, velocityY,
                 imagePath);
 
@@ -70,18 +67,12 @@ public class Player extends MovableObject {
      * Creates a new instance of {@link Player} at specific position in a
      * specific {@link Level}.
      *
-     * @param level
-     *            The {@link Level} where the {@link Player} is located.
-     * @param name
-     *            The name of the {@link Player}.
-     * @param positionX
-     *            Position X of the {@link Player}.
-     * @param positionY
-     *            Position Y of the {@link Player}.
-     * @param velocityX
-     *            Velocity X of the {@link Player}.
-     * @param velocityY
-     *            Velocity Y of the {@link Player}.
+     * @param level     The {@link Level} where the {@link Player} is located.
+     * @param name      The name of the {@link Player}.
+     * @param positionX Position X of the {@link Player}.
+     * @param positionY Position Y of the {@link Player}.
+     * @param velocityX Velocity X of the {@link Player}.
+     * @param velocityY Velocity Y of the {@link Player}.
      */
     public Player(Level level, String name, int positionX, int positionY,
                   int velocityX, int velocityY) {
@@ -102,26 +93,27 @@ public class Player extends MovableObject {
         StepableCell nextCell = this.getNextStepableCellInVelocity(this,
                 this.getVelocityX(), this.getVelocityY());
 
-        // Check if the move can be done; if not, do not move
+        //Check if the move can be done; if not, do not move.
         if (nextCell != null) {
             CollisionCheckResult collisionResult = nextCell.stepOn(this);
             if (collisionResult.isColliding()) {
-                // Colliding; stepOn was NOT successful
+                //Colliding; stepOn was NOT successful.
                 this.onCollided(collisionResult);
             } else {
-                // Not colliding; stepOn was successful - remove on screen message
+                //Not colliding; stepOn was successful - remove on screen message.
                 GameScene.getOnScreenMessage().setVisible(false);
                 GameScene.getOnScreenMessage().setGraphic(null);
                 currentCell.stepOff();
 
-                // If the movableObject on the nextCell is not
-                // equal to this =>
-                // Teleporter - position is already set
+                //If the movableObject on the nextCell is not
+                //equal to this (Player) then set this (Player)
+                //to the position of nextCell.
+                //Teleporter - position is already set.
                 if (nextCell.getMovableObject() == this) {
                     this.setPosition(nextCell.getPositionX(),
                             nextCell.getPositionY());
                 }
-                // Does nothing for Teleporters => safe
+                // Does nothing for Teleporters => safe.
                 this.onCellStepped(nextCell);
             }
         }
@@ -131,38 +123,37 @@ public class Player extends MovableObject {
      * Method invoked after the {@link Player} collided with another
      * {@link LevelObject}.
      *
-     * @param result
-     *            the {@link CollisionCheckResult}.
+     * @param result the {@link CollisionCheckResult}.
      */
     @Override
     protected void onCollided(CollisionCheckResult result) {
         switch (result.getType()) {
-        case Enemy:
-            Enemy enemy = (Enemy) result.getCollidingObject();
-            enemy.onCollided(new CollisionCheckResult(
-                    CollisionCheckResultType.Player, this));
-            break;
-        case MissingKey:
-            if (this.tryToOpenKeyDoor(result)) {
-                this.move();
-            }
-            break;
-        case NotEnoughTokens:
-            if (this.tryToOpenTokenDoor(result)) {
-                this.move();
-            }
-            break;
-        default:
-            break;
+            case Enemy:
+                Enemy enemy = (Enemy) result.getCollidingObject();
+                enemy.onCollided(new CollisionCheckResult(
+                        CollisionCheckResultType.Player, this));
+                break;
+            case MissingKey:
+                if (this.tryToOpenKeyDoor(result)) {
+                    this.move();
+                }
+                break;
+            case NotEnoughTokens:
+                if (this.tryToOpenTokenDoor(result)) {
+                    this.move();
+                }
+                break;
+            default:
+                break;
         }
     }
 
     /**
      * Tries to open {@link KeyDoor}.
      *
-     * @param result
-     *            collision result.
-     * @return true if the door are open; otherwise false and update the on screen message.
+     * @param result collision result.
+     * @return true if the door are open; otherwise false and
+     *         update the on screen message.
      */
     private boolean tryToOpenKeyDoor(CollisionCheckResult result) {
         KeyDoor door = (KeyDoor) result.getCollidingObject();
@@ -172,7 +163,8 @@ public class Player extends MovableObject {
             door.open(key);
         }
         String imagePath = door.getUnlockingKeyType().getImagePath();
-        GameScene.setOnScreenMessage("You need a " + door.getUnlockingKeyType().getTitle() + " to open this door!", imagePath);
+        GameScene.setOnScreenMessage("You need a " +
+                door.getUnlockingKeyType().getTitle() + " to open this door!", imagePath);
         GameScene.getOnScreenMessage().setVisible(true);
         return door.isOpen();
     }
@@ -180,8 +172,7 @@ public class Player extends MovableObject {
     /**
      * Returns a key of a specific type if player has it in inventory.
      *
-     * @param type
-     *            type of the key to find.
+     * @param type type of the key to find.
      * @return the key if found; otherwise null.
      */
     private Key getKey(KeyType type) {
@@ -197,16 +188,15 @@ public class Player extends MovableObject {
     /**
      * Tries to open {@link TokenDoor}.
      *
-     * @param result
-     *            collision result.
+     * @param result collision result.
      * @return true if the door are open; otherwise false and update the on screen message.
      */
     private boolean tryToOpenTokenDoor(CollisionCheckResult result) {
-        //TODO: Create Constants.TOKEN_PATH and hardode the paths for each type of LevelObject
         TokenDoor door = (TokenDoor) result.getCollidingObject();
-        if(!door.open(this.getTokenAccumulator())){
+        if (!door.open(this.getTokenAccumulator())) {
             int tokensLeft = door.getTokensNeeded() - this.getTokenAccumulator().getTokensCount();
-            GameScene.setOnScreenMessage("You need " + tokensLeft + " more token(s) to open this door!", Constants.TOKEN_PATH);
+            GameScene.setOnScreenMessage("You need " + tokensLeft +
+                    " more token(s) to open this door!", Constants.TOKEN_PATH);
             GameScene.getOnScreenMessage().setVisible(true);
         }
         return door.open(this.getTokenAccumulator());
@@ -216,22 +206,19 @@ public class Player extends MovableObject {
      * If the {@link StepableCell} is an instance of {@link Ground}, the
      * {@link Player} will collect any {@link CollectableItem} on the cell.
      *
-     * @param cell
-     *            {@link StepableCell} the {@link Player} stepped on.
+     * @param cell {@link StepableCell} the {@link Player} stepped on.
      */
     private void onCellStepped(StepableCell cell) {
         if (cell instanceof Ground) {
             Ground ground = ((Ground) cell);
             if (ground.hasCollectableItem()) {
-                // Collect the CollectableItem if the is any
+                //Collect the CollectableItem if the is any.
                 CollectableItem item = ground.collect();
                 if (item instanceof Token) {
-                    // If token, add to TokenAccumulator
+                    //If token, add to TokenAccumulator.
                     this.getTokenAccumulator().addToken((Token) item);
                 } else {
-                    this.inventory.add(item); // else, add
-                                              // to
-                                              // inventory
+                    this.inventory.add(item); //else, add to inventory.
                 }
             }
         }
@@ -241,8 +228,7 @@ public class Player extends MovableObject {
      * Method executed when some other {@link LevelObject} tries to kill the
      * {@link Player}. The player will die if he can't protect himself.
      *
-     * @param object
-     *            the {@link LevelObject} trying to kill the {@link Player}.
+     * @param object the {@link LevelObject} trying to kill the {@link Player}.
      */
     @Override
     public void die(LevelObject object) {
@@ -286,29 +272,28 @@ public class Player extends MovableObject {
     /**
      * Sets the velocity of the {@link Player} based on the arrow pressed.
      *
-     * @param event
-     *            the {@link KeyEvent}.
+     * @param event the {@link KeyEvent}.
      */
     public void keyDown(KeyEvent event) {
         switch (event.getCode()) {
-        case LEFT:
-            this.setVelocityX(-1);
-            this.setVelocityY(0);
-            break;
-        case RIGHT:
-            this.setVelocityX(1);
-            this.setVelocityY(0);
-            break;
-        case UP:
-            this.setVelocityX(0);
-            this.setVelocityY(-1);
-            break;
-        case DOWN:
-            this.setVelocityX(0);
-            this.setVelocityY(1);
-            break;
-        default:
-            break;
+            case LEFT:
+                this.setVelocityX(-1);
+                this.setVelocityY(0);
+                break;
+            case RIGHT:
+                this.setVelocityX(1);
+                this.setVelocityY(0);
+                break;
+            case UP:
+                this.setVelocityX(0);
+                this.setVelocityY(-1);
+                break;
+            case DOWN:
+                this.setVelocityX(0);
+                this.setVelocityY(1);
+                break;
+            default:
+                break;
         }
     }
 
@@ -334,8 +319,7 @@ public class Player extends MovableObject {
     /**
      * Adds {@link CollectableItem} to the inventory.
      *
-     * @param item
-     *            the collectable item.
+     * @param item the collectable item.
      */
     public void addToInventory(CollectableItem item) {
         if (item instanceof TokenAccumulator) {

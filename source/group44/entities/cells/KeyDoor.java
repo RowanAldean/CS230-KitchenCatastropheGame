@@ -18,7 +18,9 @@ import group44.game.Level;
  * @version 1.0
  */
 public class KeyDoor extends Door {
-    /** Unlocking key for the door. */
+    /**
+     * Unlocking key for the door.
+     */
     @Editable
     private Key.KeyType unlockingKey;
 
@@ -26,26 +28,18 @@ public class KeyDoor extends Door {
      * This creates a new instance of {@link KeyDoor} and associates it with an
      * unlocking {@link KeyType}.
      *
-     * @param level
-     *            The {@link Level} where the {@link KeyDoor} is located.
-     * @param title
-     *            Title of the {@link Door}.
-     * @param positionX
-     *            Position X in the game.
-     * @param positionY
-     *            Position Y in the game.
-     * @param lockedImagePath
-     *            Path to the Image representing locked door in the game.
-     * @param unlockedImagePath
-     *            Path to the Image representing unlocked door in the game.
-     * @param unlockingKey
-     *            Key used to unlock the door.
-     * @param isOpen
-     *            Open/Closed state of the door.
+     * @param level             The {@link Level} where the {@link KeyDoor} is located.
+     * @param title             Title of the {@link Door}.
+     * @param positionX         Position X in the game.
+     * @param positionY         Position Y in the game.
+     * @param lockedImagePath   Path to the Image representing locked door in the game.
+     * @param unlockedImagePath Path to the Image representing unlocked door in the game.
+     * @param unlockingKey      Key used to unlock the door.
+     * @param isOpen            Open/Closed state of the door.
      */
     public KeyDoor(Level level, String title, int positionX, int positionY,
-            String lockedImagePath, String unlockedImagePath,
-            Key.KeyType unlockingKey, boolean isOpen) {
+                   String lockedImagePath, String unlockedImagePath,
+                   Key.KeyType unlockingKey, boolean isOpen) {
         super(level, title, positionX, positionY, lockedImagePath,
                 unlockedImagePath, isOpen);
         this.unlockingKey = unlockingKey;
@@ -55,18 +49,12 @@ public class KeyDoor extends Door {
      * This creates a new instance of {@link KeyDoor} and associates it with an
      * unlocking {@link KeyType}.
      *
-     * @param level
-     *            The {@link Level} where the {@link KeyDoor} is located.
-     * @param title
-     *            Title of the {@link Door}.
-     * @param positionX
-     *            Position X in the game.
-     * @param positionY
-     *            Position Y in the game.
-     * @param unlockingKey
-     *            Key used to unlock the door.
-     * @param isOpen
-     *            Open/Closed state of the door.
+     * @param level        The {@link Level} where the {@link KeyDoor} is located.
+     * @param title        Title of the {@link Door}.
+     * @param positionX    Position X in the game.
+     * @param positionY    Position Y in the game.
+     * @param unlockingKey Key used to unlock the door.
+     * @param isOpen       Open/Closed state of the door.
      */
     public KeyDoor(Level level, String title, int positionX, int positionY,
                    Key.KeyType unlockingKey, boolean isOpen) {
@@ -90,9 +78,7 @@ public class KeyDoor extends Door {
     /**
      * Opens the door if the right Key is used.
      *
-     * @param item
-     *            the Key to use.
-     *
+     * @param item the Key to use.
      * @return true if the door was opened; otherwise false.
      */
     @Override
@@ -107,12 +93,9 @@ public class KeyDoor extends Door {
     /**
      * Places {@link MovableObject} on the {@link KeyDoor}. If then door is
      * locked, {@link CollisionCheckResult} with the door as a colliding object
-     * is returned. Otherwise, returns a successful
-     * {@link CollisionCheckResult}.
+     * is returned. Otherwise, returns a successful {@link CollisionCheckResult}.
      *
-     * @param object
-     *            {@link MovableObject} that steps on the cell.
-     *
+     * @param object {@link MovableObject} that steps on the cell.
      * @return a result of the step action in the {@link CollisionCheckResult}.
      */
     @Override

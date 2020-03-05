@@ -92,8 +92,7 @@ public class LevelEditorScene {
     /**
      * Creates a new {@link LevelEditorScene} to create new {@link Level}.
      *
-     * @param primaryStage
-     *            represents the window where the stages are displayed.
+     * @param primaryStage represents the window where the stages are displayed.
      */
     public LevelEditorScene(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -127,10 +126,8 @@ public class LevelEditorScene {
     /**
      * Creates a new {@link LevelEditorScene} to edit existing {@link Level}.
      *
-     * @param primaryStage
-     *            the stage to display window.
-     * @param levelId
-     *            an Id of a {@link Level} to edit.
+     * @param primaryStage the stage to display window.
+     * @param levelId      an Id of a {@link Level} to edit.
      */
     public LevelEditorScene(Stage primaryStage, int levelId) {
         this(primaryStage);
@@ -301,8 +298,7 @@ public class LevelEditorScene {
     /**
      * Creates an {@link ImageView} for specified {@link LevelObjectImage}.
      *
-     * @param image
-     *            the {@link LevelObjectImage}.
+     * @param image the {@link LevelObjectImage}.
      * @return the created {@link ImageView}.
      */
     private ImageView createImageViewForLevelObjectImage(
@@ -476,8 +472,7 @@ public class LevelEditorScene {
      * Registers event handlers for {@link Canvas} displaying currently edited
      * {@link Level}.
      *
-     * @param canvas
-     *            the {@link Canvas} to work with.
+     * @param canvas the {@link Canvas} to work with.
      */
     private void registerEventHandlerForCanvas(Canvas canvas) {
         canvas.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -624,7 +619,7 @@ public class LevelEditorScene {
                     }
                     gp.add(moLabel, 1, i);
                     break;
-
+                
                 // collectible item cannot be edited
                 case CollectableItem:
                     Label ciLabel;
@@ -876,8 +871,7 @@ public class LevelEditorScene {
     /**
      * Registers event handlers for {@link ImageView}.
      *
-     * @param view
-     *            the {@link ImageView} to use.
+     * @param view the {@link ImageView} to use.
      */
     private void registerEventHandlerForImageView(ImageView view) {
         view.setOnDragDetected(event -> {
@@ -899,14 +893,10 @@ public class LevelEditorScene {
     /**
      * Validates user input for {@link Level} width and height.
      *
-     * @param target
-     *            the field in which to write the value.
-     * @param observable
-     *            the {@link TextField} in which the value has changed.
-     * @param oldValue
-     *            the old value.
-     * @param newValue
-     *            the new value.
+     * @param target     the field in which to write the value.
+     * @param observable the {@link TextField} in which the value has changed.
+     * @param oldValue   the old value.
+     * @param newValue   the new value.
      */
     private void validateLevelDimension(
             ObservableValue<? extends String> observable, String oldValue,
@@ -944,10 +934,8 @@ public class LevelEditorScene {
     /**
      * Creates a new {@link LevelEditor} with default {@link Level}.
      *
-     * @param width
-     *            the width of the new {@link Level}.
-     * @param height
-     *            the height of the new {@link Level}.
+     * @param width  the width of the new {@link Level}.
+     * @param height the height of the new {@link Level}.
      */
     private void createLevelEditor(int width, int height) {
         this.levelEditor = new LevelEditor(width, height);
@@ -983,8 +971,7 @@ public class LevelEditorScene {
     /**
      * Creates a new {@link LevelObject} from its name.
      *
-     * @param name
-     *            name of the {@link LevelObject}.
+     * @param name name of the {@link LevelObject}.
      * @return the created {@link LevelObject}.
      */
     private LevelObject createLevelObjectByName(String name, int x, int y) {

@@ -14,10 +14,8 @@ public class Token extends CollectableItem {
     /**
      * Creates a new instance of {@link Token} with position, and image.
      *
-     * @param level
-     *            The {@link Level} where the {@link Ground} is located.
-     * @param imagePath
-     *            Path to the Image representing the {@link Token} in the game.
+     * @param level     The {@link Level} where the {@link Ground} is located.
+     * @param imagePath Path to the Image representing the {@link Token} in the game.
      */
     public Token(Level level, String imagePath) {
         super(level, Constants.TITLE_TOKEN, imagePath);
@@ -26,8 +24,7 @@ public class Token extends CollectableItem {
     /**
      * Creates a new instance of {@link Token} with position, and image.
      *
-     * @param level
-     *            The {@link Level} where the {@link Ground} is located.
+     * @param level The {@link Level} where the {@link Ground} is located.
      */
     public Token(Level level) {
         super(level, Constants.TITLE_TOKEN, Constants.TOKEN_PATH);

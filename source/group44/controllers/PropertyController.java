@@ -74,52 +74,52 @@ public class PropertyController implements IPropertyController {
         field.setAccessible(true);
         try {
             switch (info.getTypeInfo()) {
-            case String:
-                if (info.getValue().getClass() != String.class) {
-                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
-                }
-                field.set(this.activeObject, info.getValue());
-                break;
-            case Int:
-                if (info.getValue().getClass() != Integer.class) {
-                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
-                }
-                field.setInt(this.activeObject, (Integer) info.getValue());
-                break;
-            case Boolean:
-                if (info.getValue().getClass() != Boolean.class) {
-                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
-                }
-                field.setBoolean(this.activeObject, (Boolean) info.getValue());
-                break;
-            case CollectableItem:
-                if (info.getValue().getClass() != CollectableItem.class) {
-                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
-                }
-                field.set(this.activeObject, (CollectableItem) info.getValue());
-                break;
-            case KeyType:
-                if (info.getValue().getClass() != KeyType.class) {
-                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
-                }
-                field.set(this.activeObject, (KeyType) info.getValue());
-                break;
-            case MovableObject:
-                if (info.getValue().getClass() != MovableObject.class) {
-                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
-                }
-                field.set(this.activeObject, (MovableObject) info.getValue());
-                break;
-            case Teleporter:
-                if (info.getValue().getClass() != Teleporter.class) {
-                    throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
-                }
-                field.set(this.activeObject, (Teleporter) info.getValue());
-                break;
+                case String:
+                    if (info.getValue().getClass() != String.class) {
+                        throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                    }
+                    field.set(this.activeObject, info.getValue());
+                    break;
+                case Int:
+                    if (info.getValue().getClass() != Integer.class) {
+                        throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                    }
+                    field.setInt(this.activeObject, (Integer) info.getValue());
+                    break;
+                case Boolean:
+                    if (info.getValue().getClass() != Boolean.class) {
+                        throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                    }
+                    field.setBoolean(this.activeObject, (Boolean) info.getValue());
+                    break;
+                case CollectableItem:
+                    if (info.getValue().getClass() != CollectableItem.class) {
+                        throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                    }
+                    field.set(this.activeObject, (CollectableItem) info.getValue());
+                    break;
+                case KeyType:
+                    if (info.getValue().getClass() != KeyType.class) {
+                        throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                    }
+                    field.set(this.activeObject, (KeyType) info.getValue());
+                    break;
+                case MovableObject:
+                    if (info.getValue().getClass() != MovableObject.class) {
+                        throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                    }
+                    field.set(this.activeObject, (MovableObject) info.getValue());
+                    break;
+                case Teleporter:
+                    if (info.getValue().getClass() != Teleporter.class) {
+                        throw new ClassCastException(String.format(CLASS_CAST_EXCEPTION_MESSAGE, info.getKey()));
+                    }
+                    field.set(this.activeObject, (Teleporter) info.getValue());
+                    break;
 
-            default:
-                field.set(this.activeObject, info.getValue());
-                break;
+                default:
+                    field.set(this.activeObject, info.getValue());
+                    break;
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -131,16 +131,12 @@ public class PropertyController implements IPropertyController {
     /**
      * Returns a {@link Field} in an object or in its super-classes.
      *
-     * @param name
-     *            The name of the field.
-     * @param cls
-     *            The instance of the object in which to look for the
-     *            {@link Field}.
+     * @param name The name of the field.
+     * @param cls  The instance of the object in which to look for the
+     *             {@link Field}.
      * @return The field.
-     * @throws NoSuchFieldException
-     *             when the {@link Field} is not found.
-     * @throws SecurityException
-     *             when the {@link Field} can't be accessed.
+     * @throws NoSuchFieldException when the {@link Field} is not found.
+     * @throws SecurityException    when the {@link Field} can't be accessed.
      */
     @SuppressWarnings("rawtypes")
     private Field getDeclaredFieldInHierarchy(String name, Class cls)
@@ -165,12 +161,9 @@ public class PropertyController implements IPropertyController {
     /**
      * Returns information about {@link Editable} fields in the hierarchy.
      *
-     * @param infos
-     *            The {@link ArrayList} with already discovered {@link Field}s.
-     * @param cls
-     *            The class in which to for the fields.
-     * @throws Exception
-     *             when something blows up.
+     * @param infos The {@link ArrayList} with already discovered {@link Field}s.
+     * @param cls   The class in which to for the fields.
+     * @throws Exception when something blows up.
      */
     @SuppressWarnings("rawtypes")
     private void getPropertyInfos(ArrayList<PropertyInfo> infos, Class cls)
@@ -182,31 +175,31 @@ public class PropertyController implements IPropertyController {
                 PropertyInfo.TypeInfo typeInfo = null;
 
                 switch (item.getType().getSimpleName()) {
-                case INT_TYPE_SIMPLE_NAME:
-                    typeInfo = TypeInfo.Int;
-                    break;
-                case STRING_TYPE_SIMPLE_NAME:
-                    typeInfo = TypeInfo.String;
-                    break;
-                case MOVABLE_OBJECT_TYPE_SIMPLE_NAME:
-                    typeInfo = TypeInfo.MovableObject;
-                    break;
-                case COLLECTABLE_ITEM_TYPE_SIMPLE_NAME:
-                    typeInfo = TypeInfo.CollectableItem;
-                    break;
-                case BOOLEAN_TYPE_SIMPLE_NAME:
-                    typeInfo = TypeInfo.Boolean;
-                    break;
-                case TELEPORTER_TYPE_SIMPLE_NAME:
-                    typeInfo = TypeInfo.Teleporter;
-                    break;
-                case KEY_TYPE_TYPE_SIMPLE_NAME:
-                    typeInfo = TypeInfo.KeyType;
-                    break;
-                default:
-                    String sName = item.getType().getSimpleName();
-                    System.err.println(sName);
-                    throw new Exception(item.getType().getSimpleName());
+                    case INT_TYPE_SIMPLE_NAME:
+                        typeInfo = TypeInfo.Int;
+                        break;
+                    case STRING_TYPE_SIMPLE_NAME:
+                        typeInfo = TypeInfo.String;
+                        break;
+                    case MOVABLE_OBJECT_TYPE_SIMPLE_NAME:
+                        typeInfo = TypeInfo.MovableObject;
+                        break;
+                    case COLLECTABLE_ITEM_TYPE_SIMPLE_NAME:
+                        typeInfo = TypeInfo.CollectableItem;
+                        break;
+                    case BOOLEAN_TYPE_SIMPLE_NAME:
+                        typeInfo = TypeInfo.Boolean;
+                        break;
+                    case TELEPORTER_TYPE_SIMPLE_NAME:
+                        typeInfo = TypeInfo.Teleporter;
+                        break;
+                    case KEY_TYPE_TYPE_SIMPLE_NAME:
+                        typeInfo = TypeInfo.KeyType;
+                        break;
+                    default:
+                        String sName = item.getType().getSimpleName();
+                        System.err.println(sName);
+                        throw new Exception(item.getType().getSimpleName());
                 }
 
                 Object value = item.get(this.activeObject);
@@ -224,8 +217,7 @@ public class PropertyController implements IPropertyController {
     /**
      * Converts field name to displayable name.
      *
-     * @param name
-     *            the field name.
+     * @param name the field name.
      * @return the displayable name.
      */
     private String convertfieldToName(String name) {
@@ -250,8 +242,7 @@ public class PropertyController implements IPropertyController {
     /**
      * Converts the displayable name back to field name.
      *
-     * @param name
-     *            The displayable name.
+     * @param name The displayable name.
      * @return The field name.
      */
     private String convertNameToField(String name) {

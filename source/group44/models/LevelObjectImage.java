@@ -24,13 +24,15 @@ public class LevelObjectImage extends Image {
         this.setLabel(label);
     }
 
-    public LevelObjectImage(String url, String label, double requestedWidth, double requestedHeight, boolean preserveRatio, boolean smooth) {
+    public LevelObjectImage(String url, String label, double requestedWidth, double requestedHeight,
+                            boolean preserveRatio, boolean smooth) {
         super(url, requestedWidth, requestedHeight, preserveRatio, smooth);
         this.path = url;
         this.setLabel(label);
     }
 
-    public LevelObjectImage(String url, String label, double requestedWidth, double requestedHeight, boolean preserveRatio, boolean smooth, boolean backgroundLoading) {
+    public LevelObjectImage(String url, String label, double requestedWidth, double requestedHeight,
+                            boolean preserveRatio, boolean smooth, boolean backgroundLoading) {
         super(url, requestedWidth, requestedHeight, preserveRatio, smooth, backgroundLoading);
         this.path = url;
         this.setLabel(label);

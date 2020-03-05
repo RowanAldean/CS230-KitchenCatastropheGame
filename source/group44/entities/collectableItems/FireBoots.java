@@ -13,10 +13,8 @@ public class FireBoots extends CollectableItem {
     /**
      * Creates a new instance of {@link FireBoots} with position, and image.
      *
-     * @param level
-     *            The {@link Level} where the {@link FireBoots} are located.
-     * @param imagePath
-     *            Path to the Image representing {@link FireBoots} in the game.
+     * @param level     The {@link Level} where the {@link FireBoots} are located.
+     * @param imagePath Path to the Image representing {@link FireBoots} in the game.
      */
     public FireBoots(Level level, String imagePath) {
         super(level, Constants.TITLE_FIREBOOTS, imagePath);
@@ -25,8 +23,7 @@ public class FireBoots extends CollectableItem {
     /**
      * Creates a new instance of {@link FireBoots} with position, and image.
      *
-     * @param level
-     *            The {@link Level} where the {@link FireBoots} are located.
+     * @param level The {@link Level} where the {@link FireBoots} are located.
      */
     public FireBoots(Level level) {
         super(level, Constants.TITLE_FIREBOOTS, Constants.FIRE_BOOTS_PATH);

@@ -7,17 +7,15 @@ import group44.models.PropertyInfo.TypeInfo;
 /**
  * An interface for {@link PropertyController}.
  *
- * @author Tomas Svejnoha
+ * @author Tomas Svejnoha.
  * @version 1.0
  */
 public interface IPropertyController {
     /**
      * Sets currently edited object.
      *
-     * @param object
-     *            The edited object.
-     * @throws IllegalArgumentException
-     *             when object is <code>null</code>.
+     * @param object The edited object.
+     * @throws IllegalArgumentException when object is <code>null</code>.
      */
     void setActiveObject(Object object) throws IllegalArgumentException;
 
@@ -32,14 +30,10 @@ public interface IPropertyController {
     /**
      * Sets value of {@link Editable} property.
      *
-     * @param info
-     *            Information about the property.
-     * @throws NoSuchFieldException
-     *             when property is not found.
-     * @throws SecurityException
-     *             when property can't be set.
-     * @throws ClassCastException
-     *             when type is inconsistent with {@link TypeInfo}.
+     * @param info Information about the property.
+     * @throws NoSuchFieldException when property is not found.
+     * @throws SecurityException    when property can't be set.
+     * @throws ClassCastException   when type is inconsistent with {@link TypeInfo}.
      */
     void setPropertyValue(PropertyInfo info)
             throws NoSuchFieldException, SecurityException, ClassCastException;

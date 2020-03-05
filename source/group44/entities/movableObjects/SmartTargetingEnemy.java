@@ -15,25 +15,25 @@ import group44.game.Level;
  * @version 1.0
  */
 public class SmartTargetingEnemy extends Enemy {
-    /** Array used to compute the shortest path in the array. */
+    /**
+     * Array used to compute the shortest path in the array.
+     */
     private CellPathInfo[][] cellPathInfos;
-    /** Indicates whether the meta-data array was initialised. */
+    /**
+     * Indicates whether the meta-data array was initialised.
+     */
     private boolean isInitialised;
 
     /**
      * Creates a new instance of {@link SmartTargetingEnemy}.
      *
-     * @param level
-     *            level where the {@link SmartTargetingEnemy} is located.
-     * @param title
-     *            title of the enemy.
-     * @param positionX
-     *            position X in the game.
-     * @param positionY
-     *            position Y in the game.
+     * @param level     Level where the {@link SmartTargetingEnemy} is located.
+     * @param title     Title of the enemy.
+     * @param positionX Position X in the game.
+     * @param positionY Position Y in the game.
      */
     public SmartTargetingEnemy(Level level, String title, int positionX,
-            int positionY) {
+                               int positionY) {
         super(level, title, positionX, positionY, 0, 0,
                 Constants.SMART_TARGETING_ENEMY_PATH);
 
@@ -44,20 +44,15 @@ public class SmartTargetingEnemy extends Enemy {
     /**
      * Creates a new instance of {@link SmartTargetingEnemy}.
      *
-     * @param level
-     *            level where the {@link SmartTargetingEnemy} is located.
-     * @param title
-     *            title of the enemy.
-     * @param positionX
-     *            position X in the game.
-     * @param positionY
-     *            position Y in the game.
-     * @param imagePath
-     *            Path to the Image representing {@link SmartTargetingEnemy} in
-     *            the game.
+     * @param level     Level where the {@link SmartTargetingEnemy} is located.
+     * @param title     Title of the enemy.
+     * @param positionX Position X in the game.
+     * @param positionY Position Y in the game.
+     * @param imagePath Path to the Image representing {@link SmartTargetingEnemy} in
+     *                  the game.
      */
     public SmartTargetingEnemy(Level level, String title, int positionX,
-            int positionY, String imagePath) {
+                               int positionY, String imagePath) {
         super(level, title, positionX, positionY, 0, 0, imagePath);
 
         this.cellPathInfos = new CellPathInfo[level.getGridWidth()][level
@@ -91,38 +86,38 @@ public class SmartTargetingEnemy extends Enemy {
         int targetX = this.getLevel().getPlayer().getPositionX();
         int targetY = this.getLevel().getPlayer().getPositionY();
 
-        // Calculate cost to the target cell
+        //Calculate cost to the target cell.
         boolean found = this.calculateCosts(targetX, targetY);
 
         if (found) {
-            // Get next cell to step
+            //Get next cell to step.
             CellPathInfo nextCell = this.nextCellToStep(targetX, targetY);
 
-            // Reset velocity
+            //Reset velocity.
             this.setVelocityX(0);
             this.setVelocityY(0);
 
-            // Set velocity
+            //Set velocity.
             if (nextCell.getX() < this.getPositionX()
                     && nextCell.getY() == this.getPositionY()) {
-                // GO LEFT
+                //GO LEFT.
                 this.setVelocityX(-1);
             } else if (nextCell.getX() > this.getPositionX()
                     && nextCell.getY() == this.getPositionY()) {
-                // GO RIGHT
+                //GO RIGHT.
                 this.setVelocityX(1);
             } else if (nextCell.getX() == this.getPositionX()
                     && nextCell.getY() < this.getPositionY()) {
-                // GO UP
+                //GO UP.
                 this.setVelocityY(-1);
             } else if (nextCell.getX() == this.getPositionX()
                     && nextCell.getY() > this.getPositionY()) {
-                // GO DOWN
+                //GO DOWN.
                 this.setVelocityY(1);
             }
         } else {
-            // Choose valid direction for the next move.
-            // Not getting closer to the player.
+            //Choose valid direction for the next move.
+            //Not getting closer to the player.
             this.chooseDirection();
         }
 
@@ -142,10 +137,8 @@ public class SmartTargetingEnemy extends Enemy {
     /**
      * Finds the shortest path to the player in the game.
      *
-     * @param targetX
-     *            position X of the player.
-     * @param targetY
-     *            position Y of the player.
+     * @param targetX position X of the player.
+     * @param targetY position Y of the player.
      * @return true there is a path; otherwise false.
      */
     private boolean calculateCosts(int targetX, int targetY) {
@@ -154,7 +147,7 @@ public class SmartTargetingEnemy extends Enemy {
 
         CellPathInfo currentCell = this.cellPathInfos[this.getPositionX()][this
                 .getPositionY()];
-        currentCell.setCost(0); // JUST FIRST CELL!!! - DANGEROUS METHOD
+        currentCell.setCost(0); //JUST FIRST CELL!!! - DANGEROUS METHOD.
         queue.add(currentCell);
 
         while (queue.isEmpty() == false) {
@@ -163,7 +156,7 @@ public class SmartTargetingEnemy extends Enemy {
             isReached = (currentCell.getX() == targetX)
                     && (currentCell.getY() == targetY);
 
-            // LEFT
+            //LEFT.
             if (isReached == false && this.isObstacle(currentCell.getX() - 1,
                     currentCell.getY()) == false) {
                 CellPathInfo left = this.cellPathInfos[currentCell.getX()
@@ -174,7 +167,7 @@ public class SmartTargetingEnemy extends Enemy {
                     }
                 }
             }
-            // RIGHT
+            //RIGHT.
             if (isReached == false && this.isObstacle(currentCell.getX() + 1,
                     currentCell.getY()) == false) {
 
@@ -186,7 +179,7 @@ public class SmartTargetingEnemy extends Enemy {
                     }
                 }
             }
-            // TOP
+            //TOP.
             if (isReached == false && this.isObstacle(currentCell.getX(),
                     currentCell.getY() - 1) == false) {
 
@@ -198,7 +191,7 @@ public class SmartTargetingEnemy extends Enemy {
                     }
                 }
             }
-            // BOTTOM
+            //BOTTOM.
             if (isReached == false && this.isObstacle(currentCell.getX(),
                     currentCell.getY() + 1) == false) {
 
@@ -215,18 +208,14 @@ public class SmartTargetingEnemy extends Enemy {
                 queue.clear();
             }
         }
-
         return isReached;
     }
 
     /**
      * Returns the next cell to step by the the {@link SmartTargetingEnemy}.
      *
-     * @param targetX
-     *            position X of the player.
-     * @param targetY
-     *            position Y of the player.
-     *
+     * @param targetX position X of the player.
+     * @param targetY position Y of the player.
      * @return the next cell to step.
      */
     private CellPathInfo nextCellToStep(int targetX, int targetY) {
@@ -244,22 +233,22 @@ public class SmartTargetingEnemy extends Enemy {
      * is not necessarily getting closer to the player.
      */
     private void chooseDirection() {
-        // LEFT
+        //LEFT.
         if (this.isObstacle(this.getPositionX() - 1,
                 this.getPositionY()) == false) {
             this.setVelocityX(-1);
         }
-        // RIGHT
+        //RIGHT.
         if (this.isObstacle(this.getPositionX() + 1,
                 this.getPositionY()) == false) {
             this.setVelocityX(1);
         }
-        // TOP
+        //TOP.
         if (this.isObstacle(this.getPositionX(),
                 this.getPositionY() - 1) == false) {
             this.setVelocityY(-1);
         }
-        // BOTTOM
+        //BOTTOM.
         if (this.isObstacle(this.getPositionX(),
                 this.getPositionY() + 1) == false) {
             this.setVelocityY(1);
@@ -269,8 +258,7 @@ public class SmartTargetingEnemy extends Enemy {
     /**
      * Method executed when enemy collides with another LevelObject.
      *
-     * @param result
-     *            information about the collision.
+     * @param result information about the collision.
      */
     @Override
     protected void onCollided(CollisionCheckResult result) {
