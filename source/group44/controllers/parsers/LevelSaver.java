@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import group44.Constants;
 import group44.entities.cells.Cell;
 import group44.entities.cells.Teleporter;
 import group44.game.Level;
@@ -51,7 +52,7 @@ public final class LevelSaver {
         for (int x = 0; x < level.getGridWidth(); x++) {
             for (int y = 0; y < level.getGridHeight(); y++) {
                 Cell cell = level.getGrid()[x][y];
-                writer.print(cell.toString() + "\n");
+                writer.print(cell.toString().replace(Constants.FILE_SOURCE, "") + "\n");
                 if (cell instanceof Teleporter) {
                     teleporters.add((Teleporter) cell);
                 }
