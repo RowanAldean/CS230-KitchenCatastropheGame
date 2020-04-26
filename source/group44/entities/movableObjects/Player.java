@@ -2,6 +2,8 @@ package group44.entities.movableObjects;
 
 import java.util.ArrayList;
 
+import com.sun.corba.se.impl.orbutil.closure.Constant;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import group44.Constants;
 import group44.controllers.AudioManager;
 import group44.entities.LevelObject;
@@ -135,11 +137,13 @@ public class Player extends MovableObject {
                         CollisionCheckResultType.Player, this));
                 break;
             case MissingKey:
+                AudioManager.playSound(Constants.LOCKED_SOUND);
                 if (this.tryToOpenKeyDoor(result)) {
                     this.move();
                 }
                 break;
             case NotEnoughTokens:
+                AudioManager.playSound(Constants.LOCKED_SOUND);
                 if (this.tryToOpenTokenDoor(result)) {
                     this.move();
                 }
@@ -160,6 +164,7 @@ public class Player extends MovableObject {
         KeyDoor door = (KeyDoor) result.getCollidingObject();
         Key key = this.getKey(door.getUnlockingKeyType());
 
+        //if they have a key then open it
         if (key != null) {
             door.open(key);
         }
@@ -215,12 +220,13 @@ public class Player extends MovableObject {
             if (ground.hasCollectableItem()) {
                 //Collect the CollectableItem if the is any.
                 CollectableItem item = ground.collect();
-                AudioManager.playSound(Constants.COLLECT_SOUND);
                 if (item instanceof Token) {
                     //If token, add to TokenAccumulator.
                     this.getTokenAccumulator().addToken((Token) item);
+                    AudioManager.playSound(Constants.TOKEN_SOUND);
                 } else {
                     this.inventory.add(item); //else, add to inventory.
+                    AudioManager.playSound(Constants.COLLECT_SOUND);
                 }
             }
         }

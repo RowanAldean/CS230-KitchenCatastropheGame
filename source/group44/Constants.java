@@ -23,6 +23,8 @@ public final class Constants {
     //Sound paths
     public static final String COLLECT_SOUND = FILE_SOURCE + "resources/Sounds/collect.mp3";
     public static final String DEATH_SOUND = FILE_SOURCE + "resources/Sounds/death.mp3";
+    public static final String TOKEN_SOUND = FILE_SOURCE + "resources/Sounds/token.mp3";
+    public static final String LOCKED_SOUND = FILE_SOURCE + "resources/Sounds/locked.wav";
 
     // Tile Paths
     public static final String WALL_PATH = FILE_SOURCE + "resources/WallCounter.png";
