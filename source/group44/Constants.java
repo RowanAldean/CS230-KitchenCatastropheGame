@@ -20,6 +20,10 @@ public final class Constants {
     public static final String FILE_LEVEL = "level_%d.txt";
     public static final String FILE_LEVEL_TEMP_PATTERN = "%d-%d.txt"; // "LEVEL_ID-PROFILE_ID.txt"
 
+    //Sound paths
+    public static final String COLLECT_SOUND = FILE_SOURCE + "resources/Sounds/collect.mp3";
+    public static final String DEATH_SOUND = FILE_SOURCE + "resources/Sounds/death.mp3";
+
     // Tile Paths
     public static final String WALL_PATH = FILE_SOURCE + "resources/WallCounter.png";
     public static final String GROUND_PATH = FILE_SOURCE + "resources/cells/floor.png";

@@ -3,6 +3,7 @@ package group44.entities.movableObjects;
 import java.util.ArrayList;
 
 import group44.Constants;
+import group44.controllers.AudioManager;
 import group44.entities.LevelObject;
 import group44.entities.cells.Fire;
 import group44.entities.cells.Ground;
@@ -214,6 +215,7 @@ public class Player extends MovableObject {
             if (ground.hasCollectableItem()) {
                 //Collect the CollectableItem if the is any.
                 CollectableItem item = ground.collect();
+                AudioManager.playSound(Constants.COLLECT_SOUND);
                 if (item instanceof Token) {
                     //If token, add to TokenAccumulator.
                     this.getTokenAccumulator().addToken((Token) item);
