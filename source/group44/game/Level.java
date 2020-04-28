@@ -292,11 +292,15 @@ public class Level {
         if (centerY < this.displaySize / 2) {
             centerY = this.displaySize / 2;
         }
-        if (centerX > (this.grid[0].length - 1) - this.displaySize / 2) {
-            centerX = (this.grid[0].length - 1) - this.displaySize / 2;
+
+        int gridWidth = this.grid.length;
+        int gridHeight = this.grid[1].length;
+
+        if (centerX > (gridWidth - 1) - this.displaySize / 2) {
+            centerX = (gridWidth - 1) - this.displaySize / 2;
         }
-        if (centerY > (this.grid[1].length - 1) - this.displaySize / 2) {
-            centerY = (this.grid[1].length - 1) - this.displaySize / 2;
+        if (centerY > (gridHeight - 1) - this.displaySize / 2) {
+            centerY = (gridHeight - 1) - this.displaySize / 2;
         }
 
         return new Area(centerX - this.displaySize / 2,
