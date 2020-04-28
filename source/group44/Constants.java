@@ -20,9 +20,15 @@ public final class Constants {
     public static final String FILE_LEVEL = "level_%d.txt";
     public static final String FILE_LEVEL_TEMP_PATTERN = "%d-%d.txt"; // "LEVEL_ID-PROFILE_ID.txt"
 
+    //Music paths
+    public static final String MENU_MUSIC = FILE_SOURCE + "resources/Music/menu.mp3";
+    public static final String GAME_MUSIC = FILE_SOURCE + "resources/Music/game.mp3";
+    public static final String DIED_MUSIC = FILE_SOURCE + "resources/Music/died.mp3";
+
     //Sound paths
     public static final String COLLECT_SOUND = FILE_SOURCE + "resources/Sounds/collect.mp3";
     public static final String DEATH_SOUND = FILE_SOURCE + "resources/Sounds/death.mp3";
+    public static final String WIN_SOUND = FILE_SOURCE + "resources/Sounds/applause.mp3";
     public static final String TOKEN_SOUND = FILE_SOURCE + "resources/Sounds/token.mp3";
     public static final String LOCKED_SOUND = FILE_SOURCE + "resources/Sounds/locked.wav";
 

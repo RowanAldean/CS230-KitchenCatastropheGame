@@ -3,6 +3,7 @@ package group44.game.scenes;
 import static group44.Constants.WINDOW_HEIGHT;
 import static group44.Constants.WINDOW_WIDTH;
 
+import group44.controllers.AudioManager;
 import group44.controllers.ProfileManager;
 import group44.game.layoutControllers.MainMenuController;
 import group44.models.Profile;
@@ -54,6 +55,7 @@ public class MainMenuScene {
             setUpButtons();
             primaryStage.setScene(scene);
             primaryStage.show();
+            AudioManager.playMenuMusic();
         } catch (Exception e) {
             e.printStackTrace();
         }

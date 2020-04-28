@@ -1,5 +1,7 @@
 package group44.game.scenes;
 
+import group44.Constants;
+import group44.controllers.AudioManager;
 import group44.controllers.Leaderboard;
 import group44.controllers.LevelManager;
 import group44.exceptions.CollisionException;
@@ -72,6 +74,7 @@ public class GameScene {
      */
     public GameScene(Stage primaryStage, Level currentLevel,
             Profile currentProfile) {
+        AudioManager.playGameMusic();
         this.primaryStage = primaryStage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                 .getResource("/group44/game/layouts/MainGameWindow.fxml"));
@@ -115,6 +118,7 @@ public class GameScene {
         myController.getResumeButton().setOnMouseClicked(this::setUpResume);
         myController.getRestartButton().setOnMouseClicked(this::setUpRestart);
         myController.getHomeButton().setOnMouseClicked(this::setUpHome);
+        AudioManager.gamePlayer.stop();
     }
 
     /**
@@ -152,11 +156,7 @@ public class GameScene {
                                                                      // Mihai
                                                                      // -
                                                                      // TESTING
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (CollisionException e) {
-            e.printStackTrace();
-        } catch (ParsingException e) {
+        } catch (FileNotFoundException | ParsingException | CollisionException e) {
             e.printStackTrace();
         }
         new GameScene(this.primaryStage, newLevel, this.currentProfile);
@@ -200,7 +200,11 @@ public class GameScene {
         a1.setHeight(400);
         a1.setWidth(500);
 
+        //Stop game music
+        AudioManager.gamePlayer.stop();
+
         if (status == LevelFinishStatus.GoalReached) {
+            AudioManager.playSound(Constants.WIN_SOUND);
             myController.getOnScreenMessage().setTextFill(Paint.valueOf("green"));
             myController.getOnScreenMessage().textProperty().setValue("You've completed the level!" + "\n" +"WELL DONE!!");
             myController.getOnScreenMessage().setVisible(true);
@@ -229,6 +233,8 @@ public class GameScene {
                                 currentProfile.getId(), currentLevel.getId()));
             }
         } else {
+            //Play sad trombone death music
+            AudioManager.playSound(Constants.DIED_MUSIC);
             //Display death message
             myController.getOnScreenMessage().textProperty().setValue("YOU COULDN'T HANDLE THIS KITCHEN! Rest In Peace");
             myController.getOnScreenMessage().setVisible(true);
@@ -237,7 +243,6 @@ public class GameScene {
             a1.setContentText(
                     "Just a suggestion: \n Practice makes it perfect! \n");
         }
-
         canMove = false;
         Optional<ButtonType> result = a1.showAndWait();
         if (!result.isPresent()) {
