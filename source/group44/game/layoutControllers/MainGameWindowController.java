@@ -1,12 +1,18 @@
 package group44.game.layoutControllers;
 
+import group44.Constants;
+import group44.entities.collectableItems.Flippers;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+
+import java.io.File;
 
 /**
  * This class does the FXML injection of the widgets from the main game window
@@ -36,6 +42,10 @@ public class MainGameWindowController {
     @FXML
     private VBox menuBox;
     @FXML
+    private VBox inventoryBox;
+    @FXML
+    private FlowPane keysInventory;
+    @FXML
     private Pane movableObjects;
 
     public MainGameWindowController() {
@@ -47,6 +57,23 @@ public class MainGameWindowController {
         menuBox.setVisible(false);
         onScreenMessage.setVisible(false);
     }
+
+    public void updateInventory(String itemURL){
+        ImageView inventoryImage = new ImageView(itemURL);
+        inventoryImage.setPreserveRatio(true);
+        if(itemURL.contains("keys")){
+            inventoryImage.setFitHeight(25);
+            inventoryImage.setFitHeight(25);
+            keysInventory.getChildren().add(0, inventoryImage);
+        }
+        else {
+            inventoryImage.setFitHeight(50);
+            inventoryImage.setFitHeight(50);
+            inventoryBox.getChildren().add(0, inventoryImage);
+        }
+    }
+
+
 
     public Button getHomeButton() {
         return homeButton;

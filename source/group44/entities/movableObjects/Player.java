@@ -158,7 +158,7 @@ public class Player extends MovableObject {
      *
      * @param result collision result.
      * @return true if the door are open; otherwise false and
-     *         update the on screen message.
+     * update the on screen message.
      */
     private boolean tryToOpenKeyDoor(CollisionCheckResult result) {
         KeyDoor door = (KeyDoor) result.getCollidingObject();
@@ -227,6 +227,7 @@ public class Player extends MovableObject {
                 } else {
                     this.inventory.add(item); //else, add to inventory.
                     AudioManager.playSound(Constants.COLLECT_SOUND);
+                    GameScene.setInventoryItem(item.getImageURL());
                 }
             }
         }

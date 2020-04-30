@@ -290,6 +290,14 @@ public class GameScene {
     }
 
     /**
+     * Changes the inventory item from greyscale to colored to indicate it has been collected.
+     * @param item The URI string of the item, used in matching it with the corresponding inventory item.
+     */
+    public static void setInventoryItem(String item){
+        myController.updateInventory(item);
+    }
+
+    /**
      * This method sets the globally available controller to the current
      * controller.
      *

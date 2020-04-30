@@ -85,6 +85,11 @@
     -fx-font-family: "Helvetica";
 }
 
+#inventoryTitle {
+    -fx-font-weight: bold;
+    -fx-font-family: "Helvetica";
+}
+
 #timer {
     -fx-background-radius: 10;
     -fx-border-radius: 10;

@@ -25,6 +25,10 @@ public abstract class LevelObject {
      */
     private String imagePath;
     /**
+     * The full image URL used for the {@link LevelObject}.
+     */
+    private String imageURL;
+    /**
      * Image representing the {@link LevelObject} in the game.
      */
     private Image image;
@@ -80,6 +84,7 @@ public abstract class LevelObject {
             }
         }
 
+        this.imageURL = file.toURI().toString();
         this.setImage(new Image(file.toURI().toString()));
     }
 
@@ -108,6 +113,15 @@ public abstract class LevelObject {
      */
     protected String getImagePath() {
         return this.imagePath;
+    }
+
+    /**
+     * Returns the full URL for the image.
+     *
+     * @return the image URL.
+     */
+    public String getImageURL() {
+        return this.imageURL;
     }
 
     /**
