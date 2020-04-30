@@ -4,6 +4,8 @@ import group44.Constants;
 import group44.controllers.AudioManager;
 import group44.controllers.Leaderboard;
 import group44.controllers.LevelManager;
+import group44.entities.collectableItems.CollectableItem;
+import group44.entities.collectableItems.TokenAccumulator;
 import group44.exceptions.CollisionException;
 import group44.exceptions.ParsingException;
 import group44.game.Level;
@@ -56,7 +58,7 @@ public class GameScene {
     // The window itself.
     private Stage primaryStage;
     // Current level displayed.
-    private Level currentLevel;
+    private static Level currentLevel;
     // Current player.
     private Profile currentProfile;
     // Clock
@@ -65,15 +67,12 @@ public class GameScene {
     /**
      * This is the main method that loads everything required to draw the scene.
      *
-     * @param primaryStage
-     *            represents the window where the stages are displayed.
-     * @param currentLevel
-     *            current level the user is playing.
-     * @param currentProfile
-     *            the current user profile to use.
+     * @param primaryStage   represents the window where the stages are displayed.
+     * @param currentLevel   current level the user is playing.
+     * @param currentProfile the current user profile to use.
      */
     public GameScene(Stage primaryStage, Level currentLevel,
-            Profile currentProfile) {
+                     Profile currentProfile) {
         AudioManager.playGameMusic();
         this.primaryStage = primaryStage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass()
@@ -98,6 +97,7 @@ public class GameScene {
             drawGame();
             primaryStage.setScene(scene);
             primaryStage.show();
+            updateInventory();
             this.currentProfile = currentProfile;
             timer.startTimer(myController.getTimeLabel(),
                     currentLevel.getTime());
@@ -125,8 +125,7 @@ public class GameScene {
      * Defining behaviour for the click on the resume button.Resumes the game
      * state and the time.
      *
-     * @param event
-     *            This is the event for the click on the resume button.
+     * @param event This is the event for the click on the resume button.
      */
     private void setUpResume(MouseEvent event) {
         timer.resumeTimer();
@@ -139,8 +138,7 @@ public class GameScene {
      * Defining behaviour for the click on the restart button.Restarts the game
      * and the time.
      *
-     * @param event
-     *            This is the event for the click on the restart button.
+     * @param event This is the event for the click on the restart button.
      */
     private void setUpRestart(MouseEvent event) {
         timer.startTimer(myController.getTimeLabel(), 0);
@@ -152,10 +150,10 @@ public class GameScene {
         Level newLevel = null;
         try {
             newLevel = LevelManager.load(this.currentLevel.getId()); // TODO:
-                                                                     // @Bogdan
-                                                                     // Mihai
-                                                                     // -
-                                                                     // TESTING
+            // @Bogdan
+            // Mihai
+            // -
+            // TESTING
         } catch (FileNotFoundException | ParsingException | CollisionException e) {
             e.printStackTrace();
         }
@@ -166,8 +164,7 @@ public class GameScene {
      * Defining behaviour for the click on the home button.Sends the player to
      * the home screen.
      *
-     * @param event
-     *            This is the event for the click on the restart button.
+     * @param event This is the event for the click on the restart button.
      */
     private void setUpHome(MouseEvent event) {
         timer.stopTimer();
@@ -200,13 +197,14 @@ public class GameScene {
         a1.setHeight(400);
         a1.setWidth(500);
 
-        //Stop game music
-        AudioManager.gamePlayer.stop();
 
         if (status == LevelFinishStatus.GoalReached) {
+            //Turn the volume down for the ending
+            AudioManager.gamePlayer.setVolume(0.05);
+            //Play winning sound
             AudioManager.playSound(Constants.WIN_SOUND);
             myController.getOnScreenMessage().setTextFill(Paint.valueOf("green"));
-            myController.getOnScreenMessage().textProperty().setValue("You've completed the level!" + "\n" +"WELL DONE!!");
+            myController.getOnScreenMessage().textProperty().setValue("You've completed the level!" + "\n" + "WELL DONE!!");
             myController.getOnScreenMessage().setVisible(true);
             a1.setTitle("Congrats on finishing the level!");
             Leaderboard.addOrUpdate(currentProfile.getId(),
@@ -230,9 +228,11 @@ public class GameScene {
             } else {
                 a1.setContentText("Top times and your time: \n"
                         + builder.toString() + Leaderboard.getRecord(
-                                currentProfile.getId(), currentLevel.getId()));
+                        currentProfile.getId(), currentLevel.getId()));
             }
         } else {
+            //Stop game music
+            AudioManager.gamePlayer.stop();
             //Play sad trombone death music
             AudioManager.playSound(Constants.DIED_MUSIC);
             //Display death message
@@ -268,6 +268,7 @@ public class GameScene {
 
     /**
      * This method gets the onScreenMessage label which is displayed in the UI.
+     *
      * @return the onScreenMessage JavaFX label
      */
     public static Label getOnScreenMessage() {
@@ -276,10 +277,11 @@ public class GameScene {
 
     /**
      * Updates the on screen message label and its corresponding picture.
-     * @param message The label text
+     *
+     * @param message   The label text
      * @param imagePath An imagepath to have an image below the label text
      */
-    public static void setOnScreenMessage(String message, String imagePath){
+    public static void setOnScreenMessage(String message, String imagePath) {
         ImageView iconImage = new ImageView(new File(imagePath).toURI().toString());
         iconImage.setFitWidth(50);
         iconImage.setFitHeight(50);
@@ -290,19 +292,25 @@ public class GameScene {
     }
 
     /**
-     * Changes the inventory item from greyscale to colored to indicate it has been collected.
-     * @param item The URI string of the item, used in matching it with the corresponding inventory item.
+     *
      */
-    public static void setInventoryItem(String item){
-        myController.updateInventory(item);
+    public static void updateInventory() {
+        myController.clearInventory();
+        for (CollectableItem item : currentLevel.getPlayer().getInventory()) {
+            if (item instanceof TokenAccumulator) {
+                updateTokens(((TokenAccumulator) item).getTokensCount());
+            }
+            else{
+                myController.addInventoryIcon(item.getImageURL());
+            }
+        }
     }
 
     /**
      * This method sets the globally available controller to the current
      * controller.
      *
-     * @param tempController
-     *            The current controller.
+     * @param tempController The current controller.
      */
     private void setController(MainGameWindowController tempController) {
         myController = tempController;
@@ -311,8 +319,7 @@ public class GameScene {
     /**
      * This method sets the globally available canvas to the current canvas.
      *
-     * @param canvas
-     *            The current canvas.
+     * @param canvas The current canvas.
      */
     private void setCanvas(Canvas canvas) {
         this.canvas = canvas;
@@ -334,11 +341,11 @@ public class GameScene {
 
     /**
      * This method updates the token amount shown in the GameScene
-     * @param tokenAmount the label holding the current token amount
+     *
+     * @param tokens the number of tokens to update to.
      */
-    private void showTokens(Label tokenAmount) {
-        int tokens = currentLevel.getPlayer().getTokenAccumulator().getTokensCount();
-        tokenAmount.setText(String.valueOf(tokens));
+    public static void updateTokens(int tokens) {
+        myController.getTokenAmount().setText(String.valueOf(tokens));
     }
 
     /**
@@ -356,46 +363,43 @@ public class GameScene {
     /**
      * This method handles the keyboard input.
      *
-     * @param event
-     *            Passes in the events from the keyboard.
+     * @param event Passes in the events from the keyboard.
      */
     private void processKeyEvent(KeyEvent event) {
 
         switch (event.getCode()) {
-        case ESCAPE: {
-            if (canMove) {
-                canMove = false;
-                timer.pauseTimer();
-                // Escape key was pressed. So show the
-                // menu.
-                myController.getMenuBox()
-                        .setVisible(!myController.getMenuBox().isVisible());
-                // Setting up the menu controls.
-                setUpMenu();
-            } else {
-                timer.resumeTimer();
-                myController.getMenuBox()
-                        .setVisible(!myController.getMenuBox().isVisible());
-                canMove = true;
+            case ESCAPE: {
+                if (canMove) {
+                    canMove = false;
+                    timer.pauseTimer();
+                    // Escape key was pressed. So show the
+                    // menu.
+                    myController.getMenuBox()
+                            .setVisible(!myController.getMenuBox().isVisible());
+                    // Setting up the menu controls.
+                    setUpMenu();
+                } else {
+                    timer.resumeTimer();
+                    myController.getMenuBox()
+                            .setVisible(!myController.getMenuBox().isVisible());
+                    canMove = true;
+                }
+                break;
             }
-            break;
-        }
 
-        // All keys going to the level
-        case UP:
-        case DOWN:
-        case LEFT:
-        case RIGHT:
-            if (canMove) {
-                this.currentLevel.keyDown(event);
-                //TODO: Consider alternative means of checking token count (this checks on every step) - try only on collection.
-                this.showTokens(myController.getTokenAmount());
-            }
-            break;
+            // All keys going to the level
+            case UP:
+            case DOWN:
+            case LEFT:
+            case RIGHT:
+                if (canMove) {
+                    this.currentLevel.keyDown(event);
+                }
+                break;
 
-        default:
-            // Do nothing
-            break;
+            default:
+                // Do nothing
+                break;
         }
         // Redraw game as the player may have moved.
         drawGame();

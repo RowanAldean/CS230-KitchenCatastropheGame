@@ -26,11 +26,15 @@ public final class Constants {
     public static final String DIED_MUSIC = FILE_SOURCE + "resources/Music/died.mp3";
 
     //Sound paths
-    public static final String COLLECT_SOUND = FILE_SOURCE + "resources/Sounds/collect.mp3";
+    public static final String FOOTSTEP_SOUND = FILE_SOURCE + "resources/Sounds/footstep.mp3";
     public static final String DEATH_SOUND = FILE_SOURCE + "resources/Sounds/death.mp3";
     public static final String WIN_SOUND = FILE_SOURCE + "resources/Sounds/applause.mp3";
+    public static final String COLLECT_SOUND = FILE_SOURCE + "resources/Sounds/collect.mp3";
     public static final String TOKEN_SOUND = FILE_SOURCE + "resources/Sounds/token.mp3";
     public static final String LOCKED_SOUND = FILE_SOURCE + "resources/Sounds/locked.wav";
+    public static final String SPLASH_SOUND = FILE_SOURCE + "resources/Sounds/water.mp3";
+    public static final String FIRE_SOUND = FILE_SOURCE + "resources/Sounds/fire.mp3";
+    public static final String TELEPORT_SOUND = FILE_SOURCE + "resources/Sounds/teleport.mp3";
 
     // Tile Paths
     public static final String WALL_PATH = FILE_SOURCE + "resources/WallCounter.png";

@@ -2,8 +2,6 @@ package group44.entities.movableObjects;
 
 import java.util.ArrayList;
 
-import com.sun.corba.se.impl.orbutil.closure.Constant;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import group44.Constants;
 import group44.controllers.AudioManager;
 import group44.entities.LevelObject;
@@ -24,8 +22,6 @@ import group44.game.CollisionCheckResult;
 import group44.game.CollisionCheckResult.CollisionCheckResultType;
 import group44.game.Level;
 import group44.game.scenes.GameScene;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -63,7 +59,7 @@ public class Player extends MovableObject {
                 imagePath);
 
         this.inventory = new ArrayList<>();
-        this.inventory.add(new TokenAccumulator());
+        addToInventory(new TokenAccumulator());
     }
 
     /**
@@ -83,7 +79,7 @@ public class Player extends MovableObject {
                 Constants.PLAYER_PATH);
 
         this.inventory = new ArrayList<>();
-        this.inventory.add(new TokenAccumulator());
+        addToInventory(new TokenAccumulator());
     }
 
     /**
@@ -220,16 +216,15 @@ public class Player extends MovableObject {
             if (ground.hasCollectableItem()) {
                 //Collect the CollectableItem if the is any.
                 CollectableItem item = ground.collect();
+                addToInventory(item);
                 if (item instanceof Token) {
-                    //If token, add to TokenAccumulator.
-                    this.getTokenAccumulator().addToken((Token) item);
                     AudioManager.playSound(Constants.TOKEN_SOUND);
                 } else {
-                    this.inventory.add(item); //else, add to inventory.
                     AudioManager.playSound(Constants.COLLECT_SOUND);
-                    GameScene.setInventoryItem(item.getImageURL());
                 }
+                GameScene.updateInventory();
             }
+            AudioManager.playSound(Constants.FOOTSTEP_SOUND);
         }
     }
 
@@ -321,7 +316,7 @@ public class Player extends MovableObject {
         }
 
         TokenAccumulator accumulator = new TokenAccumulator();
-        this.inventory.add(accumulator);
+        addToInventory(new TokenAccumulator());
         return accumulator;
     }
 
@@ -331,11 +326,20 @@ public class Player extends MovableObject {
      * @param item the collectable item.
      */
     public void addToInventory(CollectableItem item) {
-        if (item instanceof TokenAccumulator) {
+        if (item instanceof Token) {
             this.getTokenAccumulator().addToken((Token) item);
         } else {
             this.inventory.add(item);
         }
+    }
+
+    /**
+     * Returns this {@link Player} inventory.
+     *
+     * @return the players inventory.
+     */
+    public ArrayList<CollectableItem> getInventory() {
+        return this.inventory;
     }
 
     /**

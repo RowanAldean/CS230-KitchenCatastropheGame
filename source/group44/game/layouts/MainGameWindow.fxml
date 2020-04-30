@@ -55,11 +55,12 @@
                 <Insets bottom="310.0" left="0.0" right="25.0" top="80.0" />
             </StackPane.margin>
         </Label>
-        <VBox id="inventoryBox" fx:id="inventoryBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="82.0" prefWidth="94.0" StackPane.alignment="CENTER_RIGHT">
+        <VBox id="inventoryBox" fx:id="inventoryParent" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="82.0" prefWidth="94.0" StackPane.alignment="CENTER_RIGHT">
             <StackPane.margin>
                 <Insets bottom="75.0" left="0.0" right="25.0" top="0.0" />
             </StackPane.margin>
             <children>
+                <VBox id="inventoryBox" fx:id="inventoryBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="82.0" prefWidth="94.0" StackPane.alignment="CENTER_RIGHT"></VBox>
                 <FlowPane id="keysInventory" fx:id="keysInventory" alignment="CENTER" hgap="20.0" prefWidth="94.0" />
             </children>
         </VBox>
