@@ -4,10 +4,7 @@ import group44.Constants;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
 import java.io.File;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Static class which controls all audio during runtime of game.
@@ -32,7 +29,7 @@ public class AudioManager {
 
     public static void playMenuMusic() {
         gamePlayer.stop();
-        menuPlayer.setVolume(0.3);
+        menuPlayer.setVolume(0.2);
         //If its not playing then play.
         if (!menuPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
             menuPlayer.setAutoPlay(true);
@@ -43,7 +40,7 @@ public class AudioManager {
 
     public static void playGameMusic() {
         menuPlayer.stop();
-        gamePlayer.setVolume(0.3);
+        gamePlayer.setVolume(0.1);
 
 
         gamePlayer.stop();
