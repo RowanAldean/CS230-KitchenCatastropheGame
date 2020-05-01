@@ -24,6 +24,9 @@ import group44.game.Level;
 import group44.game.scenes.GameScene;
 import javafx.scene.input.KeyEvent;
 
+import static group44.game.scenes.GameScene.updateInventory;
+import static group44.game.scenes.GameScene.updateTokens;
+
 /**
  * Represents a player in the game.
  *
@@ -217,12 +220,15 @@ public class Player extends MovableObject {
                 //Collect the CollectableItem if the is any.
                 CollectableItem item = ground.collect();
                 addToInventory(item);
+                //If its a token then update the screen.
+                //Otherwise add to graphical inventory.
                 if (item instanceof Token) {
                     AudioManager.playSound(Constants.TOKEN_SOUND);
+                    updateTokens(getTokenAccumulator().getTokensCount());
                 } else {
                     AudioManager.playSound(Constants.COLLECT_SOUND);
+                    updateInventory(item);
                 }
-                GameScene.updateInventory();
             }
             AudioManager.playSound(Constants.FOOTSTEP_SOUND);
         }

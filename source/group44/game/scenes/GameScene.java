@@ -97,7 +97,7 @@ public class GameScene {
             drawGame();
             primaryStage.setScene(scene);
             primaryStage.show();
-            updateInventory();
+            loadInventory();
             this.currentProfile = currentProfile;
             timer.startTimer(myController.getTimeLabel(),
                     currentLevel.getTime());
@@ -292,9 +292,9 @@ public class GameScene {
     }
 
     /**
-     *
+     * Loads the players inventory. This method is used when creating a new GameScene.
      */
-    public static void updateInventory() {
+    private static void loadInventory() {
         myController.clearInventory();
         for (CollectableItem item : currentLevel.getPlayer().getInventory()) {
             if (item instanceof TokenAccumulator) {
@@ -304,6 +304,14 @@ public class GameScene {
                 myController.addInventoryIcon(item.getImageURL());
             }
         }
+    }
+
+    /**
+     * Adds a new item to the graphical inventory.
+     * @param item The item to be added.
+     */
+    public static void updateInventory(CollectableItem item){
+        myController.addInventoryIcon(item.getImageURL());
     }
 
     /**
