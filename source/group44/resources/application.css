@@ -98,3 +98,9 @@
     -fx-background-color: lightgreen;
     -fx-font-family: "Helvetica";
 }
+
+#minigameInstructions {
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-font-family: "Helvetica";
+}
