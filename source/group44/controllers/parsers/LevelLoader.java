@@ -20,12 +20,7 @@ import group44.entities.collectableItems.Flippers;
 import group44.entities.collectableItems.Key;
 import group44.entities.collectableItems.Key.KeyType;
 import group44.entities.collectableItems.Token;
-import group44.entities.movableObjects.DumbTargetingEnemy;
-import group44.entities.movableObjects.MovableObject;
-import group44.entities.movableObjects.Player;
-import group44.entities.movableObjects.SmartTargetingEnemy;
-import group44.entities.movableObjects.StraightWalkingEnemy;
-import group44.entities.movableObjects.WallFollowingEnemy;
+import group44.entities.movableObjects.*;
 import group44.exceptions.CollisionException;
 import group44.exceptions.ParsingException;
 import group44.game.Level;
@@ -191,6 +186,8 @@ public class LevelLoader {
                 movableObject = parseWallFollowingEnemyEntry(level, scanner);
             } else if (type.equals(Constants.TYPE_SMART_TARGETING_ENEMY)) {
                 movableObject = parseSmartTargetingEnemyEntry(level, scanner);
+            } else if (type.equals(Constants.TYPE_MINIGAME_ENEMY)) {
+                movableObject = parseMinigameEnemyEntry(level, scanner);
             } else if (type.equals(Constants.TYPE_FIRE_BOOTS)) {
                 collectableItem = parseFireBootsEntry(level, scanner);
             } else if (type.equals(Constants.TYPE_FLIPPERS)) {
@@ -239,6 +236,8 @@ public class LevelLoader {
                 movableObject = parseWallFollowingEnemyEntry(level, scanner);
             } else if (type.equals(Constants.TYPE_SMART_TARGETING_ENEMY)) {
                 movableObject = parseSmartTargetingEnemyEntry(level, scanner);
+            } else if (type.equals(Constants.TYPE_MINIGAME_ENEMY)) {
+                movableObject = parseMinigameEnemyEntry(level, scanner);
             }
         }
 
@@ -277,6 +276,8 @@ public class LevelLoader {
                 movableObject = parseWallFollowingEnemyEntry(level, scanner);
             } else if (type.equals(Constants.TYPE_SMART_TARGETING_ENEMY)) {
                 movableObject = parseSmartTargetingEnemyEntry(level, scanner);
+            } else if (type.equals(Constants.TYPE_MINIGAME_ENEMY)) {
+                movableObject = parseMinigameEnemyEntry(level, scanner);
             }
         }
 
@@ -321,6 +322,8 @@ public class LevelLoader {
                 movableObject = parseWallFollowingEnemyEntry(level, scanner);
             } else if (type.equals(Constants.TYPE_SMART_TARGETING_ENEMY)) {
                 movableObject = parseSmartTargetingEnemyEntry(level, scanner);
+            } else if (type.equals(Constants.TYPE_MINIGAME_ENEMY)) {
+                movableObject = parseMinigameEnemyEntry(level, scanner);
             }
         }
 
@@ -366,6 +369,8 @@ public class LevelLoader {
                 movableObject = parseWallFollowingEnemyEntry(level, scanner);
             } else if (type.equals(Constants.TYPE_SMART_TARGETING_ENEMY)) {
                 movableObject = parseSmartTargetingEnemyEntry(level, scanner);
+            } else if (type.equals(Constants.TYPE_MINIGAME_ENEMY)) {
+                movableObject = parseMinigameEnemyEntry(level, scanner);
             }
         }
 
@@ -405,6 +410,8 @@ public class LevelLoader {
                 movableObject = parseWallFollowingEnemyEntry(level, scanner);
             } else if (type.equals(Constants.TYPE_SMART_TARGETING_ENEMY)) {
                 movableObject = parseSmartTargetingEnemyEntry(level, scanner);
+            } else if (type.equals(Constants.TYPE_MINIGAME_ENEMY)) {
+                movableObject = parseMinigameEnemyEntry(level, scanner);
             }
         }
 
@@ -446,6 +453,8 @@ public class LevelLoader {
                 movableObject = parseWallFollowingEnemyEntry(level, scanner);
             } else if (type.equals(Constants.TYPE_SMART_TARGETING_ENEMY)) {
                 movableObject = parseSmartTargetingEnemyEntry(level, scanner);
+            } else if (type.equals(Constants.TYPE_MINIGAME_ENEMY)) {
+                movableObject = parseMinigameEnemyEntry(level, scanner);
             }
         }
 
@@ -569,6 +578,25 @@ public class LevelLoader {
         String imagePath = scanner.next();
 
         return new SmartTargetingEnemy(level, name, positionX, positionY,
+                imagePath);
+    }
+
+    /**
+     * Parses the Minigame Enemy on the scanned line.
+     *
+     * @param level   the level where the enemy is located.
+     * @param scanner scanner with the serialised enemy.
+     * @return the serialised {@link MinigameEnemy} as a type of
+     * {@link MovableObject}.
+     */
+    private static MovableObject parseMinigameEnemyEntry(Level level,
+                                                         Scanner scanner) {
+        String name = scanner.next();
+        int positionX = scanner.nextInt();
+        int positionY = scanner.nextInt();
+        String imagePath = scanner.next();
+
+        return new MinigameEnemy(level, name, positionX, positionY,
                 imagePath);
     }
 

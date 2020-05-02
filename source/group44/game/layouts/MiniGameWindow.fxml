@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane id="pane" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@/group44/resources/application.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group44.game.layoutControllers.MiniGameWindowController">
+    <children>
+        <Canvas fx:id="canvas" height="550.0" width="725.0" StackPane.alignment="CENTER" />
+        <Pane fx:id="movableObjects" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="725.0" stylesheets="@/group44/resources/application.css">
+        </Pane>
+    </children>
+</StackPane>

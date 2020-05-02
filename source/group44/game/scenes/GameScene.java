@@ -10,6 +10,7 @@ import group44.exceptions.CollisionException;
 import group44.exceptions.ParsingException;
 import group44.game.Level;
 import group44.game.LevelFinishStatus;
+import group44.game.Minigame;
 import group44.game.layoutControllers.MainGameWindowController;
 import group44.models.GTimer;
 import group44.models.Profile;
@@ -56,11 +57,11 @@ public class GameScene {
     private boolean canMove = true;
 
     // The window itself.
-    private Stage primaryStage;
+    private static Stage primaryStage;
     // Current level displayed.
     private static Level currentLevel;
     // Current player.
-    private Profile currentProfile;
+    private static Profile currentProfile;
     // Clock
     private GTimer timer = new GTimer();
 
@@ -105,6 +106,10 @@ public class GameScene {
             e.printStackTrace();
         }
         primaryStage.setTitle("Kitchen Catastrophe");
+    }
+
+    public static void launchMinigame() {
+        new MinigameScene(primaryStage, currentLevel, currentProfile);
     }
 
     /**

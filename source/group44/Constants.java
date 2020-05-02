@@ -60,6 +60,7 @@ public final class Constants {
     public static final String PLAYER_PATH = FILE_SOURCE + "resources/ChefDownWalk/Front1.png";
     public static final String DUMB_TARGETING_ENEMY_PATH = FILE_SOURCE + "resources/Enemies/Pickle/MrPickleFront.png";
     public static final String SMART_TARGETING_ENEMY_PATH = FILE_SOURCE + "resources/Enemies/Egg/MrEggFront.png";
+    public static final String MINIGAME_ENEMY_PATH = FILE_SOURCE + "resources/Enemies/Waiter/WaiterFront.png";
     public static final String STRAIGHT_WALKING_ENEMY_PATH = FILE_SOURCE + "resources/Enemies/Carrot/MrCarrotFront.png";
     public static final String WALL_FOLLOWING_ENEMY_PATH = FILE_SOURCE + "resources/Enemies/Hotdog/MrHotDogFront.png";
 
@@ -71,6 +72,7 @@ public final class Constants {
     public static final String LEVEL_EDITOR_PLAYER_PATH = FILE_SOURCE + "resources/LevelEditor/PlayerFront.png";
     public static final String LEVEL_EDITOR_DUMB_TARGETING_ENEMY_PATH = FILE_SOURCE + "resources/LevelEditor/MrPickleFront.png";
     public static final String LEVEL_EDITOR_SMART_TARGETING_ENEMY_PATH = FILE_SOURCE + "resources/LevelEditor/MrEggFront.png";
+    public static final String LEVEL_EDITOR_MINIGAME_ENEMY_PATH = FILE_SOURCE + "resources/LevelEditor/WaiterEditor.png";
     public static final String LEVEL_EDITOR_WALL_FOLLOWING_ENEMY_PATH = FILE_SOURCE + "resources/LevelEditor/MrHotDogFront.png";
     public static final String LEVEL_EDITOR_STRAIGHT_WALKING_ENEMY_PATH = FILE_SOURCE + "resources/LevelEditor/MrCarrotFront.png";
 
@@ -97,6 +99,7 @@ public final class Constants {
     public static final String TYPE_STRAIGHT_WALKING_ENEMY = "straightWalkingEnemy";
     public static final String TYPE_WALL_FOLLOWING_ENEMY = "wallFollowingEnemy";
     public static final String TYPE_SMART_TARGETING_ENEMY = "smartTargetingEnemy";
+    public static final String TYPE_MINIGAME_ENEMY = "minigameEnemy";
     public static final String TYPE_TOKEN_DOOR = "tokenDoor";
     public static final String TYPE_KEY_DOOR = "keyDoor";
     public static final String TYPE_TELEPORTER = "teleporter";
@@ -112,6 +115,7 @@ public final class Constants {
     public static final String TITLE_KEY_DOOR = "Key Door";
     public static final String TITLE_PLAYER = "Player";
     public static final String TITLE_SMART_TARGETING_ENEMY = "Smart Targeting Enemy";
+    public static final String TITLE_MINIGAME_ENEMY = "Minigame Enemy";
     public static final String TITLE_STRAIGHT_WALKING_ENEMY = "Straight Walking Enemy";
     public static final String TITLE_TELEPORTER = "Teleporter";
     public static final String TITLE_TOKEN = "Token";

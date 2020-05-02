@@ -36,7 +36,7 @@ public class Level {
     /** The game player. */
     private Player player;
     /** The game enemies. */
-    private ArrayList<Enemy> enemies;
+    private volatile ArrayList<Enemy> enemies;
     /** Indicates whether the level is finished or not. */
     private boolean isFinished;
     /** Indicates under which circumstances the level finished. */
