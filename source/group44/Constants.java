@@ -2,6 +2,7 @@ package group44;
 
 /**
  * This file contains all the constants used throughout the project.
+ *
  * @author Tomas Svejnoha, Oliver Morris.
  * @version 1.0
  */
@@ -49,6 +50,19 @@ public final class Constants {
     public static final String FLIPPERS_PATH = FILE_SOURCE + "resources/cells/flippers.png";
     public static final String TOKEN_PATH = FILE_SOURCE + "resources/cells/token.png";
     public static final String KEY_PATH = FILE_SOURCE + "resources/keys/%s.png";
+
+    //Minigame ingredient paths
+    public static final String MINIGAME_BOTTOM_BUN_PATH = FILE_SOURCE + "resources/minigame/bottomBun.png";
+    public static final String MINIGAME_TOMATO_PATH = FILE_SOURCE + "resources/minigame/tomato.png";
+    public static final String MINIGAME_LETTUCE_PATH = FILE_SOURCE + "resources/minigame/lettuce.png";
+    public static final String MINIGAME_BURGER_PATH = FILE_SOURCE + "resources/minigame/burger.png";
+    public static final String MINIGAME_TOP_BUN_PATH = FILE_SOURCE + "resources/minigame/topBun.png";
+    //Minigame selected ingredient paths
+    public static final String MINIGAME_SELECTED_BOTTOM_BUN_PATH = FILE_SOURCE + "resources/minigame/bottomBunHighlighted.png";
+    public static final String MINIGAME_SELECTED_TOMATO_PATH = FILE_SOURCE + "resources/minigame/tomatoHighlighted.png";
+    public static final String MINIGAME_SELECTED_LETTUCE_PATH = FILE_SOURCE + "resources/minigame/lettuceHighlighted.png";
+    public static final String MINIGAME_SELECTED_BURGER_PATH = FILE_SOURCE + "resources/minigame/burgerHighlighted.png";
+    public static final String MINIGAME_SELECTED_TOP_BUN_PATH = FILE_SOURCE + "resources/minigame/topBunHighlighted.png";
 
     // Door paths
     public static final String CLOSED_KEY_DOOR_PATH = FILE_SOURCE + "resources/cells/closed%sDoor.png";

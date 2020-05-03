@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane id="pane" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@/group44/resources/application.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group44.game.layoutControllers.MiniGameWindowController">
+<StackPane id="root" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@/group44/resources/application.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group44.game.layoutControllers.MiniGameWindowController">
     <children>
-        <Canvas fx:id="canvas" height="550.0" width="725.0" StackPane.alignment="CENTER" />
-        <Pane fx:id="movableObjects" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="725.0" stylesheets="@/group44/resources/application.css">
-        </Pane>
-        <Label id="minigameInstructions" text="Use the arrow keys and 'Enter' to select burger ingredients from top to bottom!" wrapText="true" StackPane.alignment="TOP_CENTER" />
+        <BorderPane id="gameGrid" fx:id="gameGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="778.0" StackPane.alignment="CENTER">
+            <top>
+                <Label id="minigameInstructions" text="Use the arrow keys and 'Enter' to select burger ingredients from top to bottom!" wrapText="true" BorderPane.alignment="TOP_CENTER" />
+            </top>
+            <left>
+
+            </left>
+            <center>
+                <VBox id="burgerSelect" fx:id="burgerSelect" alignment="CENTER" fillWidth="false" spacing="25.0" BorderPane.alignment="CENTER" StackPane.alignment="CENTER" />
+            </center>
+            <right>
+                <VBox id="rightSideMenu" fx:id="rightSideMenu" alignment="CENTER" fillWidth="false" prefHeight="503.0" prefWidth="123.0" BorderPane.alignment="CENTER">
+                    <Label id="OrderText" alignment="CENTER" text="Assembly Order:" wrapText="true" BorderPane.alignment="CENTER" />
+                    <ImageView fitHeight="75.0" fitWidth="75.0" preserveRatio="true">
+                        <image>
+                            <Image url="@../../resources/minigame/burgerComplete.png" />
+                        </image>
+                    </ImageView>
+                    <Label id="Reminder" alignment="CENTER" text="The timer's still going!" wrapText="true" BorderPane.alignment="CENTER" />
+                    <Label id="timeTitle" alignment="CENTER" prefHeight="28.0" prefWidth="74.0" text="Time Taken:" textAlignment="CENTER" StackPane.alignment="CENTER_RIGHT">
+                        <StackPane.margin>
+                            <Insets bottom="400.0" left="0.0" right="25.0" top="0.0" />
+                        </StackPane.margin>
+                    </Label>
+                    <Label id="timer" fx:id="timeLabel" alignment="CENTER" prefHeight="50" prefWidth="90" text="Testing Stopwatch" StackPane.alignment="CENTER_RIGHT">
+                        <StackPane.margin>
+                            <Insets bottom="320.0" left="0.0" right="25.0" top="0.0" />
+                        </StackPane.margin>
+                    </Label>
+                </VBox>
+            </right>
+            <bottom>
+
+            </bottom>
+        </BorderPane>
     </children>
 </StackPane>

@@ -37,8 +37,6 @@ public class MinigameScene {
             MiniGameWindowController tempController = fxmlLoader
                     .getController();
             this.myController = (tempController);
-            // Setting the canvas
-            this.canvas = (myController.getCanvas());
             // Adding the key listener to the scene.
             //FIXME: Create a process key event
 //            scene.addEventFilter(KeyEvent.KEY_PRESSED,

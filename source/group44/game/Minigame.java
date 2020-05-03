@@ -1,6 +1,5 @@
 package group44.game;
 
-import group44.entities.cells.Cell;
 import javafx.scene.canvas.GraphicsContext;
 
 public class Minigame {

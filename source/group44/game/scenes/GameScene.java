@@ -10,7 +10,6 @@ import group44.exceptions.CollisionException;
 import group44.exceptions.ParsingException;
 import group44.game.Level;
 import group44.game.LevelFinishStatus;
-import group44.game.Minigame;
 import group44.game.layoutControllers.MainGameWindowController;
 import group44.models.GTimer;
 import group44.models.Profile;
