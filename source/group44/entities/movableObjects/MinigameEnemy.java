@@ -22,6 +22,7 @@ public class MinigameEnemy extends SmartTargetingEnemy {
     protected void onCollided(CollisionCheckResult result) {
         if (result.getCollidingObject() instanceof Player) {
             GameScene.launchMinigame();
+            die(result.getCollidingObject());
         }
     }
 

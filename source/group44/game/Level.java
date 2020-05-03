@@ -272,7 +272,8 @@ public class Level {
      * Moves all enemies in the game.
      */
     private void moveEnemies() {
-        for (Enemy enemy : this.enemies) {
+        ArrayList<Enemy> enemiesClone = (ArrayList<Enemy>) this.enemies.clone();
+        for (Enemy enemy : enemiesClone) {
             enemy.move();
         }
     }
