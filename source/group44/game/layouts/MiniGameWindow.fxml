@@ -18,15 +18,15 @@
                 <VBox id="burgerSelect" fx:id="burgerSelect" alignment="CENTER" fillWidth="false" spacing="25.0" BorderPane.alignment="CENTER" StackPane.alignment="CENTER" />
             </center>
             <right>
-                <VBox id="rightSideMenu" fx:id="rightSideMenu" alignment="CENTER" fillWidth="false" prefHeight="377.0" prefWidth="123.0" BorderPane.alignment="CENTER">
-                    <Label id="Explanation" alignment="CENTER" prefHeight="101.0" prefWidth="123.0" text="That pesky waiter can't tell you're busy! Get this order out quick!" textAlignment="CENTER" wrapText="true" />
+                <VBox id="rightSideMenu" fx:id="rightSideMenu" alignment="CENTER" fillWidth="false" prefHeight="503.0" prefWidth="197.0" BorderPane.alignment="CENTER">
+                    <Label id="Explanation" alignment="CENTER" prefHeight="135.0" prefWidth="123.0" text="That stupid waiter cannot see you're busy! Get this order out quick!" textAlignment="CENTER" wrapText="true" />
                     <Label id="OrderText" alignment="CENTER" prefHeight="50.0" prefWidth="87.0" text="Assembly Order:" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER" />
                     <ImageView fitHeight="143.0" fitWidth="100.0" preserveRatio="true">
                         <image>
                             <Image url="@../../resources/minigame/burgerComplete.png" />
                         </image>
                     </ImageView>
-                    <Label id="Reminder" alignment="CENTER" prefHeight="141.0" prefWidth="117.0" text="The timer's still going!" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER" />
+                    <Label id="Reminder" alignment="CENTER" prefHeight="127.0" prefWidth="117.0" text="The timer's still going!" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER" />
                     <Label id="timeTitle" alignment="CENTER" prefHeight="32.0" prefWidth="74.0" text="Time Taken:" textAlignment="CENTER" StackPane.alignment="CENTER_RIGHT">
                         <StackPane.margin>
                             <Insets bottom="400.0" left="0.0" right="25.0" top="0.0" />

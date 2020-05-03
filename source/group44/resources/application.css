@@ -105,8 +105,14 @@
 }
 
 #Explanation {
-    -fx-font-size: 14;
+    -fx-font-size: 18;
+    -fx-text-fill: orange;
     -fx-font-family: "Arial Rounded MT Bold";
+}
+
+#Explanation .text{
+    -fx-stroke: black;
+    -fx-stroke-width: 1px;
 }
 
 #OrderText {
@@ -116,7 +122,7 @@
 
 #Reminder {
     -fx-font-size: 24;
-    -fx-font-family: "Impact";
+        -fx-font-family: "Arial Rounded MT Bold";
     -fx-text-fill: orange;
 }
 
