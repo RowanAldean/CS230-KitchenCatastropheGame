@@ -45,7 +45,6 @@ public class MiniGameWindowController {
 
     public void initialize() {
         placeRandomBurgerParts();
-        setupUI();
     }
 
 
@@ -70,22 +69,28 @@ public class MiniGameWindowController {
         };
     }
 
-    private void placeRandomBurgerParts() {
+    public void placeRandomBurgerParts() {
+        burgerSelect.getChildren().clear();
         ImageView[] ingredientViews = generateBurgerPartImages();
         for (ImageView ingredient : ingredientViews) {
             ingredient.setFocusTraversable(true);
             burgerSelect.getChildren().add(ingredient);
         }
+        setupUI();
     }
 
     private ImageView[] generateBurgerPartImages() {
-        final String[] ingredientPaths = mapToHighlights.keySet().toArray(new String[0]);
-        ImageView[] burgerParts = new ImageView[5];
+        final String[] ingredientsArray = mapToHighlights.keySet().toArray(new String[0]);
+        final ArrayList<String> ingredientPaths = new ArrayList<>(Arrays.asList(ingredientsArray));
+
+        ImageView[] burgerParts = new ImageView[ingredientPaths.size()];
         for (int i = 0; i < burgerParts.length; i++) {
-            File ingredientFile = new File(ingredientPaths[i]);
-            LevelObjectImage ingredientImage = new LevelObjectImage(ingredientFile.toURI().toString(), ingredientPaths[i]);
+            int randomImageIndex = new Random().nextInt(ingredientPaths.size());
+            File ingredientFile = new File(ingredientPaths.get(randomImageIndex));
+            LevelObjectImage ingredientImage = new LevelObjectImage(ingredientFile.toURI().toString(), ingredientPaths.get(randomImageIndex));
             ImageView ingredient = new ImageView(ingredientImage);
             burgerParts[i] = ingredient;
+            ingredientPaths.remove(randomImageIndex);
         }
         return burgerParts;
     }

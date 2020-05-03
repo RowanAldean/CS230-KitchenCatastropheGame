@@ -1,16 +1,19 @@
 package group44.game.scenes;
 
+import group44.controllers.LevelManager;
+import group44.game.Level;
 import group44.game.layoutControllers.MiniGameWindowController;
 import group44.models.GTimer;
 import group44.models.LevelObjectImage;
+import group44.models.Profile;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,19 +21,22 @@ import static group44.Constants.WINDOW_HEIGHT;
 import static group44.Constants.WINDOW_WIDTH;
 
 public class MinigameScene {
+    private final Level currentLevel;
+    private final Profile currentProfile;
     private Scene scene;
     private final Stage primaryStage;
     private MiniGameWindowController myController;
-    private GTimer sceneTimer;
+    private GTimer sceneTimer = new GTimer();
 
-    private ArrayList<String> userOrder = new ArrayList<String>();
+    private ArrayList<String> userOrder = new ArrayList<>();
 
-    public MinigameScene(Stage primaryStage, GTimer gameTimer) {
+    public MinigameScene(Stage primaryStage, Level currentLevel, Profile currentProfile) {
         this.primaryStage = primaryStage;
+        this.currentLevel = currentLevel;
+        this.currentProfile = currentProfile;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                 .getResource("/group44/game/layouts/MiniGameWindow.fxml"));
         try {
-            sceneTimer = gameTimer;
             Parent root = fxmlLoader.load();
 
             // Setting the stage and adding my custom style to it.
@@ -42,14 +48,13 @@ public class MinigameScene {
             this.myController = fxmlLoader.getController();
 
             // Adding the key listener to the ingredients VBox.
-            //FIXME: Create a process key event
             myController.getBurgerSelect().addEventFilter(KeyEvent.KEY_PRESSED, event -> ingredientKeyEvent(event));
 
             // Drawing the game
-            drawGame();
             primaryStage.setScene(scene);
             primaryStage.show();
-            sceneTimer.setTime(myController.getTimerLabel());
+
+            sceneTimer.startTimer(myController.getTimerLabel(), currentLevel.getTime());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,14 +84,18 @@ public class MinigameScene {
             else{
                 System.out.println("WIPED");
                 userOrder.clear();
+                myController.placeRandomBurgerParts();
             }
         }
         if (correctMatches == correctOrdering.size()) {
-            System.out.println("WIN");
-            userOrder.clear();
+            sceneTimer.pauseTimer();
+            this.currentLevel.setTime(GTimer.getCurrentTimeTaken());
+            try {
+                LevelManager.save(this.currentLevel, this.currentProfile.getId());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            new GameScene(primaryStage, currentLevel, currentProfile);
         }
-    }
-
-    private void drawGame() {
     }
 }

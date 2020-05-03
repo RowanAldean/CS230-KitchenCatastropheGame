@@ -62,7 +62,7 @@ public class GameScene {
     // Current player.
     private static Profile currentProfile;
     // Clock
-    private static GTimer timer;
+    private static GTimer timer = new GTimer();
 
     /**
      * This is the main method that loads everything required to draw the scene.
@@ -74,7 +74,7 @@ public class GameScene {
     public GameScene(Stage primaryStage, Level currentLevel,
                      Profile currentProfile) {
         AudioManager.playGameMusic();
-        this.primaryStage = primaryStage;
+        GameScene.primaryStage = primaryStage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                 .getResource("/group44/game/layouts/MainGameWindow.fxml"));
         try {
@@ -88,10 +88,7 @@ public class GameScene {
                     .getController();
             setController(tempController);
 
-            //Create the timer and pass it the label to update.
-            timer = new GTimer(myController.getTimeLabel());
-
-            this.currentLevel = currentLevel;
+            GameScene.currentLevel = currentLevel;
             // Setting the canvas
             setCanvas(myController.getCanvas());
             // Adding the key listener to the scene.
@@ -102,8 +99,8 @@ public class GameScene {
             primaryStage.setScene(scene);
             primaryStage.show();
             updateInventory();
-            this.currentProfile = currentProfile;
-            timer.startTimer(
+            GameScene.currentProfile = currentProfile;
+            timer.startTimer(myController.getTimeLabel(),
                     currentLevel.getTime());
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,7 +109,14 @@ public class GameScene {
     }
 
     public static void launchMinigame() {
-        new MinigameScene(primaryStage, timer);
+        timer.pauseTimer();
+        currentLevel.setTime(GTimer.getCurrentTimeTaken());
+        try {
+            LevelManager.save(currentLevel, currentProfile.getId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        new MinigameScene(primaryStage, currentLevel, currentProfile);
     }
 
     /**
@@ -149,15 +153,15 @@ public class GameScene {
      * @param event This is the event for the click on the restart button.
      */
     private void setUpRestart(MouseEvent event) {
-        timer.startTimer(0);
+        timer.startTimer(myController.getTimeLabel(), 0);
 
         // Delete all temp files
-        LevelManager.deleteTempData(this.currentLevel.getId(),
-                this.currentProfile.getId());
+        LevelManager.deleteTempData(currentLevel.getId(),
+                currentProfile.getId());
 
         Level newLevel = null;
         try {
-            newLevel = LevelManager.load(this.currentLevel.getId()); // TODO:
+            newLevel = LevelManager.load(currentLevel.getId()); // TODO:
             // @Bogdan
             // Mihai
             // -
@@ -165,7 +169,7 @@ public class GameScene {
         } catch (FileNotFoundException | ParsingException | CollisionException e) {
             e.printStackTrace();
         }
-        new GameScene(this.primaryStage, newLevel, this.currentProfile);
+        new GameScene(primaryStage, newLevel, currentProfile);
     }
 
     /**
@@ -177,8 +181,8 @@ public class GameScene {
     private void setUpHome(MouseEvent event) {
         timer.stopTimer();
         try {
-            this.currentLevel.setTime(GTimer.getCurrentTimeTaken());
-            LevelManager.save(this.currentLevel, this.currentProfile.getId());
+            currentLevel.setTime(GTimer.getCurrentTimeTaken());
+            LevelManager.save(currentLevel, currentProfile.getId());
         } catch (IOException e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");
@@ -258,7 +262,7 @@ public class GameScene {
         } else {
             if (result.get() == levelSelector) {
                 LevelSelectorScene ls = new LevelSelectorScene(primaryStage,
-                        this.currentProfile);
+                        currentProfile);
             } else {
                 if (result.get() == mainMenu) {
                     MainMenuScene ms = new MainMenuScene(primaryStage);
@@ -362,9 +366,9 @@ public class GameScene {
      */
     private void endGame() {
         timer.pauseTimer();
-        LevelManager.deleteTempData(this.currentLevel.getId(),
-                this.currentProfile.getId());
-        this.showTimes(this.currentLevel.getFinishStatus());
+        LevelManager.deleteTempData(currentLevel.getId(),
+                currentProfile.getId());
+        this.showTimes(currentLevel.getFinishStatus());
     }
 
     /**
@@ -400,7 +404,7 @@ public class GameScene {
             case LEFT:
             case RIGHT:
                 if (canMove) {
-                    this.currentLevel.keyDown(event);
+                    currentLevel.keyDown(event);
                 }
                 break;
 
@@ -414,7 +418,7 @@ public class GameScene {
         // with. This stops other GUI nodes (buttons etc) responding to it.
         event.consume();
 
-        if (this.currentLevel.isFinished()) {
+        if (currentLevel.isFinished()) {
             this.endGame();
         }
     }

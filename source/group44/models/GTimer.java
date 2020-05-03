@@ -28,20 +28,17 @@ public class GTimer {
     private static long currentTimeTaken;
     // Creates the thread for the timer to run in.
     private Timer timer = new Timer("Stopwatch");
-    //The label to update the timer for
-    private Label time;
-
-    public GTimer(Label timeLabel){
-        time = timeLabel;
-    }
 
     /**
      * This method starts the timer.
      *
+     * @param time
+     *            passes in the timeLabel Label in from the
+     *            MainGameWindowController.
      * @param startTime
      *            resume or start time of the level.
      */
-    public void startTimer(long startTime) { // TODO: EDIT HERE
+    public void startTimer(Label time, long startTime) { // TODO: EDIT HERE
         formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
         prevTime = new Date();
         timing = true;
@@ -78,14 +75,6 @@ public class GTimer {
 
         // Starts the timer.
         timer.scheduleAtFixedRate(timerTask, 0, 100);
-    }
-
-    public Label getTime() {
-        return time;
-    }
-
-    public void setTime(Label time) {
-        this.time = time;
     }
 
     /**

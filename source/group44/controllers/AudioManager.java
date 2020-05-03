@@ -42,13 +42,12 @@ public class AudioManager {
         menuPlayer.stop();
         gamePlayer.setVolume(0.1);
 
-
-        gamePlayer.stop();
-        gamePlayer.setAutoPlay(true);
-        gamePlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        gamePlayer.play();
-
-
+        //If its not playing then play.
+        if (!gamePlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+            gamePlayer.setAutoPlay(true);
+            gamePlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            gamePlayer.play();
+        }
     }
 
 
