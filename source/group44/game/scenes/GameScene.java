@@ -130,7 +130,7 @@ public class GameScene {
         myController.getResumeButton().setOnMouseClicked(this::setUpResume);
         myController.getRestartButton().setOnMouseClicked(this::setUpRestart);
         myController.getHomeButton().setOnMouseClicked(this::setUpHome);
-        AudioManager.gamePlayer.stop();
+        AudioManager.gamePlayer.setVolume(0.0);
     }
 
     /**
@@ -179,7 +179,7 @@ public class GameScene {
      * @param event This is the event for the click on the restart button.
      */
     private void setUpHome(MouseEvent event) {
-        timer.stopTimer();
+        timer.pauseTimer();
         try {
             currentLevel.setTime(GTimer.getCurrentTimeTaken());
             LevelManager.save(currentLevel, currentProfile.getId());
@@ -198,6 +198,7 @@ public class GameScene {
      * and your time.
      */
     private void showTimes(LevelFinishStatus status) {
+        timer.stopTimer();
         ButtonType levelSelector = new ButtonType("Level Selector",
                 ButtonBar.ButtonData.OK_DONE);
         ButtonType mainMenu = new ButtonType("Main Menu",
@@ -394,6 +395,7 @@ public class GameScene {
                     myController.getMenuBox()
                             .setVisible(!myController.getMenuBox().isVisible());
                     canMove = true;
+                    AudioManager.playGameMusic();
                 }
                 break;
             }

@@ -101,6 +101,26 @@
 
 #minigameInstructions {
     -fx-font-size: 24;
-    -fx-font-weight: bold;
-    -fx-font-family: "Helvetica";
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+
+#Explanation {
+    -fx-font-size: 14;
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+
+#OrderText {
+    -fx-font-size: 14;
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+
+#Reminder {
+    -fx-font-size: 24;
+    -fx-font-family: "Impact";
+    -fx-text-fill: orange;
+}
+
+#Reminder .text{
+    -fx-stroke: black;
+    -fx-stroke-width: 1px;
 }

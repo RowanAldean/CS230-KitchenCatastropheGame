@@ -98,7 +98,7 @@ public class GTimer {
      */
     public void stopTimer() {
         timing = false;
-        timer.cancel();
+        timer.purge();
         // Need a call here to send to leaderboard or profile?
 
     }
