@@ -37,6 +37,12 @@ public final class Constants {
     public static final String FIRE_SOUND = FILE_SOURCE + "resources/Sounds/fire.mp3";
     public static final String TELEPORT_SOUND = FILE_SOURCE + "resources/Sounds/teleport.mp3";
 
+    //Minigame sound paths
+    public static final String MINIGAME_NAV = FILE_SOURCE + "resources/Sounds/minigame_navigate.wav";
+    public static final String MINIGAME_SELECT = FILE_SOURCE + "resources/Sounds/minigame_select.wav";
+    public static final String MINIGAME_FAIL = FILE_SOURCE + "resources/Sounds/minigame_fail.wav";
+    public static final String MINIGAME_WIN = FILE_SOURCE + "resources/Sounds/minigame_success.wav";
+
     // Tile Paths
     public static final String WALL_PATH = FILE_SOURCE + "resources/WallCounter.png";
     public static final String GROUND_PATH = FILE_SOURCE + "resources/cells/floor.png";

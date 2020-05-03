@@ -1,5 +1,7 @@
 package group44.game.scenes;
 
+import group44.Constants;
+import group44.controllers.AudioManager;
 import group44.controllers.LevelManager;
 import group44.game.Level;
 import group44.game.layoutControllers.MiniGameWindowController;
@@ -64,12 +66,15 @@ public class MinigameScene {
     private void ingredientKeyEvent(KeyEvent event) {
         switch (event.getCode()) {
             case ENTER:
+                AudioManager.playSound(Constants.MINIGAME_SELECT);
                 ImageView selectedImageView = (ImageView) scene.focusOwnerProperty().get();
                 LevelObjectImage selectedImage = (LevelObjectImage) selectedImageView.getImage();
                 String selectedImageLabel = selectedImage.getLabel();
                 userOrder.add(selectedImageLabel);
                 checkWin();
                 break;
+            default:
+                AudioManager.playSound(Constants.MINIGAME_NAV);
         }
     }
 
@@ -77,12 +82,12 @@ public class MinigameScene {
         List<String> correctOrdering = myController.getCorrectOrder();
         int correctMatches = 0;
         //Compare every element in order.
-        for(int i = 0; i < userOrder.size(); i++){
-            if(userOrder.get(i).equals(correctOrdering.get(i))){
-                correctMatches ++;
-            }
-            else{
-                System.out.println("WIPED");
+        for (int i = 0; i < userOrder.size(); i++) {
+            if (userOrder.get(i).equals(correctOrdering.get(i))) {
+                correctMatches++;
+            } else {
+//                System.out.println("Selections wiped");
+                AudioManager.playSound(Constants.MINIGAME_FAIL);
                 userOrder.clear();
                 myController.placeRandomBurgerParts();
             }
@@ -95,6 +100,7 @@ public class MinigameScene {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            AudioManager.playSound(Constants.MINIGAME_WIN);
             new GameScene(primaryStage, currentLevel, currentProfile);
         }
     }
