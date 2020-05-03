@@ -62,7 +62,7 @@ public class GameScene {
     // Current player.
     private static Profile currentProfile;
     // Clock
-    private GTimer timer = new GTimer();
+    private static GTimer timer;
 
     /**
      * This is the main method that loads everything required to draw the scene.
@@ -87,6 +87,10 @@ public class GameScene {
             MainGameWindowController tempController = fxmlLoader
                     .getController();
             setController(tempController);
+
+            //Create the timer and pass it the label to update.
+            timer = new GTimer(myController.getTimeLabel());
+
             this.currentLevel = currentLevel;
             // Setting the canvas
             setCanvas(myController.getCanvas());
@@ -99,7 +103,7 @@ public class GameScene {
             primaryStage.show();
             updateInventory();
             this.currentProfile = currentProfile;
-            timer.startTimer(myController.getTimeLabel(),
+            timer.startTimer(
                     currentLevel.getTime());
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,7 +112,7 @@ public class GameScene {
     }
 
     public static void launchMinigame() {
-        new MinigameScene(primaryStage, currentLevel, currentProfile);
+        new MinigameScene(primaryStage, timer);
     }
 
     /**
@@ -145,7 +149,7 @@ public class GameScene {
      * @param event This is the event for the click on the restart button.
      */
     private void setUpRestart(MouseEvent event) {
-        timer.startTimer(myController.getTimeLabel(), 0);
+        timer.startTimer(0);
 
         // Delete all temp files
         LevelManager.deleteTempData(this.currentLevel.getId(),
@@ -303,8 +307,7 @@ public class GameScene {
         for (CollectableItem item : currentLevel.getPlayer().getInventory()) {
             if (item instanceof TokenAccumulator) {
                 updateTokens(((TokenAccumulator) item).getTokensCount());
-            }
-            else{
+            } else {
                 myController.addInventoryIcon(item.getImageURL());
             }
         }

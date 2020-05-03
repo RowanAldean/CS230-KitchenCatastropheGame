@@ -31,7 +31,7 @@
                             <Insets bottom="400.0" left="0.0" right="25.0" top="0.0" />
                         </StackPane.margin>
                     </Label>
-                    <Label id="timer" fx:id="timeLabel" alignment="CENTER" prefHeight="50" prefWidth="90" text="Testing Stopwatch" StackPane.alignment="CENTER_RIGHT">
+                    <Label id="timer" fx:id="timerLabel" alignment="CENTER" prefHeight="50" prefWidth="90" text="Testing Stopwatch" StackPane.alignment="CENTER_RIGHT">
                         <StackPane.margin>
                             <Insets bottom="320.0" left="0.0" right="25.0" top="0.0" />
                         </StackPane.margin>
