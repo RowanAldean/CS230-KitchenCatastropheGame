@@ -70,7 +70,8 @@ public class MinigameEnemy extends SmartTargetingEnemy {
         //Find a random index in the right side of the grid (half of the arraylist)
         //possibleSize / 2 is the halfway point and desired minimum index.
         int min = possibleCells.size()/2;
-        int randomIndex = (int) (Math.random() * ((possibleCells.size() - min) + 1)) + min;
+        int max = possibleCells.size()-1;
+        int randomIndex = (int) (Math.random() * ((max - min) + 1)) + min;
 
         /*If the random index == size i.e there is no desirable random in the right half of possible moves
         then simply seek for a random move to any possible place*/
