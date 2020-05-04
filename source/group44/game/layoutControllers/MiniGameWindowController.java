@@ -132,18 +132,17 @@ public class MiniGameWindowController {
     }
 
     public List<String> getCorrectOrder() {
-        getOrdering(assemblyOrderBox);
-        List<String> correctOrder = Arrays.asList(MINIGAME_SELECTED_TOP_BUN_PATH,
-                MINIGAME_SELECTED_TOMATO_PATH,
-                MINIGAME_SELECTED_LETTUCE_PATH,
-                MINIGAME_SELECTED_BURGER_PATH,
-                MINIGAME_SELECTED_BOTTOM_BUN_PATH);
-        return correctOrder;
+        return getOrdering(assemblyOrderBox);
     }
 
-    private void getOrdering(VBox assemblyOrderBox) {
+    private List<String> getOrdering(VBox assemblyOrderBox) {
+        List<String> stringOrder = new ArrayList<>();
         for(Node childNode: assemblyOrderBox.getChildren()){
-
+            ImageView assemblyNodeView = (ImageView) childNode;
+            LevelObjectImage assemblyNodeImage = (LevelObjectImage) assemblyNodeView.getImage();
+            String selectedCorrectString = mapToHighlights.get(assemblyNodeImage.getLabel());
+            stringOrder.add(selectedCorrectString);
         }
+        return stringOrder;
     }
 }
