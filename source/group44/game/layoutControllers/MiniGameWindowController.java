@@ -2,11 +2,11 @@ package group44.game.layoutControllers;
 
 import group44.models.LevelObjectImage;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -42,6 +42,8 @@ public class MiniGameWindowController {
     @FXML
     private Label timerLabel;
 
+    @FXML
+    private VBox assemblyOrderBox;
 
     public void initialize() {
         placeRandomBurgerParts();
@@ -71,28 +73,54 @@ public class MiniGameWindowController {
 
     public void placeRandomBurgerParts() {
         burgerSelect.getChildren().clear();
-        ImageView[] ingredientViews = generateBurgerPartImages();
-        for (ImageView ingredient : ingredientViews) {
-            ingredient.setFocusTraversable(true);
-            burgerSelect.getChildren().add(ingredient);
-        }
+        assemblyOrderBox.getChildren().clear();
+        generateAssemblyOrderImage();
+        generateBurgerParts();
         setupUI();
     }
 
-    private ImageView[] generateBurgerPartImages() {
-        final String[] ingredientsArray = mapToHighlights.keySet().toArray(new String[0]);
+    private void populateVBoxRandomly(VBox someVBox, String[] someImagePaths){
+        final String[] ingredientsArray = someImagePaths;
         final ArrayList<String> ingredientPaths = new ArrayList<>(Arrays.asList(ingredientsArray));
 
         ImageView[] burgerParts = new ImageView[ingredientPaths.size()];
         for (int i = 0; i < burgerParts.length; i++) {
             int randomImageIndex = new Random().nextInt(ingredientPaths.size());
-            File ingredientFile = new File(ingredientPaths.get(randomImageIndex));
-            LevelObjectImage ingredientImage = new LevelObjectImage(ingredientFile.toURI().toString(), ingredientPaths.get(randomImageIndex));
-            ImageView ingredient = new ImageView(ingredientImage);
-            burgerParts[i] = ingredient;
+            burgerParts[i] = produceImageView(ingredientPaths.get(randomImageIndex), someVBox);;
             ingredientPaths.remove(randomImageIndex);
         }
-        return burgerParts;
+        for (ImageView ingredient : burgerParts) {
+            someVBox.getChildren().add(ingredient);
+        }
+    }
+
+    private void generateBurgerParts(){
+        populateVBoxRandomly(burgerSelect, mapToHighlights.keySet().toArray(new String[0]));
+        for (Node ingredient : burgerSelect.getChildren()) {
+            ingredient.setFocusTraversable(true);
+        }
+    }
+
+    private void generateAssemblyOrderImage() {
+        ImageView topBunView = produceImageView(MINIGAME_TOP_BUN_PATH, assemblyOrderBox);
+        ImageView bottomBunView = produceImageView(MINIGAME_BOTTOM_BUN_PATH, assemblyOrderBox);
+
+        final String[] ingredientsArray = {MINIGAME_LETTUCE_PATH, MINIGAME_TOMATO_PATH, MINIGAME_BURGER_PATH};
+
+        assemblyOrderBox.getChildren().add(topBunView);
+        populateVBoxRandomly(assemblyOrderBox, ingredientsArray);
+        assemblyOrderBox.getChildren().add(bottomBunView);
+
+    }
+
+    private ImageView produceImageView(String path, VBox parentVBox){
+        File ingredientFile = new File(path);
+        LevelObjectImage ingredientImage = new LevelObjectImage(ingredientFile.toURI().toString(), path);
+        ImageView producedImageView = new ImageView(ingredientImage);
+        producedImageView.fitWidthProperty().bind(parentVBox.widthProperty());
+        producedImageView.fitHeightProperty().bind(parentVBox.heightProperty());
+        producedImageView.setPreserveRatio(true);
+        return producedImageView;
     }
 
     public VBox getBurgerSelect() {
@@ -104,11 +132,18 @@ public class MiniGameWindowController {
     }
 
     public List<String> getCorrectOrder() {
+        getOrdering(assemblyOrderBox);
         List<String> correctOrder = Arrays.asList(MINIGAME_SELECTED_TOP_BUN_PATH,
                 MINIGAME_SELECTED_TOMATO_PATH,
                 MINIGAME_SELECTED_LETTUCE_PATH,
                 MINIGAME_SELECTED_BURGER_PATH,
                 MINIGAME_SELECTED_BOTTOM_BUN_PATH);
         return correctOrder;
+    }
+
+    private void getOrdering(VBox assemblyOrderBox) {
+        for(Node childNode: assemblyOrderBox.getChildren()){
+
+        }
     }
 }

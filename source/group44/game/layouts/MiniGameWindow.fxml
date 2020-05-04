@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <StackPane id="root" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@/group44/resources/application.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group44.game.layoutControllers.MiniGameWindowController">
@@ -15,18 +14,19 @@
 
             </left>
             <center>
-                <VBox id="burgerSelect" fx:id="burgerSelect" alignment="CENTER" fillWidth="false" spacing="25.0" BorderPane.alignment="CENTER" StackPane.alignment="CENTER" />
+                <VBox id="burgerSelect" fx:id="burgerSelect" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="338.0" prefWidth="293.0" spacing="20.0" BorderPane.alignment="CENTER" StackPane.alignment="CENTER" />
             </center>
             <right>
-                <VBox id="rightSideMenu" fx:id="rightSideMenu" alignment="CENTER" fillWidth="false" prefHeight="503.0" prefWidth="197.0" BorderPane.alignment="CENTER">
+                <VBox id="rightSideMenu" fx:id="rightSideMenu" alignment="CENTER" prefHeight="510.0" prefWidth="197.0" BorderPane.alignment="CENTER">
                     <Label id="Explanation" alignment="CENTER" prefHeight="135.0" prefWidth="123.0" text="That stupid waiter cannot see you're busy! Get this order out quick!" textAlignment="CENTER" wrapText="true" />
-                    <Label id="OrderText" alignment="CENTER" prefHeight="50.0" prefWidth="87.0" text="Assembly Order:" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER" />
-                    <ImageView fitHeight="143.0" fitWidth="100.0" preserveRatio="true">
-                        <image>
-                            <Image url="@../../resources/minigame/burgerComplete.png" />
-                        </image>
-                    </ImageView>
-                    <Label id="Reminder" alignment="CENTER" prefHeight="127.0" prefWidth="117.0" text="The timer's still going!" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER" />
+                    <Label id="OrderText" alignment="CENTER" prefHeight="65.0" prefWidth="87.0" text="Assembly Order:" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER" />
+<VBox id="assemblyOrderBox" fx:id="assemblyOrderBox" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="53.0" VBox.vgrow="NEVER" />
+                    <!--                    <ImageView fitHeight="143.0" fitWidth="100.0" preserveRatio="true">-->
+<!--                        <image>-->
+<!--                            <Image url="@../../resources/minigame/burgerComplete.png" />-->
+<!--                        </image>-->
+<!--                    </ImageView>-->
+                    <Label id="Reminder" alignment="CENTER" prefHeight="145.0" prefWidth="117.0" text="The timer's still going!" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER" />
                     <Label id="timeTitle" alignment="CENTER" prefHeight="32.0" prefWidth="74.0" text="Time Taken:" textAlignment="CENTER" StackPane.alignment="CENTER_RIGHT">
                         <StackPane.margin>
                             <Insets bottom="400.0" left="0.0" right="25.0" top="0.0" />
