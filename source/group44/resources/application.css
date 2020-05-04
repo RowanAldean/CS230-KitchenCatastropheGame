@@ -105,7 +105,7 @@
 }
 
 #Explanation {
-    -fx-font-size: 18;
+    -fx-font-size: 20;
     -fx-text-fill: orange;
     -fx-font-family: "Arial Rounded MT Bold";
 }
@@ -123,7 +123,7 @@
 #Reminder {
     -fx-font-size: 24;
         -fx-font-family: "Arial Rounded MT Bold";
-    -fx-text-fill: orange;
+    -fx-text-fill: red;
 }
 
 #Reminder .text{

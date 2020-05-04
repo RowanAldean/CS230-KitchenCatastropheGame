@@ -18,15 +18,15 @@
             </center>
             <right>
                 <VBox id="rightSideMenu" fx:id="rightSideMenu" alignment="CENTER" prefHeight="510.0" prefWidth="197.0" BorderPane.alignment="CENTER">
-                    <Label id="Explanation" alignment="CENTER" prefHeight="135.0" prefWidth="123.0" text="That stupid waiter cannot see you're busy! Get this order out quick!" textAlignment="CENTER" wrapText="true" />
-                    <Label id="OrderText" alignment="CENTER" prefHeight="65.0" prefWidth="87.0" text="Assembly Order:" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER" />
-<VBox id="assemblyOrderBox" fx:id="assemblyOrderBox" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="53.0" VBox.vgrow="NEVER" />
                     <!--                    <ImageView fitHeight="143.0" fitWidth="100.0" preserveRatio="true">-->
 <!--                        <image>-->
 <!--                            <Image url="@../../resources/minigame/burgerComplete.png" />-->
 <!--                        </image>-->
 <!--                    </ImageView>-->
-                    <Label id="Reminder" alignment="CENTER" prefHeight="145.0" prefWidth="117.0" text="The timer's still going!" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER" />
+                    <Label id="Reminder" alignment="CENTER" prefHeight="114.0" prefWidth="117.0" text="The timer's still going!" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER">
+                  <VBox.margin>
+                     <Insets />
+                  </VBox.margin></Label>
                     <Label id="timeTitle" alignment="CENTER" prefHeight="32.0" prefWidth="74.0" text="Time Taken:" textAlignment="CENTER" StackPane.alignment="CENTER_RIGHT">
                         <StackPane.margin>
                             <Insets bottom="400.0" left="0.0" right="25.0" top="0.0" />
@@ -37,6 +37,15 @@
                             <Insets bottom="320.0" left="0.0" right="25.0" top="0.0" />
                         </StackPane.margin>
                     </Label>
+                    <Label id="OrderText" alignment="CENTER" prefHeight="51.0" prefWidth="76.0" text="Assembly Order:" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER">
+                  <VBox.margin>
+                     <Insets />
+                  </VBox.margin></Label>
+<VBox id="assemblyOrderBox" fx:id="assemblyOrderBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="62.0" VBox.vgrow="NEVER">
+                  <VBox.margin>
+                     <Insets bottom="30.0" top="10.0" />
+                  </VBox.margin></VBox>
+                    <Label id="Explanation" alignment="CENTER" prefHeight="119.0" prefWidth="161.0" text="That stupid waiter cannot see you're busy! Get this order out quick!" textAlignment="CENTER" wrapText="true" />
                 </VBox>
             </right>
             <bottom>
