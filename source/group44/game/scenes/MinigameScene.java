@@ -11,10 +11,15 @@ import group44.models.Profile;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +73,7 @@ public class MinigameScene {
             case ENTER:
                 AudioManager.playSound(Constants.MINIGAME_SELECT);
                 ImageView selectedImageView = (ImageView) scene.focusOwnerProperty().get();
+                shadeSelection(selectedImageView);
                 LevelObjectImage selectedImage = (LevelObjectImage) selectedImageView.getImage();
                 String selectedImageLabel = selectedImage.getLabel();
                 userOrder.add(selectedImageLabel);
@@ -76,6 +82,19 @@ public class MinigameScene {
             default:
                 AudioManager.playSound(Constants.MINIGAME_NAV);
         }
+    }
+
+    private void shadeSelection(ImageView selectedImageView) {
+        //Create green lighting
+        Lighting greenLighting = new Lighting();
+        greenLighting.setDiffuseConstant(1.0);
+        greenLighting.setLight(new Light.Distant(45, 90, Color.LIMEGREEN));
+        //Create brighter pixels effect
+        ColorAdjust shadingEffect = new ColorAdjust(0,0,0.5,0.5);
+        //Pass the brighter pixels effect to the lighting.
+        greenLighting.setContentInput(shadingEffect);
+        //Set the effect on the ImageView
+        selectedImageView.setEffect(greenLighting);
     }
 
     private void checkWin() {
