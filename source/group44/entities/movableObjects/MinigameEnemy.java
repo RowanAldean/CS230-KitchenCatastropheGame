@@ -9,16 +9,45 @@ import group44.game.scenes.GameScene;
 
 import java.util.ArrayList;
 
+/**
+ * An extension of the smart targeting enemy that initiates a minigame sequence and respawns as opposed to killing the player.
+ *
+ * @author Rowan Aldean
+ * @version 1.1
+ */
 public class MinigameEnemy extends SmartTargetingEnemy {
 
+    /**
+     * Creates a new instance of the {@link MinigameEnemy}.
+     *
+     * @param level     Level where the {@link MinigameEnemy} is located.
+     * @param title     Title of the enemy.
+     * @param positionX Position X in the game.
+     * @param positionY Position Y in the game.
+     */
     public MinigameEnemy(Level level, String title, int positionX, int positionY) {
         super(level, title, positionX, positionY, Constants.MINIGAME_ENEMY_PATH);
     }
 
+    /**
+     * Creates a new instance of the {@link MinigameEnemy}.
+     *
+     * @param level     Level where the {@link MinigameEnemy} is located.
+     * @param title     Title of the enemy.
+     * @param positionX Position X in the game.
+     * @param positionY Position Y in the game.
+     * @param imagePath Path to the Image representing {@link MinigameEnemy} in
+     *                  the game.
+     */
     public MinigameEnemy(Level level, String title, int positionX, int positionY, String imagePath) {
         super(level, title, positionX, positionY, imagePath);
     }
 
+    /**
+     * Method executed when enemy collides with another LevelObject.
+     *
+     * @param result information about the collision.
+     */
     @Override
     protected void onCollided(CollisionCheckResult result) {
         if (result.getCollidingObject() instanceof Player) {
@@ -35,7 +64,7 @@ public class MinigameEnemy extends SmartTargetingEnemy {
         //The cell we will respawn at.
         StepableCell newCell = findSpaceOnRightSide();
         //If the new cell is the same as the current one then die (waiter runs away from stress lol).
-        if(newCell.equals(this.getStepableCellAtMovableObjectPosition(this))){
+        if (newCell.equals(this.getStepableCellAtMovableObjectPosition(this))) {
             die(getLevel().getPlayer());
             return;
         }
@@ -50,6 +79,7 @@ public class MinigameEnemy extends SmartTargetingEnemy {
     /**
      * A method which finds some {@link StepableCell} in the right side of the grid. If there is no best cell then it will
      * return any random possible cell. If there is no possible cell then use current cell.
+     *
      * @return Some possible {@link StepableCell} to move position to; otherwise current cell.
      */
     private StepableCell findSpaceOnRightSide() {
@@ -69,8 +99,8 @@ public class MinigameEnemy extends SmartTargetingEnemy {
 
         //Find a random index in the right side of the grid (half of the arraylist)
         //possibleSize / 2 is the halfway point and desired minimum index.
-        int min = possibleCells.size()/2;
-        int max = possibleCells.size()-1;
+        int min = possibleCells.size() / 2;
+        int max = possibleCells.size() - 1;
         int randomIndex = (int) (Math.random() * ((max - min) + 1)) + min;
 
         /*If the random index == size i.e there is no desirable random in the right half of possible moves
@@ -79,7 +109,7 @@ public class MinigameEnemy extends SmartTargetingEnemy {
             randomIndex = (int) (Math.random() * possibleCells.size());
         }
         //If there's no possible moves then return the current cell
-        else if(possibleCells.isEmpty()){
+        else if (possibleCells.isEmpty()) {
             return this.getStepableCellAtMovableObjectPosition(this);
         }
         //Return possible move index
@@ -88,7 +118,7 @@ public class MinigameEnemy extends SmartTargetingEnemy {
 
     /**
      * Method executed when some other {@link LevelObject} tries to kill the
-     * {@link MinigameEnemy}. The minigame enemy will die when the minigame is completed.
+     * {@link MinigameEnemy}. The minigame enemy will die if no respawn is possible.
      *
      * @param object the {@link LevelObject} trying to kill the {@link MinigameEnemy}.
      */

@@ -108,6 +108,9 @@ public class GameScene {
         primaryStage.setTitle("Kitchen Catastrophe");
     }
 
+    /**
+     * Launches the minigame and maintains the game state.
+     */
     public static void launchMinigame() {
         timer.pauseTimer();
         currentLevel.setTime(GTimer.getCurrentTimeTaken());
@@ -130,7 +133,7 @@ public class GameScene {
         myController.getResumeButton().setOnMouseClicked(this::setUpResume);
         myController.getRestartButton().setOnMouseClicked(this::setUpRestart);
         myController.getHomeButton().setOnMouseClicked(this::setUpHome);
-        AudioManager.gamePlayer.setVolume(0.0);
+        AudioManager.setGameVolume(0.0);
     }
 
     /**
@@ -213,7 +216,7 @@ public class GameScene {
 
         if (status == LevelFinishStatus.GoalReached) {
             //Turn the volume down for the ending
-            AudioManager.gamePlayer.setVolume(0.05);
+            AudioManager.setGameVolume(0.05);
             //Play winning sound
             AudioManager.playSound(Constants.WIN_SOUND);
             myController.getOnScreenMessage().setTextFill(Paint.valueOf("green"));
@@ -245,7 +248,7 @@ public class GameScene {
             }
         } else {
             //Stop game music
-            AudioManager.gamePlayer.stop();
+            AudioManager.pauseGameMusic();
             //Play sad trombone death music
             AudioManager.playSound(Constants.DIED_MUSIC);
             //Display death message
@@ -305,7 +308,8 @@ public class GameScene {
     }
 
     /**
-     *
+     * Updates the Players inventory, used when collecting an item
+     * in the {@link group44.entities.movableObjects.Player} class.
      */
     public static void updateInventory() {
         myController.clearInventory();

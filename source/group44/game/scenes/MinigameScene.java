@@ -19,7 +19,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +36,12 @@ public class MinigameScene {
 
     private ArrayList<String> userOrder = new ArrayList<>();
 
+    /**
+     * Creates a new instance of a {@link MinigameScene}.
+     * @param primaryStage The stage the scene should appear on.
+     * @param currentLevel The level the minigame is currently running for.
+     * @param currentProfile The profile currently engaged in the minigame.
+     */
     public MinigameScene(Stage primaryStage, Level currentLevel, Profile currentProfile) {
         this.primaryStage = primaryStage;
         this.currentLevel = currentLevel;
@@ -57,7 +62,7 @@ public class MinigameScene {
             // Adding the key listener to the ingredients VBox.
             myController.getBurgerSelect().addEventFilter(KeyEvent.KEY_PRESSED, event -> ingredientKeyEvent(event));
 
-            // Drawing the game
+            // Displaying the scene.
             primaryStage.setScene(scene);
             primaryStage.show();
 
@@ -68,6 +73,10 @@ public class MinigameScene {
         primaryStage.setTitle("Kitchen Catastrophe");
     }
 
+    /**
+     * Used as event filter in monitoring user inputs and selections of ingredients.
+     * @param event The key press event to be handled.
+     */
     private void ingredientKeyEvent(KeyEvent event) {
         switch (event.getCode()) {
             case ENTER:
@@ -84,19 +93,27 @@ public class MinigameScene {
         }
     }
 
+    /**
+     * Highlights correct selections in a green tint to indicate this selection has been used and was correct.
+     * @param selectedImageView The {@link ImageView} to give a green tint and effect.
+     */
     private void shadeSelection(ImageView selectedImageView) {
         //Create green lighting
         Lighting greenLighting = new Lighting();
         greenLighting.setDiffuseConstant(1.0);
         greenLighting.setLight(new Light.Distant(45, 90, Color.LIMEGREEN));
         //Create brighter pixels effect
-        ColorAdjust shadingEffect = new ColorAdjust(0,0,0.5,0.5);
+        ColorAdjust shadingEffect = new ColorAdjust(0, 0, 0.5, 0.5);
         //Pass the brighter pixels effect to the lighting.
         greenLighting.setContentInput(shadingEffect);
         //Set the effect on the ImageView
         selectedImageView.setEffect(greenLighting);
     }
 
+    /**
+     * Compares the users input against the correct assembly order provided. Clears the users input and refreshes the
+     * minigame if an incorrect selection is made. If successful the minigame is complete and the scene is closed.
+     */
     private void checkWin() {
         List<String> correctOrdering = myController.getCorrectOrder();
         int correctMatches = 0;
@@ -105,12 +122,13 @@ public class MinigameScene {
             if (userOrder.get(i).equals(correctOrdering.get(i))) {
                 correctMatches++;
             } else {
-//                System.out.println("Selections wiped");
+                //Wipe selections
                 AudioManager.playSound(Constants.MINIGAME_FAIL);
                 userOrder.clear();
                 myController.placeRandomBurgerParts();
             }
         }
+        //If all selections are correct, return to main game.
         if (correctMatches == correctOrdering.size()) {
             sceneTimer.pauseTimer();
             this.currentLevel.setTime(GTimer.getCurrentTimeTaken());
