@@ -39,6 +39,7 @@ public abstract class Door extends StepableCell {
      * @param positionY         Position Y in the game.
      * @param lockedImagePath   Path to the Image representing locked door in the game.
      * @param unlockedImagePath Path to the Image representing unlocked door in the game.
+     * @param isOpen            Is the door to be instantiated open.
      */
     public Door(Level level, String title, int positionX, int positionY,
                 String lockedImagePath, String unlockedImagePath, boolean isOpen) {
