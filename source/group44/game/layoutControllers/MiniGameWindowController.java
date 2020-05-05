@@ -81,6 +81,7 @@ public class MiniGameWindowController {
 
     /**
      * A listener used in determining which image variant to use for an image when it is focused on.
+     *
      * @param childImage Some {@link ImageView} node in the Scene graph.
      * @return an {@link ChangeListener} for this specific ImageView node.
      */
@@ -116,17 +117,19 @@ public class MiniGameWindowController {
     /**
      * Takes some VBox and some list of image paths, and populates the VBox children with a random order of
      * {@link ImageView} nodes using the provided image paths.
-     * @param someVBox The VBox to populate with ImageViews.
+     *
+     * @param someVBox       The VBox to populate with ImageViews.
      * @param someImagePaths The paths used to populate the VBox ImageViews.
      */
-    private void populateVBoxRandomly(VBox someVBox, String[] someImagePaths){
+    private void populateVBoxRandomly(VBox someVBox, String[] someImagePaths) {
         final String[] ingredientsArray = someImagePaths;
         final ArrayList<String> ingredientPaths = new ArrayList<>(Arrays.asList(ingredientsArray));
 
         ImageView[] burgerParts = new ImageView[ingredientPaths.size()];
         for (int i = 0; i < burgerParts.length; i++) {
             int randomImageIndex = new Random().nextInt(ingredientPaths.size());
-            burgerParts[i] = produceImageView(ingredientPaths.get(randomImageIndex), someVBox);;
+            burgerParts[i] = produceImageView(ingredientPaths.get(randomImageIndex), someVBox);
+            ;
             ingredientPaths.remove(randomImageIndex);
         }
         for (ImageView ingredient : burgerParts) {
@@ -137,7 +140,7 @@ public class MiniGameWindowController {
     /**
      * Populates the selectable burger parts and ensures they are focus traversable (they can be selected by the user).
      */
-    private void generateBurgerParts(){
+    private void generateBurgerParts() {
         populateVBoxRandomly(burgerSelect, mapToHighlights.keySet().toArray(new String[0]));
         for (Node ingredient : burgerSelect.getChildren()) {
             ingredient.setFocusTraversable(true);
@@ -162,11 +165,12 @@ public class MiniGameWindowController {
 
     /**
      * Produce an imageView designed to fit neatly within a given VBox.
-     * @param path Some path to produce an {@link LevelObjectImage} for the {@link ImageView}.
+     *
+     * @param path       Some path to produce an {@link LevelObjectImage} for the {@link ImageView}.
      * @param parentVBox Some {@link VBox} to bind the ImageViews properties to.
      * @return An ImageView with a height and width property bound to some parentVBox.
      */
-    private ImageView produceImageView(String path, VBox parentVBox){
+    private ImageView produceImageView(String path, VBox parentVBox) {
         File ingredientFile = new File(path);
         LevelObjectImage ingredientImage = new LevelObjectImage(ingredientFile.toURI().toString(), path);
         ImageView producedImageView = new ImageView(ingredientImage);
@@ -186,7 +190,10 @@ public class MiniGameWindowController {
 
     /**
      * Used in checking the correct assembly order against the users entries.
-     * @return The correct assembly order.
+     *
+     * @return An {@link List<String>} containing the highlighted image paths of the assembly order,
+     * as the user will be selecting the highlighted images and
+     * not the original variants used in displaying the assembly order.
      */
     public List<String> getCorrectOrder() {
         return getAssemblyOrdering();
@@ -194,13 +201,14 @@ public class MiniGameWindowController {
 
     /**
      * Gets the String labels of the assembly order, for comparison against the users entry.
+     *
      * @return An {@link List<String>} containing the highlighted image paths of the assembly order,
      * as the user will be selecting the highlighted images and
      * not the original variants used in displaying the assembly order.
      */
     private List<String> getAssemblyOrdering() {
         List<String> stringOrder = new ArrayList<>();
-        for(Node childNode: assemblyOrderBox.getChildren()){
+        for (Node childNode : assemblyOrderBox.getChildren()) {
             ImageView assemblyNodeView = (ImageView) childNode;
             LevelObjectImage assemblyNodeImage = (LevelObjectImage) assemblyNodeView.getImage();
             String selectedCorrectString = mapToHighlights.get(assemblyNodeImage.getLabel());
