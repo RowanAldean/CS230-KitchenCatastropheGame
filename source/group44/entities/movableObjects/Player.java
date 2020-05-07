@@ -201,6 +201,7 @@ public class Player extends MovableObject {
                     " more token(s) to open this door!", Constants.TOKEN_PATH);
             GameScene.getOnScreenMessage().setVisible(true);
         }
+        GameScene.updateTokens(this.getTokenAccumulator().getTokensCount());
         return door.open(this.getTokenAccumulator());
     }
 
