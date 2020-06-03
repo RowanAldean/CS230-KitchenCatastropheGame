@@ -36,7 +36,7 @@ public class Level {
     /** The game player. */
     private Player player;
     /** The game enemies. */
-    private ArrayList<Enemy> enemies;
+    private volatile ArrayList<Enemy> enemies;
     /** Indicates whether the level is finished or not. */
     private boolean isFinished;
     /** Indicates under which circumstances the level finished. */
@@ -272,7 +272,9 @@ public class Level {
      * Moves all enemies in the game.
      */
     private void moveEnemies() {
-        for (Enemy enemy : this.enemies) {
+        //Avoids any concurrent modification issues with enemy death by using a shallow clone of the games enemies.
+        ArrayList<Enemy> enemiesClone = (ArrayList<Enemy>) this.enemies.clone();
+        for (Enemy enemy : enemiesClone) {
             enemy.move();
         }
     }

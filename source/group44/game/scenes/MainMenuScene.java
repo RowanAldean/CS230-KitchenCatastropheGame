@@ -103,6 +103,7 @@ public class MainMenuScene {
     //needs a listener, will add that in a future commit.
     private void closeGame(MouseEvent e) {
         primaryStage.close();
+        System.exit(0);
     }
 
     private void profilesListener() {

@@ -217,6 +217,10 @@ public class LevelEditorScene {
                 new File(Constants.LEVEL_EDITOR_SMART_TARGETING_ENEMY_PATH).toURI()
                         .toString(),
                 SmartTargetingEnemy.class.getName());
+        LevelObjectImage minigameEnemyImage = new LevelObjectImage(
+                new File(Constants.LEVEL_EDITOR_MINIGAME_ENEMY_PATH).toURI()
+                        .toString(),
+                MinigameEnemy.class.getName());
         LevelObjectImage straightEnemyImage = new LevelObjectImage(
                 new File(Constants.LEVEL_EDITOR_STRAIGHT_WALKING_ENEMY_PATH).toURI()
                         .toString(),
@@ -250,6 +254,8 @@ public class LevelEditorScene {
                 dumbEnemeyImage);
         ImageView smartTargetingEnemy = createImageViewForLevelObjectImage(
                 smartEnemyImage);
+        ImageView minigameEnemy = createImageViewForLevelObjectImage(
+                minigameEnemyImage);
         ImageView straightTargetingEnemy = createImageViewForLevelObjectImage(
                 straightEnemyImage);
         ImageView wallTargetingEnemy = createImageViewForLevelObjectImage(
@@ -272,8 +278,9 @@ public class LevelEditorScene {
         this.controller.getContainer().add(player, 0, 6);
         this.controller.getContainer().add(dumbTargetingEnemy, 1, 6);
         this.controller.getContainer().add(smartTargetingEnemy, 0, 7);
-        this.controller.getContainer().add(straightTargetingEnemy, 1, 7);
-        this.controller.getContainer().add(wallTargetingEnemy, 0, 8);
+        this.controller.getContainer().add(minigameEnemy, 1, 7);
+        this.controller.getContainer().add(straightTargetingEnemy, 0, 8);
+        this.controller.getContainer().add(wallTargetingEnemy, 1, 8);
 
         this.registerEventHandlerForImageView(fire);
         this.registerEventHandlerForImageView(water);
@@ -290,6 +297,7 @@ public class LevelEditorScene {
         this.registerEventHandlerForImageView(player);
         this.registerEventHandlerForImageView(dumbTargetingEnemy);
         this.registerEventHandlerForImageView(smartTargetingEnemy);
+        this.registerEventHandlerForImageView(minigameEnemy);
         this.registerEventHandlerForImageView(straightTargetingEnemy);
         this.registerEventHandlerForImageView(wallTargetingEnemy);
         this.registerEventHandlerForImageView(GreyKey);
@@ -1034,6 +1042,11 @@ public class LevelEditorScene {
             case "SmartTargetingEnemy": {
                 cell = new SmartTargetingEnemy(this.levelEditor.getLevel(),
                         Constants.TITLE_SMART_TARGETING_ENEMY, x, y);
+                break;
+            }
+            case "MinigameEnemy": {
+                cell = new MinigameEnemy(this.levelEditor.getLevel(),
+                        Constants.TITLE_MINIGAME_ENEMY, x, y);
                 break;
             }
             case "StraightWalkingEnemy": {
