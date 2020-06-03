@@ -311,7 +311,7 @@ public class GameScene {
      * Updates the Players inventory, used when collecting an item
      * in the {@link group44.entities.movableObjects.Player} class.
      */
-    public static void updateInventory() {
+    private static void loadInventory() {
         myController.clearInventory();
         for (CollectableItem item : currentLevel.getPlayer().getInventory()) {
             if (item instanceof TokenAccumulator) {
@@ -320,6 +320,14 @@ public class GameScene {
                 myController.addInventoryIcon(item.getImageURL());
             }
         }
+    }
+
+    /**
+     * Adds a new item to the graphical inventory.
+     * @param item The item to be added.
+     */
+    public static void updateInventory(CollectableItem item){
+        myController.addInventoryIcon(item.getImageURL());
     }
 
     /**
