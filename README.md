@@ -31,7 +31,11 @@ _Branch will be automatically deleted after the code is merged._
 Go to [Extra features](https://github.com/svejnohatomas/KitchenCatastropheGame/projects/2) and create a new Card
 We will decide which extra features to do when we are done with the compulsory ones.
 
-### (Rowan Aldean) Grades Achieved ↓ 
+# Personal Module Averages ↓ ↓  ↓ 
+1. **CS230 Software Engineering:** 80% (72% design + 88% implementation)
+2. **CS235 Software Engineering 2:** 87.4% (across 3 assignments - 1 SE related, 2 implementation related)
+
+# Grades Breakdown ↓ 
 * **CS230 Software Engineering 1 (Original Module)** 
     * **Video:** https://youtu.be/uPakI8p3xQA
     * **Group Average:** 77% (74% design + 80% implementation)
@@ -47,7 +51,3 @@ We will decide which extra features to do when we are done with the compulsory o
 * **CS235 Software Engineering 2 (Assignment 3 - User Research)**
     * **Video:** https://youtu.be/K9PwPViuhuk
     * **Grade:** 97%
-    
-# Personal Module Averages ↓ ↓  ↓ 
-1. **CS230 Software Engineering:** 80% (72% design + 88% implementation)
-2. **CS235 Software Engineering 2:** 87.4% (across 3 assignments - 1 SE related, 2 implementation related)
