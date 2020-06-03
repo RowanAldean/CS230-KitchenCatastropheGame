@@ -85,6 +85,11 @@
     -fx-font-family: "Helvetica";
 }
 
+#inventoryTitle {
+    -fx-font-weight: bold;
+    -fx-font-family: "Helvetica";
+}
+
 #timer {
     -fx-background-radius: 10;
     -fx-border-radius: 10;
@@ -92,4 +97,36 @@
     -fx-border-width: 3;
     -fx-background-color: lightgreen;
     -fx-font-family: "Helvetica";
+}
+
+#minigameInstructions {
+    -fx-font-size: 24;
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+
+#Explanation {
+    -fx-font-size: 20;
+    -fx-text-fill: orange;
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+
+#Explanation .text{
+    -fx-stroke: black;
+    -fx-stroke-width: 1px;
+}
+
+#OrderText {
+    -fx-font-size: 14;
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+
+#Reminder {
+    -fx-font-size: 24;
+        -fx-font-family: "Arial Rounded MT Bold";
+    -fx-text-fill: red;
+}
+
+#Reminder .text{
+    -fx-stroke: black;
+    -fx-stroke-width: 1px;
 }

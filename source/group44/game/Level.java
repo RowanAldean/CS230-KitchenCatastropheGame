@@ -36,7 +36,7 @@ public class Level {
     /** The game player. */
     private Player player;
     /** The game enemies. */
-    private ArrayList<Enemy> enemies;
+    private volatile ArrayList<Enemy> enemies;
     /** Indicates whether the level is finished or not. */
     private boolean isFinished;
     /** Indicates under which circumstances the level finished. */
@@ -272,7 +272,9 @@ public class Level {
      * Moves all enemies in the game.
      */
     private void moveEnemies() {
-        for (Enemy enemy : this.enemies) {
+        //Avoids any concurrent modification issues with enemy death by using a shallow clone of the games enemies.
+        ArrayList<Enemy> enemiesClone = (ArrayList<Enemy>) this.enemies.clone();
+        for (Enemy enemy : enemiesClone) {
             enemy.move();
         }
     }
@@ -292,11 +294,15 @@ public class Level {
         if (centerY < this.displaySize / 2) {
             centerY = this.displaySize / 2;
         }
-        if (centerX > (this.grid[0].length - 1) - this.displaySize / 2) {
-            centerX = (this.grid[0].length - 1) - this.displaySize / 2;
+
+        int gridWidth = this.grid.length;
+        int gridHeight = this.grid[1].length;
+
+        if (centerX > (gridWidth - 1) - this.displaySize / 2) {
+            centerX = (gridWidth - 1) - this.displaySize / 2;
         }
-        if (centerY > (this.grid[1].length - 1) - this.displaySize / 2) {
-            centerY = (this.grid[1].length - 1) - this.displaySize / 2;
+        if (centerY > (gridHeight - 1) - this.displaySize / 2) {
+            centerY = (gridHeight - 1) - this.displaySize / 2;
         }
 
         return new Area(centerX - this.displaySize / 2,

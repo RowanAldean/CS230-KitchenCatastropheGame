@@ -1,6 +1,7 @@
 package group44.entities.cells;
 
 import group44.Constants;
+import group44.controllers.AudioManager;
 import group44.entities.movableObjects.MovableObject;
 import group44.game.Level;
 
@@ -44,6 +45,7 @@ public class Fire extends StepableCell {
     @Override
     protected void onStepped(MovableObject object) {
         object.die(this);
+        AudioManager.playSound(Constants.FIRE_SOUND);
     }
 
     /**

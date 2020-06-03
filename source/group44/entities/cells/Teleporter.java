@@ -2,6 +2,7 @@ package group44.entities.cells;
 
 import group44.Constants;
 import group44.annotations.Editable;
+import group44.controllers.AudioManager;
 import group44.entities.LevelObject;
 import group44.entities.movableObjects.MovableObject;
 import group44.game.Level;
@@ -74,6 +75,7 @@ public class Teleporter extends StepableCell {
     @Override
     protected void onStepped(MovableObject object) {
         if (this.teleport(object)) {
+            AudioManager.playSound(Constants.TELEPORT_SOUND);
             this.stepOff();
         }
     }

@@ -3,6 +3,7 @@ package group44.entities.movableObjects;
 import java.util.ArrayList;
 
 import group44.Constants;
+import group44.controllers.AudioManager;
 import group44.entities.LevelObject;
 import group44.entities.cells.Fire;
 import group44.entities.cells.Ground;
@@ -21,9 +22,10 @@ import group44.game.CollisionCheckResult;
 import group44.game.CollisionCheckResult.CollisionCheckResultType;
 import group44.game.Level;
 import group44.game.scenes.GameScene;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+
+import static group44.game.scenes.GameScene.updateInventory;
+import static group44.game.scenes.GameScene.updateTokens;
 
 /**
  * Represents a player in the game.
@@ -60,7 +62,7 @@ public class Player extends MovableObject {
                 imagePath);
 
         this.inventory = new ArrayList<>();
-        this.inventory.add(new TokenAccumulator());
+        addToInventory(new TokenAccumulator());
     }
 
     /**
@@ -80,7 +82,7 @@ public class Player extends MovableObject {
                 Constants.PLAYER_PATH);
 
         this.inventory = new ArrayList<>();
-        this.inventory.add(new TokenAccumulator());
+        addToInventory(new TokenAccumulator());
     }
 
     /**
@@ -134,11 +136,13 @@ public class Player extends MovableObject {
                         CollisionCheckResultType.Player, this));
                 break;
             case MissingKey:
+                AudioManager.playSound(Constants.LOCKED_SOUND);
                 if (this.tryToOpenKeyDoor(result)) {
                     this.move();
                 }
                 break;
             case NotEnoughTokens:
+                AudioManager.playSound(Constants.LOCKED_SOUND);
                 if (this.tryToOpenTokenDoor(result)) {
                     this.move();
                 }
@@ -153,12 +157,13 @@ public class Player extends MovableObject {
      *
      * @param result collision result.
      * @return true if the door are open; otherwise false and
-     *         update the on screen message.
+     * update the on screen message.
      */
     private boolean tryToOpenKeyDoor(CollisionCheckResult result) {
         KeyDoor door = (KeyDoor) result.getCollidingObject();
         Key key = this.getKey(door.getUnlockingKeyType());
 
+        //if they have a key then open it
         if (key != null) {
             door.open(key);
         }
@@ -199,6 +204,7 @@ public class Player extends MovableObject {
                     " more token(s) to open this door!", Constants.TOKEN_PATH);
             GameScene.getOnScreenMessage().setVisible(true);
         }
+        GameScene.updateTokens(this.getTokenAccumulator().getTokensCount());
         return door.open(this.getTokenAccumulator());
     }
 
@@ -214,13 +220,18 @@ public class Player extends MovableObject {
             if (ground.hasCollectableItem()) {
                 //Collect the CollectableItem if the is any.
                 CollectableItem item = ground.collect();
+                addToInventory(item);
+                //If its a token then update the screen.
+                //Otherwise add to graphical inventory.
                 if (item instanceof Token) {
-                    //If token, add to TokenAccumulator.
-                    this.getTokenAccumulator().addToken((Token) item);
+                    AudioManager.playSound(Constants.TOKEN_SOUND);
+                    updateTokens(getTokenAccumulator().getTokensCount());
                 } else {
-                    this.inventory.add(item); //else, add to inventory.
+                    AudioManager.playSound(Constants.COLLECT_SOUND);
+                    updateInventory(item);
                 }
             }
+            AudioManager.playSound(Constants.FOOTSTEP_SOUND);
         }
     }
 
@@ -312,7 +323,7 @@ public class Player extends MovableObject {
         }
 
         TokenAccumulator accumulator = new TokenAccumulator();
-        this.inventory.add(accumulator);
+        addToInventory(new TokenAccumulator());
         return accumulator;
     }
 
@@ -322,11 +333,20 @@ public class Player extends MovableObject {
      * @param item the collectable item.
      */
     public void addToInventory(CollectableItem item) {
-        if (item instanceof TokenAccumulator) {
+        if (item instanceof Token) {
             this.getTokenAccumulator().addToken((Token) item);
         } else {
             this.inventory.add(item);
         }
+    }
+
+    /**
+     * Returns this {@link Player} inventory.
+     *
+     * @return the players inventory.
+     */
+    public ArrayList<CollectableItem> getInventory() {
+        return this.inventory;
     }
 
     /**
