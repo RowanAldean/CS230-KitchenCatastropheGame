@@ -51,3 +51,10 @@ We will decide which extra features to do when we are done with the compulsory o
 * **CS235 Software Engineering 2 (Assignment 3 - User Research)**
     * **Video:** https://youtu.be/K9PwPViuhuk
     * **Grade:** 97%
+
+## Special Thanks
+I'd like to publically thank:
+* [Tomas Svejnoha](https://github.com/svejnohatomas) for his help in leading development and producing a workable codebase.
+* [Tian Bogdan Mihai](https://github.com/magick1999) for his dedication and ambition to produce code and aid in front-end development.
+* [Oliver Morris](https://github.com/blueman7700) for integrating beautifully into the team and aiding substantially with the level editor.
+* [Amy Mason](https://github.com/mason0109) for her determination and superbly useful aid in documentation and development.
